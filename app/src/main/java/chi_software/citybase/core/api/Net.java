@@ -1,6 +1,7 @@
 package chi_software.citybase.core.api;
 
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 
 import chi_software.citybase.core.observer.Subject;
 
@@ -14,6 +15,6 @@ public interface Net extends Subject<NetSubscriber> {
     int SIGN_IN = 101;
 
     //  ************* AUTH ************
-
+    void login (@NonNull String login, @NonNull String password);
 
 }

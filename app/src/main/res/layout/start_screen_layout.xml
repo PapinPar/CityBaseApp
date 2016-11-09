@@ -18,9 +18,9 @@
     <Button
         android:text="Войти"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
+        android:id="@+id/SignInBut"
         android:gravity="center_vertical|center_horizontal|center"
-        android:layout_above="@+id/button2"
+        android:layout_above="@+id/GetAccessBut"
         android:layout_centerHorizontal="true"
         style="@style/WhiteButton"
         android:padding="5dp"
@@ -31,7 +31,7 @@
         android:text="Получить доступ"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
+        android:id="@+id/GetAccessBut"
         style="@style/WhiteButton"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
@@ -42,12 +42,12 @@
         android:text="Попробовать базу"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/button3"
+        android:id="@+id/TryBaseBut"
         android:gravity="center_vertical|center_horizontal|center"
         style="@style/WhiteButton"
         android:padding="5dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2"/>
+        android:layout_below="@+id/GetAccessBut"
+        android:layout_alignLeft="@+id/GetAccessBut"
+        android:layout_alignStart="@+id/GetAccessBut"/>
 </RelativeLayout>
