@@ -414,7 +414,7 @@ public class getMyObject {
     }
 
     /**
-     * 
+     *
      * @param foto
      *     The foto
      */
@@ -423,7 +423,7 @@ public class getMyObject {
     }
 
     /**
-     * 
+     *
      * @return
      *     The phone
      */

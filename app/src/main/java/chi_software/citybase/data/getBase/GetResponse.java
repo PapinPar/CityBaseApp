@@ -14,12 +14,12 @@ public class GetResponse {
     @SerializedName("lastpage")
     @Expose
     private String lastpage;
-    @SerializedName("countphone")
-    @Expose
-    private List<Countphone> countphone = new ArrayList<Countphone>();
-    @SerializedName("address_count")
-    @Expose
-    private List<AddressCount> addressCount = new ArrayList<AddressCount>();
+    //@SerializedName("countphone")
+    //@Expose
+    //private List<Countphone> countphone = new ArrayList<Countphone>();
+    //@SerializedName("address_count")
+    //@Expose
+    //private List<AddressCount> addressCount = new ArrayList<AddressCount>();
 
     /**
      * 
@@ -62,35 +62,5 @@ public class GetResponse {
      * @return
      *     The countphone
      */
-    public List<Countphone> getCountphone() {
-        return countphone;
-    }
-
-    /**
-     * 
-     * @param countphone
-     *     The countphone
-     */
-    public void setCountphone(List<Countphone> countphone) {
-        this.countphone = countphone;
-    }
-
-    /**
-     * 
-     * @return
-     *     The addressCount
-     */
-    public List<AddressCount> getAddressCount() {
-        return addressCount;
-    }
-
-    /**
-     * 
-     * @param addressCount
-     *     The address_count
-     */
-    public void setAddressCount(List<AddressCount> addressCount) {
-        this.addressCount = addressCount;
-    }
 
 }

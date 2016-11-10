@@ -3,14 +3,22 @@ package chi_software.citybase.retrofit;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.v4.util.ArrayMap;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
+import chi_software.citybase.data.BaseGetPhoto;
+import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.login.LoginResponse;
 import retrofit2.Response;
 
@@ -90,5 +98,61 @@ public class ConnectionManager implements Net {
                 }
             }
         });
+    }
+
+    @Override
+    public void searchMenu (@NonNull String uid, @NonNull String key, @NonNull String city, @NonNull String table) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+            }
+        });
+    }
+
+    @Override
+    public void getBase (final String search, final String city, final String table, final String uid, final String key) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<BaseGet> response = RestApiWrapper.getInstanse().getBase(search, city, table, uid, key);
+                    BaseGet baseGet = response.body();
+                    Map s = getModel(baseGet);
+                    BaseGetPhoto photoResponse = new BaseGetPhoto(baseGet, s);
+                    if ( baseGet.getGetResponse() != null ) {
+                        notifySuccessSubscribers(GET_BASE, photoResponse);
+                    } else notifyErrorSubscribers(GET_BASE, "ERROR");
+
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private Map getModel (BaseGet baseGet) {
+        Map<String, List<String>> keys = new ArrayMap<>();
+
+        keys.clear();
+        for ( int i = 0 ; i < baseGet.getGetResponse().getGetMyObjects().size() ; i++ ) {
+            String s = baseGet.getGetResponse().getGetMyObjects().get(i).getFoto();
+            try {
+                JSONObject object = new JSONObject(s);
+                Iterator iter = object.keys();
+                List<String> values = new ArrayList<>();
+                while ( iter.hasNext() ) {
+                    String key = (String) iter.next();
+                    String value = object.getString(key);
+                    values.add(value);
+                }
+                if ( values.size() > 0 ) {
+                    keys.put(baseGet.getGetResponse().getGetMyObjects().get(i).getId(), values);
+                }
+            } catch ( JSONException e ) {
+                e.printStackTrace();
+            }
+        }
+        return keys;
     }
 }
