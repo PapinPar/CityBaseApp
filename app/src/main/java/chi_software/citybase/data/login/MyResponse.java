@@ -11,7 +11,7 @@ public class MyResponse {
     @SerializedName("key")
     @Expose
     private String key;
-    @SerializedName("time")
+    @SerializedName("type")
     @Expose
     private String time;
     @SerializedName("active")

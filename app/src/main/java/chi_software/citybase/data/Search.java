@@ -15,7 +15,7 @@ public class Search {
     @SerializedName("typedate")
     @Expose
     private String typedate;
-    @SerializedName("time")
+    @SerializedName("type")
     @Expose
     private String time;
     @SerializedName("datefrom")

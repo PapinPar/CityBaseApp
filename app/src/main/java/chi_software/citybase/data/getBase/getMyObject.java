@@ -479,7 +479,7 @@ public class getMyObject {
     /**
      * 
      * @return
-     *     The time
+     *     The type
      */
     public String getTime() {
         return time;
@@ -488,7 +488,7 @@ public class getMyObject {
     /**
      * 
      * @param time
-     *     The time
+     *     The type
      */
     public void setTime(String time) {
         this.time = time;
