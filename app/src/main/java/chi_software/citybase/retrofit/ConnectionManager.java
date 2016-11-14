@@ -17,9 +17,10 @@ import java.util.concurrent.Executor;
 
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
-import chi_software.citybase.data.BaseGetPhoto;
+import chi_software.citybase.data.BaseResponse;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.login.LoginResponse;
+import chi_software.citybase.data.menuSearch.MenuSearch;
 import retrofit2.Response;
 
 /**
@@ -101,10 +102,20 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void searchMenu (@NonNull String uid, @NonNull String key, @NonNull String city, @NonNull String table) {
+    public void searchMenu (@NonNull final String city, @NonNull final String table, @NonNull final String uid, @NonNull final String key) {
         executor.execute(new Runnable() {
             @Override
             public void run () {
+                try {
+                    Response<MenuSearch> response = RestApiWrapper.getInstanse().searchMenu(city, table, uid, key);
+                    MenuSearch menuSearch = response.body();
+                    if ( menuSearch != null )
+                        notifySuccessSubscribers(MENU_SEARC, menuSearch);
+                    else
+                        notifyErrorSubscribers(MENU_SEARC, "ERROR");
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -118,7 +129,7 @@ public class ConnectionManager implements Net {
                     Response<BaseGet> response = RestApiWrapper.getInstanse().getBase(search, city, table, uid, key);
                     BaseGet baseGet = response.body();
                     Map s = getModel(baseGet);
-                    BaseGetPhoto photoResponse = new BaseGetPhoto(baseGet, s);
+                    BaseResponse photoResponse = new BaseResponse(baseGet, s);
                     if ( baseGet.getGetResponse() != null ) {
                         notifySuccessSubscribers(GET_BASE, photoResponse);
                     } else notifyErrorSubscribers(GET_BASE, "ERROR");
@@ -135,8 +146,8 @@ public class ConnectionManager implements Net {
         Map<String, List<String>> keys = new ArrayMap<>();
 
         keys.clear();
-        for ( int i = 0 ; i < baseGet.getGetResponse().getGetMyObjects().size() ; i++ ) {
-            String s = baseGet.getGetResponse().getGetMyObjects().get(i).getFoto();
+        for ( int i = 0 ; i < baseGet.getGetResponse().getModel().size() ; i++ ) {
+            String s = baseGet.getGetResponse().getModel().get(i).getFoto();
             try {
                 JSONObject object = new JSONObject(s);
                 Iterator iter = object.keys();
@@ -147,7 +158,7 @@ public class ConnectionManager implements Net {
                     values.add(value);
                 }
                 if ( values.size() > 0 ) {
-                    keys.put(baseGet.getGetResponse().getGetMyObjects().get(i).getId(), values);
+                    keys.put(baseGet.getGetResponse().getModel().get(i).getId(), values);
                 }
             } catch ( JSONException e ) {
                 e.printStackTrace();

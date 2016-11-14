@@ -12,18 +12,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import chi_software.citybase.R;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
-import chi_software.citybase.data.BaseGetPhoto;
-import chi_software.citybase.data.ObjectModel;
+import chi_software.citybase.data.BaseResponse;
+import chi_software.citybase.data.ModelData;
+import chi_software.citybase.data.menuSearch.MenuSearch;
 import chi_software.citybase.ui.adapter.MyAdapter;
+import chi_software.citybase.ui.dialog.SearchDialog;
 
 public class MainScreen extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,SearchDialog.GetSpinnerListner {
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -33,29 +37,38 @@ public class MainScreen extends BaseActivity
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private MyAdapter adapter;
-    private List<ObjectModel> objectModelList = new ArrayList<>();
+    private List<ModelData> modelDataList = new ArrayList<>();
+    private SearchDialog searchDialog;
+    private MenuSearch myMenu;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         navigationInitial();
+        searchDialog = new SearchDialog();
         findBut = (Button) findViewById(R.id.findButton);
         findBut.setOnClickListener(this);
+        findBut.setClickable(false);
+        findBut.setAlpha((float) 0.4);
         recyclerView = (RecyclerView) findViewById(R.id.MyRecycle);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new MyAdapter(objectModelList);
+        adapter = new MyAdapter(modelDataList);
         recyclerView.setAdapter(adapter);
+
 
         recyclerView.setLayoutManager(layoutManager);
 
         app.getNet().getBase("", "_Kharkov", "rent_living", "4698", "05d7762e5ac636443a36a2cd6160111c6877f03f");
+        app.getNet().searchMenu("_Kharkov", "rent_living", "4698", "05d7762e5ac636443a36a2cd6160111c6877f03f");
     }
 
     @Override
     public void onClick (View v) {
         switch ( v.getId() ) {
             case R.id.findButton:
+                searchDialog.getListner(this,myMenu);
+                searchDialog.show(getFragmentManager(),"Поиск");
                 break;
         }
     }
@@ -67,33 +80,44 @@ public class MainScreen extends BaseActivity
             case Net.GET_BASE:
                 filldata(NetObjects);
                 break;
+            case Net.MENU_SEARC:
+                fillsearch((MenuSearch) NetObjects);
         }
     }
 
+    private void fillsearch (MenuSearch netObjects) {
+        myMenu = netObjects;
+        findBut.setClickable(true);
+        findBut.setAlpha(1);
+
+    }
+
     private void filldata (Object netObjects) {
-        BaseGetPhoto s = (BaseGetPhoto) netObjects;
+        BaseResponse baseResponse = (BaseResponse) netObjects;
         String url = "http://api.citybase.in.ua/api/img/";
         ArrayList list = new ArrayList();
         String info;
-        for ( int i = 0 ; i < s.getBaseGet().getGetResponse().getGetMyObjects().size() ; i++ ) {
-            String id = s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getId();
-            if ( s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getAdminRegion().length() > 1 )
-                info = s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getAdminRegion();
-            else if ( s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getPlace().length() > 1 )
-                info = s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getPlace();
-            else info = s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getCity();
-            if ( s.getMap().containsKey(id) ) {
-                list = (ArrayList) s.getMap().get(id);
-                objectModelList.add(new ObjectModel(s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getPrice(),
+        for ( int i = 0 ; i < baseResponse.getBaseGet().getGetResponse().getModel().size() ; i++ ) {
+            String id = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId();
+            if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1 )
+                info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
+            else if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1 )
+                info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
+            else info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
+            if ( baseResponse.getMap().containsKey(id) ) {
+                list = (ArrayList) baseResponse.getMap().get(id);
+                modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(),
                         info,
-                        s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getDateUp(),
-                        s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getType(),
+                        baseResponse.getBaseGet().getGetResponse().getModel().get(i).getDateUp(),
+                        baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(),
+                        baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(),
                         url + list.get(0)));
             } else
-                objectModelList.add(new ObjectModel(s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getPrice(),
+                modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(),
                         info,
-                        s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getDateUp(),
-                        s.getBaseGet().getGetResponse().getGetMyObjects().get(i).getType(),
+                        baseResponse.getBaseGet().getGetResponse().getModel().get(i).getDateUp(),
+                        baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(),
+                        baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(),
                         null));
         }
         adapter.notifyDataSetChanged();
@@ -146,5 +170,10 @@ public class MainScreen extends BaseActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void getSpinner (Gson gson) {
+
     }
 }

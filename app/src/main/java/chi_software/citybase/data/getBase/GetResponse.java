@@ -21,46 +21,19 @@ public class GetResponse {
     //@Expose
     //private List<AddressCount> addressCount = new ArrayList<AddressCount>();
 
-    /**
-     * 
-     * @return
-     *     The objects
-     */
-    public List<getMyObject> getGetMyObjects () {
+    public List<getMyObject> getModel () {
         return getMyObjects;
     }
 
-    /**
-     * 
-     * @param getMyObjects
-     *     The objects
-     */
     public void setGetMyObjects (List<getMyObject> getMyObjects) {
         this.getMyObjects = getMyObjects;
     }
 
-    /**
-     * 
-     * @return
-     *     The lastpage
-     */
-    public String getLastpage() {
+    public String getLastpage () {
         return lastpage;
     }
 
-    /**
-     * 
-     * @param lastpage
-     *     The lastpage
-     */
-    public void setLastpage(String lastpage) {
+    public void setLastpage (String lastpage) {
         this.lastpage = lastpage;
     }
-
-    /**
-     * 
-     * @return
-     *     The countphone
-     */
-
 }

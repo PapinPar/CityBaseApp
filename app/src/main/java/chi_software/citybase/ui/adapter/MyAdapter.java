@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import chi_software.citybase.R;
-import chi_software.citybase.data.ObjectModel;
+import chi_software.citybase.data.ModelData;
 
 /**
  * Created by Papin on 11.11.2016.
@@ -21,7 +21,7 @@ import chi_software.citybase.data.ObjectModel;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
 
-    private List<ObjectModel> developersInfoList;
+    private List<ModelData> developersInfoList;
 
     public static class DevViewHolder extends RecyclerView.ViewHolder {
         private TextView adminArea;
@@ -30,6 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         private TextView price;
         private Context myParent;
         private ImageView image;
+        private TextView info;
 
         DevViewHolder (View itemView) {
             super(itemView);
@@ -38,11 +39,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
             data = (TextView) itemView.findViewById(R.id.twData);
             price = (TextView) itemView.findViewById(R.id.twPrice);
             myParent = itemView.getContext();
-            image = (ImageView) itemView.findViewById(R.id.objectImage);
+            image = (ImageView) itemView.findViewById(R.id.modelImage);
+            info = (TextView) itemView.findViewById(R.id.twInfo);
         }
     }
 
-    public MyAdapter (List<ObjectModel> developersInfoList) {
+    public MyAdapter (List<ModelData> developersInfoList) {
         this.developersInfoList = developersInfoList;
     }
 
@@ -64,7 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         } else holder.data.setVisibility(View.INVISIBLE);
         if ( developersInfoList.get(i).price != null )
             holder.price.setText(developersInfoList.get(i).price + "грн");
-        else holder.price.setVisibility(View.INVISIBLE);
+        else holder.price.setText("?грн");
         if ( developersInfoList.get(i).type.length() > 0 )
             holder.type.setText(developersInfoList.get(i).type);
         else
@@ -73,11 +75,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
             Picasso.with(holder.myParent)
                     .load(developersInfoList.get(i).url).centerInside()
                     .resize(120, 120)
-                    .placeholder(R.drawable.loading)
-                    .error(R.drawable.no_photo).into(holder.image);
+                    .error(R.drawable.no_photo)
+                    .into(holder.image);
         else
             holder.image.setImageResource(R.drawable.no_photo);
+        String info;
+        if ( developersInfoList.get(i).info.length() > 110 ) {
+            info = developersInfoList.get(i).info.substring(0, 110);
+        } else info = developersInfoList.get(i).info;
 
+        info = info + "...";
+        info = info.trim();
+        holder.info.setText(info);
     }
 
     @Override

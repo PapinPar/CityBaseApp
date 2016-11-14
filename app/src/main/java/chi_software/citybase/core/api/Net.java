@@ -21,7 +21,7 @@ public interface Net extends Subject<NetSubscriber> {
     void login (@NonNull String login, @NonNull String password);
 
     //************** SEARCH ************
-    void searchMenu (@NonNull String uid, @NonNull String key, @NonNull String city, @NonNull String table);
+    void searchMenu (@NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
     void getBase (String search, String city,String table, String uid, String key);
 
 }
