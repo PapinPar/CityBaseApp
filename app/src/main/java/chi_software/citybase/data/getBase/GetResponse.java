@@ -3,14 +3,15 @@ package chi_software.citybase.data.getBase;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetResponse {
+public class GetResponse implements Serializable {
 
     @SerializedName("objects")
     @Expose
-    private List<getMyObject> getMyObjects = new ArrayList<getMyObject>();
+    private List<MyObject> MyObjects = new ArrayList<MyObject>();
     @SerializedName("lastpage")
     @Expose
     private String lastpage;
@@ -21,12 +22,12 @@ public class GetResponse {
     //@Expose
     //private List<AddressCount> addressCount = new ArrayList<AddressCount>();
 
-    public List<getMyObject> getModel () {
-        return getMyObjects;
+    public List<MyObject> getModel () {
+        return MyObjects;
     }
 
-    public void setGetMyObjects (List<getMyObject> getMyObjects) {
-        this.getMyObjects = getMyObjects;
+    public void setMyObjects (List<MyObject> myObjects) {
+        this.MyObjects = myObjects;
     }
 
     public String getLastpage () {

@@ -1,5 +1,6 @@
 package chi_software.citybase.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,8 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.gson.Gson;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +22,14 @@ import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.BaseResponse;
 import chi_software.citybase.data.ModelData;
+import chi_software.citybase.data.getBase.MyObject;
 import chi_software.citybase.data.menuSearch.MenuSearch;
 import chi_software.citybase.ui.adapter.MyAdapter;
 import chi_software.citybase.ui.dialog.SearchDialog;
+import chi_software.citybase.ui.pager.PagerViwer;
 
 public class MainScreen extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,SearchDialog.GetSpinnerListner {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchDialog.GetSpinnerListner, MyAdapter.photoListner {
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -40,6 +42,7 @@ public class MainScreen extends BaseActivity
     private List<ModelData> modelDataList = new ArrayList<>();
     private SearchDialog searchDialog;
     private MenuSearch myMenu;
+    private BaseResponse baseResponse;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -53,9 +56,8 @@ public class MainScreen extends BaseActivity
         findBut.setAlpha((float) 0.4);
         recyclerView = (RecyclerView) findViewById(R.id.MyRecycle);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new MyAdapter(modelDataList);
+        adapter = new MyAdapter(modelDataList, this);
         recyclerView.setAdapter(adapter);
-
 
         recyclerView.setLayoutManager(layoutManager);
 
@@ -67,10 +69,28 @@ public class MainScreen extends BaseActivity
     public void onClick (View v) {
         switch ( v.getId() ) {
             case R.id.findButton:
-                searchDialog.getListner(this,myMenu);
-                searchDialog.show(getFragmentManager(),"Поиск");
+                searchDialog.getListner(this, myMenu);
+                searchDialog.show(getFragmentManager(), "Поиск");
                 break;
         }
+    }
+
+    @Override
+    public void getPhotoId (String id,int position) {
+        String url = "http://api.citybase.in.ua/api/img/";
+        ArrayList list = new ArrayList();
+        if ( baseResponse.getMap().containsKey(id) )
+            list = (ArrayList) baseResponse.getMap().get(id);
+        ArrayList<String> urlList = new ArrayList<>();
+        for(int i=0;i<list.size();i++)
+            urlList.add(url+list.get(i));
+        Intent s = new Intent(MainScreen.this, PagerViwer.class);
+        s.putExtra("position", position);
+        s.putExtra("size", urlList.size());
+        s.putStringArrayListExtra("test", (ArrayList<String>) urlList);
+        List<MyObject> baseGets = baseResponse.getBaseGet().getGetResponse().getModel();
+        s.putExtra("model", (Serializable) baseGets);
+        startActivity(s);
     }
 
     @Override
@@ -85,15 +105,20 @@ public class MainScreen extends BaseActivity
         }
     }
 
+    @Override
+    public void getSpinner (String search) {
+        app.getNet().getBase(search, "_Kharkov", "rent_living", "4698", "05d7762e5ac636443a36a2cd6160111c6877f03f");
+    }
+
     private void fillsearch (MenuSearch netObjects) {
         myMenu = netObjects;
         findBut.setClickable(true);
         findBut.setAlpha(1);
-
     }
 
     private void filldata (Object netObjects) {
-        BaseResponse baseResponse = (BaseResponse) netObjects;
+        modelDataList.clear();
+        baseResponse = (BaseResponse) netObjects;
         String url = "http://api.citybase.in.ua/api/img/";
         ArrayList list = new ArrayList();
         String info;
@@ -111,6 +136,7 @@ public class MainScreen extends BaseActivity
                         baseResponse.getBaseGet().getGetResponse().getModel().get(i).getDateUp(),
                         baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(),
                         baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(),
+                        baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(),
                         url + list.get(0)));
             } else
                 modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(),
@@ -118,6 +144,7 @@ public class MainScreen extends BaseActivity
                         baseResponse.getBaseGet().getGetResponse().getModel().get(i).getDateUp(),
                         baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(),
                         baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(),
+                        baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(),
                         null));
         }
         adapter.notifyDataSetChanged();
@@ -170,10 +197,5 @@ public class MainScreen extends BaseActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public void getSpinner (Gson gson) {
-
     }
 }

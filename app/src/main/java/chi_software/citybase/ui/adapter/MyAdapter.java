@@ -21,6 +21,11 @@ import chi_software.citybase.data.ModelData;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
 
+    public interface photoListner{
+        void getPhotoId (String id,int position);
+    }
+
+    photoListner photoListner;
     private List<ModelData> developersInfoList;
 
     public static class DevViewHolder extends RecyclerView.ViewHolder {
@@ -44,8 +49,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         }
     }
 
-    public MyAdapter (List<ModelData> developersInfoList) {
+    public MyAdapter (List<ModelData> developersInfoList,photoListner photoListner) {
         this.developersInfoList = developersInfoList;
+        this.photoListner = photoListner;
     }
 
     @Override
@@ -57,7 +63,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder (DevViewHolder holder, int i) {
+    public void onBindViewHolder (DevViewHolder holder, final int i) {
         if ( developersInfoList.get(i).AdminArea.length() > 1 ) {
             holder.adminArea.setText(developersInfoList.get(i).AdminArea);
         } else holder.adminArea.setVisibility(View.INVISIBLE);
@@ -84,6 +90,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
             info = developersInfoList.get(i).info.substring(0, 110);
         } else info = developersInfoList.get(i).info;
 
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                photoListner.getPhotoId(developersInfoList.get(i).id,i);
+            }
+        });
         info = info + "...";
         info = info.trim();
         holder.info.setText(info);

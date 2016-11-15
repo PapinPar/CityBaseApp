@@ -4,8 +4,9 @@ package chi_software.citybase.data.getBase;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class getMyObject {
+public class MyObject  implements Serializable {
 
     @SerializedName("id")
     @Expose

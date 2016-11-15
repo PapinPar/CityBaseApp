@@ -11,13 +11,15 @@ public class ModelData {
     public String price;
     public String url;
     public String info;
+    public String id;
 
-    public ModelData (String price, String AdminArea, String data, String type, String info, String url) {
+    public ModelData (String price, String AdminArea, String data, String type, String info, String id, String url) {
         this.AdminArea = AdminArea;
         this.price = price;
         this.data = data;
         this.url = url;
         this.type = type;
+        this.id = id;
         this.info = info;
     }
 }

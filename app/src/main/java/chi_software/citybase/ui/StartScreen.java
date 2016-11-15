@@ -23,13 +23,6 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.start_screen_layout);
         signInBut = (Button) findViewById(R.id.SignInBut);
         signInBut.setOnClickListener(this);
-
-        /*
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        Log.i("GSON", gson.toJson(search));
-        */
-
     }
 
     @Override

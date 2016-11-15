@@ -15,12 +15,12 @@ public class Search {
     @SerializedName("typedate")
     @Expose
     private String typedate;
-    @SerializedName("type")
+    @SerializedName("time")
     @Expose
     private String time;
     @SerializedName("datefrom")
     @Expose
-    private Date datefrom;
+    private String datefrom;
     @SerializedName("dateto")
     @Expose
     private Date dateto;
@@ -63,6 +63,44 @@ public class Search {
     @SerializedName("fill")
     @Expose
     private List<String> fill = new ArrayList<String>();
+    @SerializedName("type")
+    @Expose
+    private List<String> type = new ArrayList<String>();
+    @SerializedName("pricefrom")
+    @Expose
+    private String pricefrom;
+    @SerializedName("priceto")
+    @Expose
+    private String priceto;
+
+
+
+
+    // ****************************************************************
+
+    public String getPricefrom () {
+        return pricefrom;
+    }
+
+    public void setPricefrom (String pricefrom) {
+        this.pricefrom = pricefrom;
+    }
+
+    public String getPriceto () {
+        return priceto;
+    }
+
+    public void setPriceto (String priceto) {
+        this.priceto = priceto;
+    }
+
+    public List<String> getTypes () {
+        return type;
+    }
+
+    public void setTypes (List<String> types) {
+        this.type = types;
+    }
 
     public List<String> getAdmin_region () {
         return admin_region;
@@ -104,11 +142,11 @@ public class Search {
         this.comment = comment;
     }
 
-    public Date getDatefrom () {
+    public String getDatefrom () {
         return datefrom;
     }
 
-    public void setDatefrom (Date datefrom) {
+    public void setDatefrom (String datefrom) {
         this.datefrom = datefrom;
     }
 
