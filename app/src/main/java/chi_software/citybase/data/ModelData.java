@@ -12,14 +12,18 @@ public class ModelData {
     public String url;
     public String info;
     public String id;
+    public String color;
+    public String table;
 
-    public ModelData (String price, String AdminArea, String data, String type, String info, String id, String url) {
+    public ModelData (String price, String AdminArea, String data, String type, String info, String id, Object color, String url,String table) {
         this.AdminArea = AdminArea;
         this.price = price;
         this.data = data;
         this.url = url;
         this.type = type;
         this.id = id;
+        this.color = (String) color;
         this.info = info;
+        this.table = table;
     }
 }

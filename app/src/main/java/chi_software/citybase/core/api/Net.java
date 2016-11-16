@@ -16,6 +16,7 @@ public interface Net extends Subject<NetSubscriber> {
     int SIGN_IN = 101;
     int GET_BASE = 102;
     int MENU_SEARC = 103;
+    int SET_COLOR = 104;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
@@ -23,5 +24,9 @@ public interface Net extends Subject<NetSubscriber> {
     //************** SEARCH ************
     void searchMenu (@NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
     void getBase (String search, String city,String table, String uid, String key);
+
+    // ********* SET COLOR ***************
+    void setColor(@NonNull String uid,@NonNull String key, @NonNull String city, @NonNull String table,
+                  @NonNull String objId, @NonNull String field, @NonNull Integer color);
 
 }

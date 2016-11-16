@@ -9,4 +9,11 @@
     <color name="priceColor">#F29200</color>
     <color name="background">#cccccc</color>
     <color name="black">#000000</color>
+
+    <color name="backGreen">#A5D6A7</color>
+    <color name="backRed">#FFCDD2</color>
+    <color name="backYellow">#FFF9c4</color>
+    <color name="backWhite">#ffffff</color>
+
+
 </resources>

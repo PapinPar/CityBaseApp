@@ -18,6 +18,7 @@ import java.util.concurrent.Executor;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
 import chi_software.citybase.data.BaseResponse;
+import chi_software.citybase.data.ColorSelect;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
@@ -142,26 +143,42 @@ public class ConnectionManager implements Net {
 
     }
 
+    @Override
+    public void setColor (@NonNull final String uid, @NonNull final String key, @NonNull final String city, @NonNull final String table, @NonNull final String objId, @NonNull final String field, @NonNull final Integer color) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<ColorSelect> response = RestApiWrapper.getInstanse().setColor(uid, key, city, table, objId, field, color);
+                    notifySuccessSubscribers(SET_COLOR, "OK");
+                }catch ( IOException e )
+                {e.printStackTrace();}
+            }
+        });
+    }
+
     private Map getModel (BaseGet baseGet) {
         Map<String, List<String>> keys = new ArrayMap<>();
 
         keys.clear();
         for ( int i = 0 ; i < baseGet.getGetResponse().getModel().size() ; i++ ) {
             String s = baseGet.getGetResponse().getModel().get(i).getFoto();
-            try {
-                JSONObject object = new JSONObject(s);
-                Iterator iter = object.keys();
-                List<String> values = new ArrayList<>();
-                while ( iter.hasNext() ) {
-                    String key = (String) iter.next();
-                    String value = object.getString(key);
-                    values.add(value);
+            if ( s != null ) {
+                try {
+                    JSONObject object = new JSONObject(s);
+                    Iterator iter = object.keys();
+                    List<String> values = new ArrayList<>();
+                    while ( iter.hasNext() ) {
+                        String key = (String) iter.next();
+                        String value = object.getString(key);
+                        values.add(value);
+                    }
+                    if ( values.size() > 0 ) {
+                        keys.put(baseGet.getGetResponse().getModel().get(i).getId(), values);
+                    }
+                } catch ( JSONException e ) {
+                    e.printStackTrace();
                 }
-                if ( values.size() > 0 ) {
-                    keys.put(baseGet.getGetResponse().getModel().get(i).getId(), values);
-                }
-            } catch ( JSONException e ) {
-                e.printStackTrace();
             }
         }
         return keys;

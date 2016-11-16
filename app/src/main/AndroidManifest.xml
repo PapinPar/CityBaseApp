@@ -27,7 +27,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.LoginSrcreen"/>
         <activity
-            android:name=".ui.pager.PagerViwer">
+            android:name=".ui.pager.PagerViwer"
+            android:theme="@style/AppTheme">
         </activity>
 
     </application>
