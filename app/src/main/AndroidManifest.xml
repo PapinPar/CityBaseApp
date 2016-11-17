@@ -30,6 +30,9 @@
             android:name=".ui.pager.PagerViwer"
             android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".ui.RegistrationActivity">
+        </activity>
 
     </application>
 

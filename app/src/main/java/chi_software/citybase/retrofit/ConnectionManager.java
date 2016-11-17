@@ -18,11 +18,12 @@ import java.util.concurrent.Executor;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
 import chi_software.citybase.data.BaseResponse;
-import chi_software.citybase.data.ColorSelect;
+import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
 import retrofit2.Response;
+
 
 /**
  * Created by Papin on 08.11.2016.
@@ -81,6 +82,8 @@ public class ConnectionManager implements Net {
         }
     }
 
+
+    // ************ AUTH *************
     @Override
     public void login (@NonNull final String login, @NonNull final String password) {
         executor.execute(new Runnable() {
@@ -102,6 +105,42 @@ public class ConnectionManager implements Net {
         });
     }
 
+    @Override
+    public void registration (@NonNull final String phone, @NonNull final String pass, @NonNull final String name) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().registration(phone, pass, name);
+                    FieldResponse body = response.body();
+
+                    if ( body.getServerResponse() != null )
+                        notifySuccessSubscribers(REGISTRATION, body.getServerResponse().toString());
+                    else
+                        notifyErrorSubscribers(REGISTRATION, "ERROR");
+                } catch ( IOException e ) {
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void ActivateAcount (@NonNull final String uid, @NonNull final String key, @NonNull final String code) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().activateAcount(uid, key, code);
+                    FieldResponse serverResponse = response.body();
+                    if(serverResponse.getServerResponse()!=null)
+                        notifySuccessSubscribers(ACTIVATE_ACOUNT, serverResponse);
+                }catch ( IOException e ){}
+            }
+        });
+    }
+
+    // ************ SEARCH ***************
     @Override
     public void searchMenu (@NonNull final String city, @NonNull final String table, @NonNull final String uid, @NonNull final String key) {
         executor.execute(new Runnable() {
@@ -133,7 +172,8 @@ public class ConnectionManager implements Net {
                     BaseResponse photoResponse = new BaseResponse(baseGet, s);
                     if ( baseGet.getGetResponse() != null ) {
                         notifySuccessSubscribers(GET_BASE, photoResponse);
-                    } else notifyErrorSubscribers(GET_BASE, "ERROR");
+                    } else
+                        notifyErrorSubscribers(GET_BASE, "ERROR");
 
                 } catch ( IOException e ) {
                     e.printStackTrace();
@@ -143,20 +183,60 @@ public class ConnectionManager implements Net {
 
     }
 
+
+
+    // ********************** SMS *************
+
+
+    @Override
+    public void sendSms (@NonNull final String uid, @NonNull final String key) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().sendSMS(uid, key);
+                    FieldResponse serverResponse = response.body();
+                    if ( serverResponse.getServerResponse()!=null )
+                        notifySuccessSubscribers(SEND_SMS,serverResponse);
+                    else
+                        notifyErrorSubscribers(SEND_SMS,"ERROR");
+                }catch ( IOException e ){}
+            }
+        });
+    }
+
+    // *************** EDIT FIELD ****************
     @Override
     public void setColor (@NonNull final String uid, @NonNull final String key, @NonNull final String city, @NonNull final String table, @NonNull final String objId, @NonNull final String field, @NonNull final Integer color) {
         executor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
-                    Response<ColorSelect> response = RestApiWrapper.getInstanse().setColor(uid, key, city, table, objId, field, color);
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().setColor(uid, key, city, table, objId, field, color);
                     notifySuccessSubscribers(SET_COLOR, "OK");
-                }catch ( IOException e )
-                {e.printStackTrace();}
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
+    @Override
+    public void setComment (@NonNull final String uid, @NonNull final String key, @NonNull final String city, @NonNull final String table, @NonNull final String objId, @NonNull final String field, @NonNull final String comment) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().setComment(uid, key, city, table, objId, field, comment);
+                    notifySuccessSubscribers(SET_COMMENT, "OK");
+                } catch ( IOException e ) {
+                }
+            }
+        });
+    }
+
+
+    // ************ HEPLERS METHODS ************
     private Map getModel (BaseGet baseGet) {
         Map<String, List<String>> keys = new ArrayMap<>();
 

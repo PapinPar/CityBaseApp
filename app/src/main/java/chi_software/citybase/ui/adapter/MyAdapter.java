@@ -125,9 +125,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
                 holder.backgroundColor.setImageResource(R.color.backYellow);
             if ( developersInfoList.get(i).color.equals("3") )
                 holder.backgroundColor.setImageResource(R.color.backRed);
-            if ( developersInfoList.get(i).color.equals(""))
+            if ( developersInfoList.get(i).color.equals("0") )
                 holder.backgroundColor.setImageResource(R.color.backWhite);
-        }
+        } else
+            holder.backgroundColor.setImageResource(R.color.backWhite);
     }
 
     @Override

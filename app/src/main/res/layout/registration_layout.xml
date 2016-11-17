@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@drawable/font_city">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/phoneReg"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextColor="@color/colorGreen"
+            app:met_floatingLabelTextSize="18dp"
+            app:met_primaryColor="@color/colorGreen"
+            app:met_textColor="@android:color/black"
+            app:met_textColorHint="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="Логин / email / номер телефона"
+            android:inputType="textEmailAddress"
+            android:selectAllOnFocus="true"
+            android:visibility="visible"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/passwordReg"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextColor="@color/colorGreen"
+            app:met_floatingLabelTextSize="18dp"
+            app:met_primaryColor="@color/colorGreen"
+            app:met_textColor="@android:color/black"
+            app:met_textColorHint="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="Пароль"
+            android:inputType="textPassword"
+            android:visibility="visible"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/nameReg"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextColor="@color/colorGreen"
+            app:met_floatingLabelTextSize="18dp"
+            app:met_primaryColor="@color/colorGreen"
+            app:met_textColor="@android:color/black"
+            app:met_textColorHint="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="Имя"
+            android:inputType="textAutoComplete"
+            android:visibility="visible"/>
+
+        <Button
+            android:id="@+id/butOkReg"
+            style="@style/WhiteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:text="Зарегистрироваться"
+            android:textColor="@android:color/black"/>
+    </LinearLayout>
+
+</RelativeLayout>
