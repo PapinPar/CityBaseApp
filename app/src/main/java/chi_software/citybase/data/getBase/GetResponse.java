@@ -15,6 +15,9 @@ public class GetResponse implements Serializable {
     @SerializedName("lastpage")
     @Expose
     private String lastpage;
+    @SerializedName("obj")
+    @Expose
+    private List<MyObject> TrialObjects = new ArrayList<>();
     //@SerializedName("countphone")
     //@Expose
     //private List<Countphone> countphone = new ArrayList<Countphone>();
@@ -36,5 +39,13 @@ public class GetResponse implements Serializable {
 
     public void setLastpage (String lastpage) {
         this.lastpage = lastpage;
+    }
+
+    public List<MyObject> getTrialObjects () {
+        return TrialObjects;
+    }
+
+    public void setTrialObjects (List<MyObject> trialObjects) {
+        TrialObjects = trialObjects;
     }
 }

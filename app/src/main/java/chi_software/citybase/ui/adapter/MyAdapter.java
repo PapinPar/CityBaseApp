@@ -88,7 +88,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         if ( developersInfoList.get(i).price != null )
             holder.price.setText(developersInfoList.get(i).price + " " + currency);
         else
-            holder.price.setText("?грн");
+            holder.price.setText("?"+currency);
         // Сроки
         if ( developersInfoList.get(i).type.length() > 0 )
             holder.type.setText(developersInfoList.get(i).type);

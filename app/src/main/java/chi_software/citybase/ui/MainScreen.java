@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -45,13 +46,13 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     private MenuSearch myMenu;
     private BaseResponse baseResponse;
     private SpotsDialog dialog;
-    private String table, _key, _id;
+    private String table, _key, _id,search;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
+        search = "";
         _key = getIntent().getStringExtra("_key");
         _id = getIntent().getStringExtra("_id");
         table = "rent_living";
@@ -73,7 +74,8 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     private void apiCalls () {
-        app.getNet().getBase("", "_Kharkov", table, _id, _key);
+        Log.d("PAPIN_TAG","search"+search);
+        app.getNet().getBase(search, "_Kharkov", table, _id, _key);
         app.getNet().searchMenu("_Kharkov", table, _id, _key);
         dialog.show();
         dialog.setCancelable(false);
@@ -126,7 +128,8 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     @Override
-    public void getSpinner (String search) {
+    public void getSpinner (String json) {
+        search = json;
         modelDataList.clear();
         adapter.notifyDataSetChanged();
         app.getNet().getBase(search, "_Kharkov", "rent_living", _id, _key);
@@ -183,18 +186,22 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         switch ( item.getItemId() ) {
             case R.id.arenda:
                 table = "rent_living";
+                search = "";
                 apiCalls();
                 break;
             case R.id.sell:
                 table = "sale_living";
+                search = "";
                 apiCalls();
                 break;
             case R.id.arendaComer:
                 table = "rent_not_living";
+                search = "";
                 apiCalls();
                 break;
             case R.id.sellComer:
                 table = "sale_not_living";
+                search = "";
                 apiCalls();
                 break;
             case R.id.myProfile:

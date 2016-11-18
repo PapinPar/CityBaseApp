@@ -183,7 +183,25 @@ public class ConnectionManager implements Net {
 
     }
 
+    @Override
+    public void tryBase (@NonNull final String city, @NonNull final String table, @NonNull final String ruscity, @NonNull final String type, @NonNull final String place, @NonNull final String basetype, @NonNull final String basetype2) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<BaseGet> response = RestApiWrapper.getInstanse().getTrialBase(city, table, ruscity, type, place, basetype, basetype2);
+                    BaseGet baseGet = response.body();
+                    if ( baseGet.getGetResponse() != null ) {
+                        notifySuccessSubscribers(TRIAL_BASE, baseGet);
+                    } else
+                        notifyErrorSubscribers(TRIAL_BASE, "ERROR");
 
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     // ********************** SMS *************
 

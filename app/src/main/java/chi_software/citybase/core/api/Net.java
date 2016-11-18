@@ -10,8 +10,7 @@ import chi_software.citybase.core.observer.Subject;
  * Created by Papin on 08.11.2016.
  */
 public interface Net extends Subject<NetSubscriber> {
-    @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR,SET_COMMENT,
-            REGISTRATION,SEND_SMS,ACTIVATE_ACOUNT})
+    @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION, SEND_SMS, ACTIVATE_ACOUNT,TRIAL_BASE })
     @interface NetEvent {}
 
 
@@ -23,6 +22,7 @@ public interface Net extends Subject<NetSubscriber> {
     int REGISTRATION = 106;
     int SEND_SMS = 107;
     int ACTIVATE_ACOUNT = 108;
+    int TRIAL_BASE = 109;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
@@ -31,8 +31,9 @@ public interface Net extends Subject<NetSubscriber> {
 
     //************** SEARCH ************
     void searchMenu (@NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
-    void getBase (String search, String city, String table, String uid, String key);
-
+    void getBase (@NonNull String search, @NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
+    void tryBase (@NonNull String city, @NonNull String table, @NonNull String ruscity,
+                  @NonNull String type, @NonNull String place, @NonNull String basetype, @NonNull String basetype2);
     // *********** SMS *************
     void sendSms (@NonNull String uid, @NonNull String key);
 
