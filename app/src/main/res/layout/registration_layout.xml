@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/phoneReg"
+            android:id="@+id/phoneLoginNew"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelTextColor="@color/colorGreen"
             app:met_floatingLabelTextSize="18dp"
@@ -59,7 +59,7 @@
 
         <Button
             android:id="@+id/butOkReg"
-            style="@style/WhiteButton"
+            style="@style/WhiteButton_Green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"

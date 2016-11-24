@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -35,8 +34,8 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
-    ActionBarDrawerToggle toggle;
-    NavigationView navigationView;
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigationView;
     private Button findBut;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -46,7 +45,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     private MenuSearch myMenu;
     private BaseResponse baseResponse;
     private SpotsDialog dialog;
-    private String table, _key, _id,search;
+    private String table, _key, _id, search;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -74,7 +73,6 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     private void apiCalls () {
-        Log.d("PAPIN_TAG","search"+search);
         app.getNet().getBase(search, "_Kharkov", table, _id, _key);
         app.getNet().searchMenu("_Kharkov", table, _id, _key);
         dialog.show();
@@ -150,24 +148,29 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         String info = "";
         for ( int i = 0 ; i < baseResponse.getBaseGet().getGetResponse().getModel().size() ; i++ ) {
             String id = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId();
-            if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null ) {
-                if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1 )
-                    info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
-            } else
-                if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null ) {
-                    if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1 )
-                        info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
-                } else
-                    info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
-            if ( baseResponse.getMap().containsKey(id) ) {
-                list = (ArrayList) baseResponse.getMap().get(id);
-                modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info, baseResponse.getBaseGet().getGetResponse().getModel().get(i).getDateUp(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), table));
-            } else
-                modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info, baseResponse.getBaseGet().getGetResponse().getModel().get(i).getDateUp(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, table));
-        }
-        dialog.dismiss();
-        adapter.notifyDataSetChanged();
+            if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null &&
+                    baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1 ){
+                info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
+        }else
+        if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null &&
+                baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1 ){
+                info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
+        } else
+            info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
+        if ( baseResponse.getMap().containsKey(id) ) {
+            list = (ArrayList) baseResponse.getMap().get(id);
+            modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
+                    //baseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
+                    "перейти на сайт", baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), table));
+        } else
+            modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
+                    //baseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
+                    "перейти на сайт", baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, table));
     }
+
+    dialog.dismiss();
+    adapter.notifyDataSetChanged();
+}
 
     private void navigationInitial () {
         toolbar = (Toolbar) findViewById(R.id.toolbar);

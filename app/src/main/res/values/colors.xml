@@ -11,9 +11,14 @@
     <color name="black">#000000</color>
 
     <color name="backGreen">#A5D6A7</color>
+    <color name="findButton">#d6e3f3</color>
+    <color name="buttonTextGreen">#8cc152</color>
     <color name="backRed">#FFCDD2</color>
     <color name="backYellow">#FFF9c4</color>
     <color name="backWhite">#ffffff</color>
+    <color name="textColor">#486b97</color>
+    <color name="hintColor">#434a54</color>
+    <color name="editTextBackground">#e7e7e7</color>
 
 
 </resources>

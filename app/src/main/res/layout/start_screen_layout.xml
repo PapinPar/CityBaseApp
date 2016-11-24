@@ -1,53 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/liner_list"
-              android:background="@drawable/font_city">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@drawable/login_bg">
 
-    <ImageView
+    <RelativeLayout
+        android:id="@+id/releative2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_oval"
+            android:id="@+id/imageView"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="223.2dp"
+            android:layout_marginRight="223.2dp"/>
+
+        <ImageView
+            android:id="@+id/ic_chape_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_shape_1"
+            android:layout_alignTop="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:text="CityBase.in.ua "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView"
+            android:textColor="@color/textColor"
+            android:textStyle="bold"
+            android:textSize="@dimen/textSize"/>
+
+        <TextView
+            android:text="База объектов недвижимости от  владельцев вашего города"
+            android:layout_height="wrap_content"
+            android:layout_width="@dimen/infoSizeWidth"
+            android:id="@+id/textView2"
+            android:textSize="@dimen/textSize"
+            android:layout_below="@+id/textView"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logo"
-        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:orientation="vertical"
         android:layout_centerHorizontal="true"
-        android:id="@+id/imageView2"/>
+        android:layout_above="@+id/butTryBaseNew"
+        android:layout_below="@+id/releative2">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/phoneLoginNew"
+            android:layout_height="wrap_content"
+            android:layout_width="@dimen/infoSizeWidth"
+            android:textSize="@dimen/textSize"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+            app:met_textColor="@android:color/black"
+            app:met_textColorHint="@color/hintColor"
+            android:gravity="center"
+            android:hint="Номер телефона"
+            android:inputType="phone"
+            android:selectAllOnFocus="true"
+            android:visibility="visible"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/passwordLoginNew"
+            android:layout_width="@dimen/infoSizeWidth"
+            android:textSize="@dimen/textSize"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+            app:met_textColor="@android:color/black"
+            app:met_textColorHint="@color/hintColor"
+            android:gravity="center"
+            android:hint="Пароль"
+            android:inputType="textPassword"
+            android:visibility="visible"/>
+
+        <TextView
+            android:text="Забыли пароль? "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSize"
+            android:id="@+id/textView3"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/butOkNew"
+            style="@style/WhiteButton_Green"
+            android:layout_width="@dimen/infoSizeWidth"
+            android:layout_height="wrap_content"
+            android:text="Войти"
+            android:layout_marginTop="20dp"
+            android:padding="20dp"
+            android:textStyle="normal|bold"
+            android:textSize="@dimen/textSize"
+            android:textIsSelectable="false"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="3dp"
+            android:gravity="center_vertical|center_horizontal|center"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="Еще нет аккаунта?"
+                android:textSize="@dimen/textSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView5"/>
+
+            <TextView
+                android:text="Зарегестрируйтесь"
+                android:textSize="@dimen/textSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/registNewTW"
+                android:textColor="@color/buttonTextGreen"
+                android:textStyle="normal|bold|italic"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
-        android:text="Войти"
+        android:text="Попробовать Базу"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/SignInBut"
-        android:gravity="center_vertical|center_horizontal|center"
-        android:layout_above="@+id/GetAccessBut"
-        android:layout_centerHorizontal="true"
-        style="@style/WhiteButton"
-        android:padding="5dp"
-        android:layout_margin="5dp"
-        android:layout_width="200dp"/>
+        android:textSize="@dimen/textSize"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/butTryBaseNew"
+        android:textColor="#486b97"
+        android:background="#d6e3f3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
 
-    <Button
-        android:text="Получить доступ"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/GetAccessBut"
-        style="@style/WhiteButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:padding="5dp"
-        android:layout_margin="5dp"/>
-
-    <Button
-        android:text="Попробовать базу"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/TryBaseBut"
-        android:gravity="center_vertical|center_horizontal|center"
-        style="@style/WhiteButton"
-        android:padding="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/GetAccessBut"
-        android:layout_alignLeft="@+id/GetAccessBut"
-        android:layout_alignStart="@+id/GetAccessBut"/>
 </RelativeLayout>

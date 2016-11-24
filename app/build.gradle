@@ -5,6 +5,7 @@ android {
     buildToolsVersion "23.0.2"
     defaultConfig {
         applicationId "chi_software.citybase"
+        vectorDrawables.useSupportLibrary = true
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -44,4 +45,5 @@ dependencies {
     compile 'com.alexvasilkov:gesture-views:2.1.1'
     //ImageLoader
     compile 'com.github.hanuor:pearl:0.0.8'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
 }

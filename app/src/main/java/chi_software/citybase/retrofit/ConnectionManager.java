@@ -133,11 +133,89 @@ public class ConnectionManager implements Net {
                 try {
                     Response<FieldResponse> response = RestApiWrapper.getInstanse().activateAcount(uid, key, code);
                     FieldResponse serverResponse = response.body();
-                    if(serverResponse.getServerResponse()!=null)
+                    if ( serverResponse.getServerResponse() != null )
                         notifySuccessSubscribers(ACTIVATE_ACOUNT, serverResponse);
-                }catch ( IOException e ){}
+                } catch ( IOException e ) {
+                }
             }
         });
+    }
+
+    // ************* EDIT USER **********
+
+
+    @Override
+    public void addUserEmail (@NonNull final String uid, @NonNull final String key, @NonNull final String email) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().addUserEmail(uid, key, email);
+                    FieldResponse fieldResponse = response.body();
+                    if ( fieldResponse.getServerResponse() != null ) {
+                        notifySuccessSubscribers(AddUserEmail, fieldResponse);
+                    } else
+                        notifyErrorSubscribers(AddUserEmail, "ERROR");
+                } catch ( IOException e ) {
+                }
+            }
+        });
+    }
+
+    @Override
+    public void deleteUserEmail (@NonNull final String uid, @NonNull final String key) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().deleteUserEmail(uid, key);
+                    FieldResponse fieldResponse = response.body();
+                    if ( fieldResponse.getServerResponse() != null ) {
+                        notifySuccessSubscribers(DeleteUserEmail, fieldResponse);
+                    } else
+                        notifyErrorSubscribers(DeleteUserEmail, "ERROR");
+
+                } catch ( IOException e ) {
+                }
+            }
+        });
+    }
+
+    @Override
+    public void editUserLogin (@NonNull final String uid, @NonNull final String key, @NonNull final String name, @NonNull final String login) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().editUserLogin(uid, key, name, login);
+                    FieldResponse fieldResponse = response.body();
+                    if ( fieldResponse.getServerResponse() != null ) {
+                        notifySuccessSubscribers(EditUserLogin, fieldResponse);
+                    } else
+                        notifyErrorSubscribers(EditUserLogin, "ERROR");
+                } catch ( IOException e ) {
+                }
+            }
+        });
+    }
+
+    @Override
+    public void editUserPassword (@NonNull final String uid, @NonNull final String key, @NonNull final String password, @NonNull final String reenterpassword) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().editUserPassword(uid, key, password, reenterpassword);
+                    FieldResponse fieldResponse = response.body();
+                    if ( fieldResponse.getServerResponse() != null ) {
+                        notifySuccessSubscribers(EditUserPassword, fieldResponse);
+                    } else
+                        notifyErrorSubscribers(EditUserPassword, "ERROR");
+                } catch ( IOException e ) {
+                }
+            }
+        });
+
     }
 
     // ************ SEARCH ***************
@@ -214,11 +292,12 @@ public class ConnectionManager implements Net {
                 try {
                     Response<FieldResponse> response = RestApiWrapper.getInstanse().sendSMS(uid, key);
                     FieldResponse serverResponse = response.body();
-                    if ( serverResponse.getServerResponse()!=null )
-                        notifySuccessSubscribers(SEND_SMS,serverResponse);
+                    if ( serverResponse.getServerResponse() != null )
+                        notifySuccessSubscribers(SEND_SMS, serverResponse);
                     else
-                        notifyErrorSubscribers(SEND_SMS,"ERROR");
-                }catch ( IOException e ){}
+                        notifyErrorSubscribers(SEND_SMS, "ERROR");
+                } catch ( IOException e ) {
+                }
             }
         });
     }

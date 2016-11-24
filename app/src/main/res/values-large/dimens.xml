@@ -7,14 +7,14 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="ovalWidth">63.6dp</dimen>
-    <dimen name="ovalHeight">63.6dp</dimen>
-    <dimen name="iconWidth">48.4dp</dimen>
-    <dimen name="iconHeight">43.4dp</dimen>
+    <dimen name="ovalWidth">93.6dp</dimen>
+    <dimen name="ovalHeight">93.6dp</dimen>
+    <dimen name="iconWidth">69dp</dimen>
+    <dimen name="iconHeight">69dp</dimen>
 
-    <dimen name="infoSizeWidth">250dp</dimen>
-    <dimen name="textSize">14sp</dimen>
-    <dimen name="floatingTextSize">10sp</dimen>
-    <dimen name="imageHight">200dp</dimen>
-    <dimen name="imageInfoHight">90dp</dimen>
+    <dimen name="infoSizeWidth">600dp</dimen>
+    <dimen name="textSize">33sp</dimen>
+    <dimen name="floatingTextSize">20sp</dimen>
+    <dimen name="imageHight">400dp</dimen>
+    <dimen name="imageInfoHight">175dp</dimen>
 </resources>

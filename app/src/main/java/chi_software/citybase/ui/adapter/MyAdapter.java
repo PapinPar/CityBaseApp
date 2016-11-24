@@ -2,6 +2,7 @@ package chi_software.citybase.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,24 +35,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
 
     public static class DevViewHolder extends RecyclerView.ViewHolder {
         private TextView adminArea;
-        private TextView data;
+        private TextView site;
         private TextView type;
         private TextView price;
-        private Context myParent;
         private ImageView image;
         private TextView info;
-        private ImageView backgroundColor;
+        private Context myParent;
+        //private ImageView backgroundColor;
 
         DevViewHolder (View itemView) {
             super(itemView);
-            adminArea = (TextView) itemView.findViewById(R.id.twArea);
-            type = (TextView) itemView.findViewById(R.id.twType);
-            data = (TextView) itemView.findViewById(R.id.twData);
-            price = (TextView) itemView.findViewById(R.id.twPrice);
+            adminArea = (TextView) itemView.findViewById(R.id.cityNew);
+            type = (TextView) itemView.findViewById(R.id.roomsType);
+            site = (TextView) itemView.findViewById(R.id.siteNew);
+            price = (TextView) itemView.findViewById(R.id.priceNew);
             myParent = itemView.getContext();
-            image = (ImageView) itemView.findViewById(R.id.modelImage);
-            info = (TextView) itemView.findViewById(R.id.twInfo);
-            backgroundColor = (ImageView) itemView.findViewById(R.id.backgroundColor);
+            image = (ImageView) itemView.findViewById(R.id.imageInfoNew);
+            info = (TextView) itemView.findViewById(R.id.detailInfoNew);
+           // backgroundColor = (ImageView) itemView.findViewById(backgroundColor);
         }
     }
 
@@ -63,7 +64,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
     @Override
     public DevViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.info_object_adappter, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.a____detail_info_layout, parent, false);
         DevViewHolder devViewHolder = new DevViewHolder(v);
         return devViewHolder;
     }
@@ -77,13 +78,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         // Местоположение
         if ( developersInfoList.get(i).AdminArea.length() > 1 ) {
             holder.adminArea.setText(developersInfoList.get(i).AdminArea);
+            Log.d("MyAdapter", developersInfoList.get(i).AdminArea);
         } else
             holder.adminArea.setVisibility(View.INVISIBLE);
-        // Дата
+        // Сайь
         if ( developersInfoList.get(i).data.length() > 0 ) {
-            holder.data.setText(developersInfoList.get(i).data);
+            holder.site.setText(developersInfoList.get(i).data);
         } else
-            holder.data.setVisibility(View.INVISIBLE);
+            holder.site.setVisibility(View.INVISIBLE);
         // Цена
         if ( developersInfoList.get(i).price != null )
             holder.price.setText(developersInfoList.get(i).price + " " + currency);
@@ -96,14 +98,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
             holder.type.setVisibility(View.INVISIBLE);
         // Картинка
         if ( developersInfoList.get(i).url != null )
-            Picasso.with(holder.myParent).load(developersInfoList.get(i).url).centerInside().resize(120, 120).error(R.drawable.no_photo).into(holder.image);
+            Picasso.with(holder.myParent).load(developersInfoList.get(i).url).error(R.drawable.icon_logo).into(holder.image);
         else
-            holder.image.setImageResource(R.drawable.no_photo);
+            holder.image.setImageResource(R.drawable.icon_logo);
 
         // Информация
         String info;
-        if ( developersInfoList.get(i).info.length() > 110 ) {
-            info = developersInfoList.get(i).info.substring(0, 110);
+        if ( developersInfoList.get(i).info.length() > 100 ) {
+            info = developersInfoList.get(i).info.substring(0, 100);
         } else
             info = developersInfoList.get(i).info;
         // Слушатель
@@ -118,17 +120,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         info = info.trim();
         holder.info.setText(info);
         // Окрашивание
-        if ( developersInfoList.get(i).color != null ) {
-            if ( developersInfoList.get(i).color.equals("1") )
-                holder.backgroundColor.setImageResource(R.color.backGreen);
-            if ( developersInfoList.get(i).color.equals("2") )
-                holder.backgroundColor.setImageResource(R.color.backYellow);
-            if ( developersInfoList.get(i).color.equals("3") )
-                holder.backgroundColor.setImageResource(R.color.backRed);
-            if ( developersInfoList.get(i).color.equals("0") )
-                holder.backgroundColor.setImageResource(R.color.backWhite);
-        } else
-            holder.backgroundColor.setImageResource(R.color.backWhite);
+       // if ( developersInfoList.get(i).color != null ) {
+       //     if ( developersInfoList.get(i).color.equals("1") )
+       //         holder.backgroundColor.setImageResource(R.color.backGreen);
+       //     if ( developersInfoList.get(i).color.equals("2") )
+       //         holder.backgroundColor.setImageResource(R.color.backYellow);
+       //     if ( developersInfoList.get(i).color.equals("3") )
+       //         holder.backgroundColor.setImageResource(R.color.backRed);
+       //     if ( developersInfoList.get(i).color.equals("0") )
+       //         holder.backgroundColor.setImageResource(R.color.backWhite);
+       // } else
+       //     holder.backgroundColor.setImageResource(R.color.backWhite);
     }
 
     @Override

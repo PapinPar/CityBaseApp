@@ -10,7 +10,8 @@ import chi_software.citybase.core.observer.Subject;
  * Created by Papin on 08.11.2016.
  */
 public interface Net extends Subject<NetSubscriber> {
-    @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION, SEND_SMS, ACTIVATE_ACOUNT,TRIAL_BASE })
+    @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION, SEND_SMS, ACTIVATE_ACOUNT,TRIAL_BASE,
+            EditUserLogin,EditUserPassword,AddUserEmail,DeleteUserEmail})
     @interface NetEvent {}
 
 
@@ -23,11 +24,21 @@ public interface Net extends Subject<NetSubscriber> {
     int SEND_SMS = 107;
     int ACTIVATE_ACOUNT = 108;
     int TRIAL_BASE = 109;
+    int EditUserLogin  = 201;
+    int EditUserPassword = 202;
+    int AddUserEmail = 203;
+    int DeleteUserEmail = 204;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
     void registration (@NonNull String phone, @NonNull String pass, @NonNull String name);
     void ActivateAcount (@NonNull String uid, @NonNull String key, @NonNull String code);
+
+    // ************** EDIT USER **********
+    void editUserLogin (@NonNull String uid, @NonNull String key, @NonNull String name, @NonNull String login);
+    void editUserPassword (@NonNull String uid, @NonNull String key, @NonNull String password, @NonNull String reenterpassword);
+    void addUserEmail (@NonNull String uid, @NonNull String key, @NonNull String email);
+    void deleteUserEmail (@NonNull String uid, @NonNull String key);
 
     //************** SEARCH ************
     void searchMenu (@NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
