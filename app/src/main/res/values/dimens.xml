@@ -17,4 +17,10 @@
     <dimen name="floatingTextSize">10sp</dimen>
     <dimen name="imageHight">200dp</dimen>
     <dimen name="imageInfoHight">90dp</dimen>
+
+    <dimen name="searchTableHeight">125dp</dimen>
+    <dimen name="searchTableButton">65dp</dimen>
+    <dimen name="searchPaddingSpinner">3dp</dimen>
+    <dimen name="searchPadding">8dp</dimen>
+    <dimen name="searchTextHeight">50dp</dimen>
 </resources>

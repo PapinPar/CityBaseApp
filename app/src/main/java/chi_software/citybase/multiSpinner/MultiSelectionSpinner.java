@@ -12,6 +12,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import chi_software.citybase.R;
+
+
 /**
  * Created by Papin on 14.11.2016.
  */
@@ -36,7 +39,7 @@ public class MultiSelectionSpinner extends Spinner implements
         super(context);
 
         simple_adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item);
+                R.layout.my_spinner_item);
         super.setAdapter(simple_adapter);
     }
 
@@ -44,7 +47,7 @@ public class MultiSelectionSpinner extends Spinner implements
         super(context, attrs);
 
         simple_adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item);
+                R.layout.my_spinner_item);
         super.setAdapter(simple_adapter);
     }
 

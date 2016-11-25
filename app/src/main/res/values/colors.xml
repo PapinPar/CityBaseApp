@@ -11,7 +11,10 @@
     <color name="black">#000000</color>
 
     <color name="backGreen">#A5D6A7</color>
-    <color name="findButton">#d6e3f3</color>
+    <color name="backSearch">#c0d1e6</color>
+    <color name="backGray">#d6e3f3</color>
+    <color name="findButton">#bac6d4</color>
+    <color name="findButton2">#eaf1f9</color>
     <color name="buttonTextGreen">#8cc152</color>
     <color name="backRed">#FFCDD2</color>
     <color name="backYellow">#FFF9c4</color>

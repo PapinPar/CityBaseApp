@@ -7,11 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.hanuor.pearl.Pearl;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import chi_software.citybase.R;
+
 
 /**
  * Created by Papin on 15.11.2016.
@@ -43,7 +44,10 @@ public class PageFragment extends Fragment {
         View view = inflater.inflate(R.layout.pager_image_fragment, null);
 
         ImageView tvPage = (ImageView) view.findViewById(R.id.iwPage);
-        Pearl.imageLoader(getContext(),url1.get(pageNumber),tvPage,R.color.black);
+        Picasso.with(getContext())
+                .load(url1.get(pageNumber))
+                .into(tvPage);
+        //Pearl.imageLoader(getContext(),url1.get(pageNumber),tvPage,R.color.black);
         return view;
     }
 }

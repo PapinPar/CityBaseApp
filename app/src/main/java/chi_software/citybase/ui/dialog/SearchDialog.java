@@ -23,13 +23,14 @@ import chi_software.citybase.data.Search;
 import chi_software.citybase.data.menuSearch.MenuSearch;
 import chi_software.citybase.multiSpinner.MultiSelectionSpinner;
 
+
 /**
  * Created by Papin on 10.11.2016.
  */
 
-public class SearchDialog extends DialogFragment implements MultiSelectionSpinner.OnMultipleItemsSelectedListener {
+public class SearchDialog extends DialogFragment implements MultiSelectionSpinner.OnMultipleItemsSelectedListener, View.OnClickListener {
 
-    View view;
+    private View view;
     private MultiSelectionSpinner spinerType;
     private MultiSelectionSpinner spinerArea;
     private MultiSelectionSpinner spinerPunrkt;
@@ -41,15 +42,18 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
     private ArrayList<String> listType;
     private ArrayList<String> listArea;
     private ArrayList<String> listPunkt;
-    private ArrayList<Integer> type;
-    private ArrayList<Integer> area;
-    private ArrayList<Integer> punkt;
+    private Button sell, sellComer, arenda, arendaComer;
+
+    private String table;
+
     List<String> typeSelected;
     List<String> areaSelected;
     List<String> punktSelected;
 
     MenuSearch menuSearch;
     GetSpinnerListner getSpinnerListner;
+    private Button sd;
+
 
     public interface GetSpinnerListner {
         void getSpinner (String json);
@@ -57,6 +61,7 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
     public void getListner (GetSpinnerListner getSpinnerListner, MenuSearch menuSearch) {
         this.getSpinnerListner = getSpinnerListner;
+
         this.menuSearch = menuSearch;
     }
 
@@ -65,14 +70,24 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().setTitle("");
         view = inflater.inflate(R.layout.search_dialog_layout, null);
-        spinerType = (MultiSelectionSpinner) view.findViewById(R.id.spinnerType);
-        spinerArea = (MultiSelectionSpinner) view.findViewById(R.id.spinnerArea);
-        spinerPunrkt = (MultiSelectionSpinner) view.findViewById(R.id.spinnerPunkt);
+        spinerType = (MultiSelectionSpinner) view.findViewById(R.id.spinnerTypeNew);
+        spinerArea = (MultiSelectionSpinner) view.findViewById(R.id.spinnerAreaNew);
+        spinerPunrkt = (MultiSelectionSpinner) view.findViewById(R.id.spinnerPunktNew);
         priceFrom = (EditText) view.findViewById(R.id.priceFromET);
         priceTo = (EditText) view.findViewById(R.id.priceToET);
         text_phone = (EditText) view.findViewById(R.id.phoneET);
         comment = (EditText) view.findViewById(R.id.comentET);
         button = (Button) view.findViewById(R.id.buttFind);
+
+        arenda = (Button) view.findViewById(R.id.arendaBUT);
+        arendaComer = (Button) view.findViewById(R.id.arendaComerBUT);
+        sell = (Button) view.findViewById(R.id.sellBUTT);
+        sellComer = (Button) view.findViewById(R.id.sellComerBUTT);
+
+        sell.setOnClickListener(this);
+        sellComer.setOnClickListener(this);
+        arenda.setOnClickListener(this);
+        arendaComer.setOnClickListener(this);
 
         listType = new ArrayList<>(); //тип
         listPunkt = new ArrayList<>(); // населенный пункт
@@ -112,8 +127,8 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
             public void onClick (View v) {
                 String dateFrom = new SimpleDateFormat("yyyy-MM").format(new Date());
                 int day = Integer.parseInt(new SimpleDateFormat("dd").format(new Date()));
-                day = day-7;
-                dateFrom = dateFrom+"-"+day;
+                day = day - 7;
+                dateFrom = dateFrom + "-" + day;
                 Search searchJson = new Search();
                 searchJson.setCity(punktSelected);
                 searchJson.setPlace(areaSelected);
@@ -169,6 +184,40 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
         if ( spinerPunrkt.getSelectedStrings().size() == 0 )
             spinerPunrkt.setSelection(0);
+    }
+
+    @Override
+    public void onClick (View v) {
+        switch ( v.getId() ) {
+            case R.id.sellBUTT:
+                sell.setBackgroundResource(R.color.greenButton);
+                sellComer.setBackgroundResource(R.color.backGray);
+                arenda.setBackgroundResource(R.color.backGray);
+                arendaComer.setBackgroundResource(R.color.backGray);
+                table = "sale_living";
+                break;
+            case R.id.sellComerBUTT:
+                sell.setBackgroundResource(R.color.backGray);
+                sellComer.setBackgroundResource(R.color.greenButton);
+                arenda.setBackgroundResource(R.color.backGray);
+                arendaComer.setBackgroundResource(R.color.backGray);
+                table = "sale_not_living";
+                break;
+            case R.id.arendaBUT:
+                sell.setBackgroundResource(R.color.backGray);
+                sellComer.setBackgroundResource(R.color.backGray);
+                arenda.setBackgroundResource(R.color.greenButton);
+                arendaComer.setBackgroundResource(R.color.backGray);
+                table = "rent_living";
+                break;
+            case R.id.arendaComerBUT:
+                sell.setBackgroundResource(R.color.backGray);
+                sellComer.setBackgroundResource(R.color.backGray);
+                arenda.setBackgroundResource(R.color.backGray);
+                arendaComer.setBackgroundResource(R.color.greenButton);
+                table = "rent_not_living";
+                break;
+        }
     }
 
 }

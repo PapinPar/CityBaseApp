@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/backSearch"
+              android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/backGreen"
+            android:padding="2dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/arendaBUT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/searchTableButton"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/backGray"
+                    android:text="Аренда жилой"
+                    android:textSize="@dimen/textSize"/>
+
+                <Button
+                    android:id="@+id/sellBUTT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/searchTableButton"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/backGray"
+                    android:text="Продажа жилой"
+                    android:textSize="@dimen/textSize"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/arendaComerBUT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/searchTableButton"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/backGray"
+                    android:text="Аренда комерческой"
+                    android:textSize="@dimen/textSize"/>
+
+                <Button
+                    android:id="@+id/sellComerBUTT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/searchTableButton"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/backGray"
+                    android:text="Продажа комерческой"
+                    android:textSize="@dimen/textSize"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tableLayout"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/backGray"
+            android:gravity="center"
+            android:padding="@dimen/searchPadding">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Тип аренды"
+                android:textSize="@dimen/textSize"/>
+
+            <chi_software.citybase.multiSpinner.MultiSelectionSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MySpinerStyle"
+                android:id="@+id/spinnerTypeNew"
+                android:gravity="center"
+                android:padding="@dimen/searchPaddingSpinner"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear1"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/backGray"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/searchPadding">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Населённый пункты"
+                android:textSize="@dimen/textSize"/>
+
+            <view
+                android:id="@+id/spinnerAreaNew"
+                class="chi_software.citybase.multiSpinner.MultiSelectionSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/searchPaddingSpinner"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear2"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/backGray"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/searchPadding">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Районы"
+                android:textSize="@dimen/textSize"/>
+
+            <view
+                android:id="@+id/spinnerPunktNew"
+                class="chi_software.citybase.multiSpinner.MultiSelectionSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/searchPaddingSpinner"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear3"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/priceFromET"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/searchTextHeight"
+                android:layout_weight="1"
+                android:background="@color/backGray"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="От"
+                android:inputType="number"
+                android:textSize="@dimen/textSize"/>
+
+            <EditText
+                android:id="@+id/priceToET"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/searchTextHeight"
+                android:layout_weight="1"
+                android:background="@color/backGray"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="До"
+                android:inputType="number"
+                android:textSize="@dimen/textSize"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/phoneET"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/searchTextHeight"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linear4"
+            android:layout_weight="1"
+            android:background="@color/backGray"
+            android:ems="10"
+            android:hint="Телефон или текст"
+            android:inputType="textPersonName"
+            android:textSize="@dimen/textSize"/>
+
+        <Button
+            android:id="@+id/buttFind"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/searchTextHeight"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/comentET"
+            android:background="@color/greenButton"
+            android:text="Применить"
+            android:textSize="@dimen/textSize"/>
+
+        <EditText
+            android:id="@+id/comentET"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/searchTextHeight"
+            android:layout_below="@+id/phoneET"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:background="@color/backGray"
+            android:ems="10"
+            android:hint="Примечание"
+            android:inputType="textPersonName"
+            android:textSize="@dimen/textSize"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

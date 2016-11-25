@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_green"
+        android:orderInCategory="100"
+        android:title="Зеленый"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_red"
+        android:orderInCategory="100"
+        android:title="Красный"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_yellow"
+        android:orderInCategory="100"
+        android:title="Желтый"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_no_color"
+        android:orderInCategory="100"
+        android:title="Без цвета"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_comment"
+        android:orderInCategory="100"
+        android:title="Коментарий"
+        app:showAsAction="never"/>
+</menu>
