@@ -1,70 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="@drawable/font_city">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/login_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <RelativeLayout
+            android:id="@+id/releative2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="223.2dp"
+                android:layout_marginRight="223.2dp"
+                android:layout_marginTop="50dp"
+                android:text="Регисрация"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="На этот номер будет отправлено sms сообщение с кодом для
+            подтверждения регистрации. "
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize"/>
+
+        </RelativeLayout>
 
     <LinearLayout
+            android:id="@+id/registLinear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/registLinear2"
+            android:layout_below="@+id/releative2"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registNameET"
+                android:layout_width="@dimen/infoSizeWidth"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Имя"
+                android:inputType="text"
+                android:selectAllOnFocus="true"
+                android:textSize="@dimen/textSize"
+                android:visibility="visible"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+                app:met_textColor="@android:color/black"
+                app:met_textColorHint="@color/hintColor"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registNumberET"
+                android:layout_width="@dimen/infoSizeWidth"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Номер"
+                android:inputType="phone"
+                android:selectAllOnFocus="true"
+                android:textSize="@dimen/textSize"
+                android:visibility="visible"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+                app:met_textColor="@android:color/black"
+                app:met_textColorHint="@color/hintColor"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registPassET"
+                android:layout_width="@dimen/infoSizeWidth"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Пароль"
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true"
+                android:textSize="@dimen/textSize"
+                android:visibility="visible"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+                app:met_textColor="@android:color/black"
+                app:met_textColorHint="@color/hintColor"/>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/registLinear2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_above="@+id/buttonReg"
+        android:layout_marginBottom="20dp">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/phoneLoginNew"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextColor="@color/colorGreen"
-            app:met_floatingLabelTextSize="18dp"
-            app:met_primaryColor="@color/colorGreen"
-            app:met_textColor="@android:color/black"
-            app:met_textColorHint="@android:color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:hint="Логин / email / номер телефона"
-            android:inputType="textEmailAddress"
-            android:selectAllOnFocus="true"
-            android:visibility="visible"/>
+        <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Вы"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize"
+                android:textStyle="bold"/>
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/passwordReg"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextColor="@color/colorGreen"
-            app:met_floatingLabelTextSize="18dp"
-            app:met_primaryColor="@color/colorGreen"
-            app:met_textColor="@android:color/black"
-            app:met_textColorHint="@android:color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:hint="Пароль"
-            android:inputType="textPassword"
-            android:visibility="visible"/>
+        <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/nameReg"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextColor="@color/colorGreen"
-            app:met_floatingLabelTextSize="18dp"
-            app:met_primaryColor="@color/colorGreen"
-            app:met_textColor="@android:color/black"
-            app:met_textColorHint="@android:color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:hint="Имя"
-            android:inputType="textAutoComplete"
-            android:visibility="visible"/>
+                <RadioButton
+                    android:id="@+id/radioButton1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Специалист по  недвижимости или агенство "
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"
+                    android:textStyle="normal|bold"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
 
-        <Button
-            android:id="@+id/butOkReg"
-            style="@style/WhiteButton_Green"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:text="Зарегистрироваться"
-            android:textColor="@android:color/black"/>
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Ищите недвижимость  для себя"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"
+                    android:textStyle="normal|bold"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Сдаете или продаете недвижимость"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"
+                    android:textStyle="normal|bold"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+            </RadioGroup>
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/greenButton"
+        android:text="Зарегестрироваться"
+        android:textSize="@dimen/textSize"
+        android:layout_gravity="bottom|center"/>
 
 </RelativeLayout>

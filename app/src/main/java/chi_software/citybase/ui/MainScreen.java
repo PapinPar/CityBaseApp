@@ -222,11 +222,6 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         return true;
     }
 
-    @Override
-    protected void onRestart () {
-        super.onRestart();
-        apiCalls();
-    }
 
     @Override
     public void onBackPressed () {

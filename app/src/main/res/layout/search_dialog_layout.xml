@@ -99,7 +99,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear2"
+            android:id="@+id/line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear1"
@@ -131,7 +131,7 @@
             android:id="@+id/linear3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linear2"
+            android:layout_below="@+id/line2"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:background="@color/backGray"

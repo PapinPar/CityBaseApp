@@ -46,7 +46,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         DevViewHolder (View itemView) {
             super(itemView);
             adminArea = (TextView) itemView.findViewById(R.id.cityNew);
-            type = (TextView) itemView.findViewById(R.id.roomsType);
+            type = (TextView) itemView.findViewById(R.id.roomsTypeTW);
             site = (TextView) itemView.findViewById(R.id.siteNew);
             price = (TextView) itemView.findViewById(R.id.priceNew);
             myParent = itemView.getContext();

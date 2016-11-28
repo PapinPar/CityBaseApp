@@ -20,7 +20,7 @@ import dmax.dialog.SpotsDialog;
  * Created by Papin on 17.11.2016.
  */
 
-public class RegistrationActivity extends BaseActivity implements View.OnClickListener,SmsDialog.SmsListner {
+public class RegistrationActivity extends BaseActivity implements View.OnClickListener, SmsDialog.SmsListner {
 
     private MaterialEditText pass;
     private MaterialEditText phone;
@@ -28,7 +28,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     private Button butOk;
     private String passS, phoneS, nameS;
     private SmsDialog smsDialog;
-    private String key,mId;
+    private String key, mId;
     private SpotsDialog dialogLoading;
 
     @Override
@@ -37,19 +37,20 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.registration_layout);
         smsDialog = new SmsDialog();
         dialogLoading = new SpotsDialog(RegistrationActivity.this);
-        pass = (MaterialEditText) findViewById(R.id.passwordReg);
-        phone = (MaterialEditText) findViewById(R.id.phoneLoginNew);
-        name = (MaterialEditText) findViewById(R.id.nameReg);
-        butOk = (Button) findViewById(R.id.butOkReg);
+        pass = (MaterialEditText) findViewById(R.id.registPassET);
+        phone = (MaterialEditText) findViewById(R.id.registNumberET);
+        name = (MaterialEditText) findViewById(R.id.registNameET);
+        butOk = (Button) findViewById(R.id.buttonReg);
         butOk.setOnClickListener(this);
     }
 
     @Override
     public void onClick (View v) {
         switch ( v.getId() ) {
-            case R.id.butOkReg:
+            case R.id.buttonReg:
                 passS = pass.getText().toString();
                 phoneS = phone.getText().toString();
+                nameS = name.getText().toString();
                 nameS = name.getText().toString();
                 app.getNet().registration(phoneS, passS, nameS);
                 dialogLoading.show();
@@ -62,16 +63,16 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         super.onNetRequestDone(eventId, NetObjects);
         switch ( eventId ) {
             case Net.REGISTRATION:
-                app.getNet().login(phoneS,passS);
+                app.getNet().login(phoneS, passS);
                 break;
             case Net.SIGN_IN:
                 LoginResponse loginResponse = (LoginResponse) NetObjects;
                 key = loginResponse.getMyResponse().getKey();
                 mId = loginResponse.getMyResponse().getId();
-                app.getNet().sendSms(mId,key);
+                app.getNet().sendSms(mId, key);
                 break;
             case Net.SEND_SMS:
-                Log.d("PAPIN_TAG","sms");
+                Log.d("PAPIN_TAG", "sms");
                 dialogLoading.dismiss();
                 smsDialog.setGetSmsListnet(RegistrationActivity.this);
                 smsDialog.setCancelable(false);
@@ -99,6 +100,6 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void getSmsListner (String answer) {
         dialogLoading.show();
-        app.getNet().ActivateAcount(mId,key,answer);
+        app.getNet().ActivateAcount(mId, key, answer);
     }
 }
