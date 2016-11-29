@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -126,10 +127,12 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     @Override
-    public void getSpinner (String json,String table) {
+    public void getSpinner (String json,String tableM) {
         search = json;
+        table = tableM;
         modelDataList.clear();
         adapter.notifyDataSetChanged();
+        Log.d("MainScreen", table);
         app.getNet().getBase(search, "_Kharkov", table, _id, _key);
         dialog.show();
     }
@@ -141,6 +144,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     private void filldata (Object netObjects) {
+        Log.d("MainScreenFill", table);
         modelDataList.clear();
         baseResponse = (BaseResponse) netObjects;
         String url = "http://api.citybase.in.ua/api/img/";

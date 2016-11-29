@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorGreen">#23be40</color>
     <color name="greenButton">#8CC152</color>
-    <color name="blueButton">#0088CC</color>
+    <color name="blueButton">#0088cc</color>
     <color name="priceColor">#F29200</color>
     <color name="background">#cccccc</color>
     <color name="black">#000000</color>
@@ -17,7 +17,7 @@
     <color name="findButton2">#eaf1f9</color>
     <color name="buttonTextGreen">#8cc152</color>
     <color name="backRed">#FFCDD2</color>
-    <color name="backYellow">#FFF9c4</color>
+    <color name="backYellow">#fff9c4</color>
     <color name="backWhite">#ffffff</color>
     <color name="textColor">#486b97</color>
     <color name="hintColor">#434a54</color>

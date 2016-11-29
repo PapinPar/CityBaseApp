@@ -135,6 +135,7 @@ public class ConnectionManager implements Net {
                     FieldResponse serverResponse = response.body();
                     if ( serverResponse.getServerResponse() != null )
                         notifySuccessSubscribers(ACTIVATE_ACOUNT, serverResponse);
+                    else notifyErrorSubscribers(ACTIVATE_ACOUNT,"ERROR");
                 } catch ( IOException e ) {
                 }
             }

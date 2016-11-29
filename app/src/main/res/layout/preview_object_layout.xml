@@ -34,14 +34,39 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true"/>
 
-            <TextView
-                android:id="@+id/roomsTypeTW"
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1room"
-                android:textColor="@color/hintColor"
-                android:textSize="@dimen/textSize"
-                android:layout_marginLeft="10dp"/>
+                android:layout_toLeftOf="@+id/imageView2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:id="@+id/roomsTypeTW"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1room"
+                    android:textColor="@color/hintColor"
+                    android:textSize="@dimen/textSize"
+                    />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cityNew"
+                    android:textColor="@color/hintColor"
+                    android:textSize="@dimen/textSize"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/roomsTypeTW"
+                    android:layout_toLeftOf="@+id/imageView2"
+                    android:layout_toStartOf="@+id/imageView2"
+                    />
+            </LinearLayout>
 
 
             <TextView
@@ -55,7 +80,7 @@
                 android:textSize="@dimen/textSize"
                 android:textColor="@color/hintColor"
                 android:padding="5dp"
-                android:layout_below="@+id/cityNew"
+                android:layout_below="@+id/linearLayout2"
                 android:layout_toLeftOf="@+id/imageView2"
                 android:layout_toStartOf="@+id/imageView2"/>
 
@@ -88,19 +113,6 @@
                     android:textColor="@color/hintColor"
                     android:textSize="@dimen/textSize"/>
             </LinearLayout>
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/cityNew"
-                android:textColor="@color/hintColor"
-                android:textSize="@dimen/textSize"
-                android:gravity="center"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/roomsTypeTW"
-                android:layout_toEndOf="@+id/roomsTypeTW"
-                android:layout_marginLeft="20dp"/>
 
             <ImageView
                 android:layout_width="wrap_content"

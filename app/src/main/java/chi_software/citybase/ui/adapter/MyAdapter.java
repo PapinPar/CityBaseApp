@@ -52,7 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
             myParent = itemView.getContext();
             image = (ImageView) itemView.findViewById(R.id.imageInfoNew);
             info = (TextView) itemView.findViewById(R.id.detailInfoNew);
-           // backgroundColor = (ImageView) itemView.findViewById(backgroundColor);
+            // backgroundColor = (ImageView) itemView.findViewById(backgroundColor);
         }
     }
 
@@ -71,17 +71,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
 
     @Override
     public void onBindViewHolder (DevViewHolder holder, final int i) {
-        if ( developersInfoList.get(0).table.equals("rent_living") || developersInfoList.get(0).table.equals("rent_not_living") )
+        if ( developersInfoList.get(i).table.equals("rent_living") || developersInfoList.get(i).table.equals("rent_not_living") )
             currency = "грн";
         else
             currency = "$";
         // Местоположение
         if ( developersInfoList.get(i).AdminArea.length() > 1 ) {
-            holder.adminArea.setText(developersInfoList.get(i).AdminArea);
+            holder.adminArea.setText("Район: "+developersInfoList.get(i).AdminArea);
             Log.d("MyAdapter", developersInfoList.get(i).AdminArea);
         } else
             holder.adminArea.setVisibility(View.INVISIBLE);
-        // Сайь
+        // Сайт
         if ( developersInfoList.get(i).data.length() > 0 ) {
             holder.site.setText(developersInfoList.get(i).data);
         } else
@@ -90,9 +90,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         if ( developersInfoList.get(i).price != null )
             holder.price.setText(developersInfoList.get(i).price + " " + currency);
         else
-            holder.price.setText("?"+currency);
+            holder.price.setText("?" + currency);
         // Сроки
-        if ( developersInfoList.get(i).type.length() > 0 )
+        if ( developersInfoList.get(i).type != null && developersInfoList.get(i).type.length() > 0 )
             holder.type.setText(developersInfoList.get(i).type);
         else
             holder.type.setVisibility(View.INVISIBLE);
@@ -120,17 +120,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         info = info.trim();
         holder.info.setText(info);
         // Окрашивание
-       // if ( developersInfoList.get(i).color != null ) {
-       //     if ( developersInfoList.get(i).color.equals("1") )
-       //         holder.backgroundColor.setImageResource(R.color.backGreen);
-       //     if ( developersInfoList.get(i).color.equals("2") )
-       //         holder.backgroundColor.setImageResource(R.color.backYellow);
-       //     if ( developersInfoList.get(i).color.equals("3") )
-       //         holder.backgroundColor.setImageResource(R.color.backRed);
-       //     if ( developersInfoList.get(i).color.equals("0") )
-       //         holder.backgroundColor.setImageResource(R.color.backWhite);
-       // } else
-       //     holder.backgroundColor.setImageResource(R.color.backWhite);
+        // if ( developersInfoList.get(i).color != null ) {
+        //     if ( developersInfoList.get(i).color.equals("1") )
+        //         holder.backgroundColor.setImageResource(R.color.backGreen);
+        //     if ( developersInfoList.get(i).color.equals("2") )
+        //         holder.backgroundColor.setImageResource(R.color.backYellow);
+        //     if ( developersInfoList.get(i).color.equals("3") )
+        //         holder.backgroundColor.setImageResource(R.color.backRed);
+        //     if ( developersInfoList.get(i).color.equals("0") )
+        //         holder.backgroundColor.setImageResource(R.color.backWhite);
+        // } else
+        //     holder.backgroundColor.setImageResource(R.color.backWhite);
     }
 
     @Override

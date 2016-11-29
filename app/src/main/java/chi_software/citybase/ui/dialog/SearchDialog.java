@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -52,7 +53,6 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
     MenuSearch menuSearch;
     GetSpinnerListner getSpinnerListner;
-    private Button sd;
 
 
     public interface GetSpinnerListner {
@@ -61,7 +61,6 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
     public void getListner (GetSpinnerListner getSpinnerListner, MenuSearch menuSearch) {
         this.getSpinnerListner = getSpinnerListner;
-
         this.menuSearch = menuSearch;
     }
 
@@ -69,6 +68,7 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().setTitle("");
+        table = "0";
         view = inflater.inflate(R.layout.search_dialog_layout, null);
         spinerType = (MultiSelectionSpinner) view.findViewById(R.id.spinnerTypeNew);
         spinerArea = (MultiSelectionSpinner) view.findViewById(R.id.spinnerAreaNew);
@@ -125,29 +125,34 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                String dateFrom = new SimpleDateFormat("yyyy-MM").format(new Date());
-                int day = Integer.parseInt(new SimpleDateFormat("dd").format(new Date()));
-                day = day - 7;
-                dateFrom = dateFrom + "-" + day;
-                Search searchJson = new Search();
-                searchJson.setCity(punktSelected);
-                searchJson.setPlace(areaSelected);
-                searchJson.setTypes(typeSelected);
-                searchJson.setDatefrom(dateFrom);
-                if ( priceFrom.getText().toString().length() > 0 )
-                    searchJson.setPricefrom(priceFrom.getText().toString());
-                if ( priceTo.getText().toString().length() > 0 )
-                    searchJson.setPriceto(priceTo.getText().toString());
-                if ( comment.getText().toString().length() > 0 )
-                    searchJson.setComment(comment.getText().toString());
-                if ( text_phone.getText().toString().length() > 0 )
-                    searchJson.setTextorphone(text_phone.getText().toString());
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
-                Log.i("GSON", gson.toJson(searchJson));
-                String json = gson.toJson(searchJson);
-                getSpinnerListner.getSpinner(json,table);
-                dismiss();
+                if ( table.equals("0") ) {
+                    Toast.makeText(view.getContext(), "Не выбран тип съема", Toast.LENGTH_SHORT).show();
+                } else {
+                    String dateFrom = new SimpleDateFormat("yyyy-MM").format(new Date());
+                    int day = Integer.parseInt(new SimpleDateFormat("dd").format(new Date()));
+                    day = day - 7;
+                    dateFrom = dateFrom + "-" + day;
+                    Search searchJson = new Search();
+                    searchJson.setCity(punktSelected);
+                    searchJson.setPlace(areaSelected);
+                    searchJson.setTypes(typeSelected);
+                    searchJson.setDatefrom(dateFrom);
+                    if ( priceFrom.getText().toString().length() > 0 )
+                        searchJson.setPricefrom(priceFrom.getText().toString());
+                    if ( priceTo.getText().toString().length() > 0 )
+                        searchJson.setPriceto(priceTo.getText().toString());
+                    if ( comment.getText().toString().length() > 0 )
+                        searchJson.setComment(comment.getText().toString());
+                    if ( text_phone.getText().toString().length() > 0 )
+                        searchJson.setTextorphone(text_phone.getText().toString());
+                    GsonBuilder builder = new GsonBuilder();
+                    Gson gson = builder.create();
+                    Log.i("GSON", gson.toJson(searchJson));
+                    String json = gson.toJson(searchJson);
+                    Log.d("SearchDialog", table);
+                    getSpinnerListner.getSpinner(json, table);
+                    dismiss();
+                }
             }
         });
 

@@ -1,22 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:background="@color/backGreen"
-              android:orientation="vertical">
-    <EditText
-        android:id="@+id/smsCodeET"
-        android:hint="СМС КОД"
-        android:textColorHint="@color/black"
-        android:gravity="center"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_height="match_parent"
+            android:clipToPadding="true"
+            app:layout_scrollFlags="scroll"
+            app:layout_collapseMode="parallax"
+            android:fillViewport="true">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/butSms"
-        android:text="Активировтаь"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/iconHeight"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/releatve1"
+            android:layout_gravity="center">
 
-</LinearLayout>
+            <TextView
+                android:text="Подтверждение номера"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textSize"
+                android:textColor="@color/textColor"
+                android:id="@+id/textView12"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:textStyle="normal|bold"/>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView12"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize"
+                android:text="Мы отпарвили sms сообщение  \n с кодом для подтверждения  регистрации. "
+                android:gravity="center"
+                android:textStyle="normal"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="29dp">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/smsCodeET"
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/infoSizeWidth"
+                android:textSize="@dimen/textSize"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+                app:met_textColor="@android:color/black"
+                app:met_textColorHint="@color/hintColor"
+                android:gravity="center"
+                android:hint="Код из СМС"
+                android:inputType="phone"
+                android:selectAllOnFocus="true"
+                android:visibility="visible"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:text="Если вы не получили код,
+дайте нам знать"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize"
+            android:id="@+id/textView14"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="45dp">
+
+            <Button
+                android:id="@+id/butConfirnSMS"
+                style="@style/WhiteButton_Green"
+                android:layout_width="@dimen/infoSizeWidth"
+                android:layout_height="wrap_content"
+                android:text="Подтвердить"
+                android:padding="20dp"
+                android:textStyle="normal|bold"
+                android:textSize="@dimen/textSize"
+                android:textIsSelectable="false"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

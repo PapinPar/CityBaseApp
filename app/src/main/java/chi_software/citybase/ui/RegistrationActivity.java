@@ -1,4 +1,5 @@
 package chi_software.citybase.ui;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -12,7 +13,6 @@ import chi_software.citybase.R;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.login.LoginResponse;
-import chi_software.citybase.ui.dialog.SmsDialog;
 import dmax.dialog.SpotsDialog;
 
 
@@ -20,14 +20,13 @@ import dmax.dialog.SpotsDialog;
  * Created by Papin on 17.11.2016.
  */
 
-public class RegistrationActivity extends BaseActivity implements View.OnClickListener, SmsDialog.SmsListner {
+public class RegistrationActivity extends BaseActivity implements View.OnClickListener {
 
     private MaterialEditText pass;
     private MaterialEditText phone;
     private MaterialEditText name;
     private Button butOk;
     private String passS, phoneS, nameS;
-    private SmsDialog smsDialog;
     private String key, mId;
     private SpotsDialog dialogLoading;
 
@@ -35,7 +34,6 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate (@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_layout);
-        smsDialog = new SmsDialog();
         dialogLoading = new SpotsDialog(RegistrationActivity.this);
         pass = (MaterialEditText) findViewById(R.id.registPassET);
         phone = (MaterialEditText) findViewById(R.id.registNumberET);
@@ -74,9 +72,10 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             case Net.SEND_SMS:
                 Log.d("PAPIN_TAG", "sms");
                 dialogLoading.dismiss();
-                smsDialog.setGetSmsListnet(RegistrationActivity.this);
-                smsDialog.setCancelable(false);
-                smsDialog.show(getFragmentManager(), "");
+                Intent sms = new Intent(RegistrationActivity.this, SmsDialog.class);
+                sms.putExtra("key", key);
+                sms.putExtra("mId", mId);
+                startActivity(sms);
                 break;
             case Net.ACTIVATE_ACOUNT:
                 dialogLoading.dismiss();
@@ -94,12 +93,8 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                 dialogLoading.dismiss();
                 Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
                 break;
+            case Net.ACTIVATE_ACOUNT:
+                Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public void getSmsListner (String answer) {
-        dialogLoading.show();
-        app.getNet().ActivateAcount(mId, key, answer);
     }
 }
