@@ -56,7 +56,7 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
 
     public interface GetSpinnerListner {
-        void getSpinner (String json);
+        void getSpinner (String json, String table);
     }
 
     public void getListner (GetSpinnerListner getSpinnerListner, MenuSearch menuSearch) {
@@ -146,7 +146,7 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
                 Gson gson = builder.create();
                 Log.i("GSON", gson.toJson(searchJson));
                 String json = gson.toJson(searchJson);
-                getSpinnerListner.getSpinner(json);
+                getSpinnerListner.getSpinner(json,table);
                 dismiss();
             }
         });

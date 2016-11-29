@@ -96,7 +96,7 @@ public class PagerViwer extends BaseActivity {
                         // for ActivityCompat#requestPermissions for more details.
                         return;
                     }
-                Intent intent = new Intent(Intent.ACTION_CALL);
+                Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" +phoneNmber.getText().toString()));
                 startActivity(intent);
             }

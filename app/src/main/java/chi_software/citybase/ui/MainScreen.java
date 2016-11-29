@@ -126,11 +126,11 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     @Override
-    public void getSpinner (String json) {
+    public void getSpinner (String json,String table) {
         search = json;
         modelDataList.clear();
         adapter.notifyDataSetChanged();
-        app.getNet().getBase(search, "_Kharkov", "rent_living", _id, _key);
+        app.getNet().getBase(search, "_Kharkov", table, _id, _key);
         dialog.show();
     }
 
@@ -192,26 +192,9 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 search = "";
                 apiCalls();
                 break;
-            case R.id.sell:
-                table = "sale_living";
-                search = "";
-                apiCalls();
-                break;
-            case R.id.arendaComer:
-                table = "rent_not_living";
-                search = "";
-                apiCalls();
-                break;
-            case R.id.sellComer:
-                table = "sale_not_living";
-                search = "";
-                apiCalls();
-                break;
             case R.id.myProfile:
                 break;
             case R.id.tarifs:
-                break;
-            case R.id.study:
                 break;
             case R.id.contacts:
                 break;
