@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:fillViewport="true"
+                android:background="@color/backWhite">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/backSearch"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:text="На вашем счету :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView15"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center"
+                    android:textSize="@dimen/textSize"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:text="0.00 грн"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView16"
+                    android:layout_below="@+id/textView15"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="15dp"
+                    android:textSize="@dimen/textSize"
+                    android:textStyle="normal|bold"
+                    android:textColor="@color/textColor"/>
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/backSearch">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/textView29"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/background"
+                    android:layout_height="4dp"/>
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/backSearch"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:text="Активные услуги :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView18"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize"/>
+
+                <TextView
+                    android:text="Аренда + Продажа 1 месяц"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView20"
+                    android:layout_below="@+id/textView18"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"/>
+
+                <TextView
+                    android:text="Действует до:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView22"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/textView23"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize"
+                    android:paddingTop="10dp"/>
+
+                <TextView
+                    android:text="Действует с:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView22"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize"
+                    android:layout_below="@+id/textView20"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingTop="10dp"/>
+
+                <TextView
+                    android:text="24.12 19:13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView23"
+                    android:layout_toRightOf="@+id/textView23"
+                    android:layout_toEndOf="@+id/textView23"
+                    android:id="@+id/textView24"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"
+                    android:layout_alignBaseline="@+id/textView23"/>
+
+                <TextView
+                    android:text="24.11 19:13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView24"
+                    android:layout_alignLeft="@+id/textView24"
+                    android:layout_alignStart="@+id/textView24"
+                    android:id="@+id/textView25"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"
+                    android:layout_alignBaseline="@+id/textView22"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@android:color/white"
+                android:layout_marginTop="25dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:text="Информация об аккаунте"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView27"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="@dimen/textSize"
+                    android:textColor="@color/textColor"/>
+
+                <EditText
+                    android:id="@+id/editNameET"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Имя"
+                    android:inputType="textAutoComplete"
+                    android:selectAllOnFocus="false"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    android:background="@color/backSearch"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:layout_marginTop="3dp"/>
+
+                <EditText
+                    android:id="@+id/editLoginET"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="\@email"
+                    android:inputType="textEmailAddress"
+                    android:selectAllOnFocus="false"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    android:background="@color/backSearch"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:layout_marginTop="3dp"/>
+
+                <EditText
+                    android:id="@+id/editPhone"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Телефон"
+                    android:inputType="phone"
+                    android:selectAllOnFocus="false"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    android:background="@color/backSearch"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:layout_marginTop="3dp"/>
+                <EditText
+                    android:id="@+id/editPassET"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Пароль"
+                    android:inputType="textPassword"
+                    android:selectAllOnFocus="false"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    android:background="@color/backSearch"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:layout_marginTop="3dp"/>
+                <EditText
+                    android:id="@+id/editCity"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Город"
+                    android:inputType="textAutoComplete"
+                    android:selectAllOnFocus="false"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    android:background="@color/backSearch"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:layout_marginTop="3dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:text="Историия платежей"
+            android:layout_width="match_parent"
+            android:id="@+id/button"
+            android:background="@color/backSearch"
+            android:textColor="@color/textColor"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="@dimen/textSize"/>
+    </RelativeLayout>
+</RelativeLayout>

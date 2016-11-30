@@ -14,38 +14,18 @@ public class Countphone {
     @Expose
     private Integer count;
 
-    /**
-     * 
-     * @return
-     *     The value
-     */
     public String getValue() {
         return value;
     }
 
-    /**
-     * 
-     * @param value
-     *     The value
-     */
     public void setValue(String value) {
         this.value = value;
     }
 
-    /**
-     * 
-     * @return
-     *     The count
-     */
     public Integer getCount() {
         return count;
     }
 
-    /**
-     * 
-     * @param count
-     *     The count
-     */
     public void setCount(Integer count) {
         this.count = count;
     }

@@ -19,7 +19,7 @@ public interface API {
     Call<LoginResponse> login (@Query("login") String login, @Query("pass") String password);
 
     @GET("login.registration")
-    Call<FieldResponse> registration (@Query("phone") String phone, @Query("pass") String pass, @Query("name") String name);
+    Call<FieldResponse> registration (@Query("phone") String phone, @Query("pass") String pass, @Query("name") String name, @Query("user_type") Integer user_type);
 
     @GET("login.ActivationAccount")
     Call<FieldResponse> activationAccount (@Query("uid") String uid, @Query("key") String key, @Query("code") String code);

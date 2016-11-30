@@ -25,9 +25,6 @@ import chi_software.citybase.data.login.LoginResponse;
 public class StartScreen extends BaseActivity implements View.OnClickListener {
 
     private MaterialEditText phoneLogin, passLogin;
-    private Button butOk, butTryBase;
-    private TextView registration;
-    private String sEmai, sPass;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
@@ -35,9 +32,9 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.start_screen_layout);
         phoneLogin = (MaterialEditText) findViewById(R.id.phoneLoginNew);
         passLogin = (MaterialEditText) findViewById(R.id.passwordLoginNew);
-        butOk = (Button) findViewById(R.id.butOkNew);
-        butTryBase = (Button) findViewById(R.id.butTryBaseNew);
-        registration = (TextView) findViewById(R.id.registNewTW);
+        Button butOk = (Button) findViewById(R.id.butOkNew);
+        Button butTryBase = (Button) findViewById(R.id.butTryBaseNew);
+        TextView registration = (TextView) findViewById(R.id.registNewTW);
 
         butOk.setOnClickListener(this);
         butTryBase.setOnClickListener(this);
@@ -98,8 +95,8 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
     }
 
     private void signIn () {
-        sEmai = phoneLogin.getText().toString();
-        sPass = passLogin.getText().toString();
+        String sEmai = phoneLogin.getText().toString();
+        String sPass = passLogin.getText().toString();
         //app.getNet().login(sEmai, sPass);
         //app.getNet().login("0664382589", "test123456");
         app.getNet().login("0638367925", "papin0");

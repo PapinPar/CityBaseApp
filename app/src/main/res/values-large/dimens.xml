@@ -23,4 +23,6 @@
     <dimen name="searchPaddingSpinner">18dp</dimen>
     <dimen name="searchPadding">28dp</dimen>
     <dimen name="searchTextHeight">90dp</dimen>
+
+    <dimen name="iconSize">70dp</dimen>
 </resources>

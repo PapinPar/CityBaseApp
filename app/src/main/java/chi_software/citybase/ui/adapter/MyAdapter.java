@@ -23,24 +23,23 @@ import chi_software.citybase.data.ModelData;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
 
-    public interface photoListner {
+    public interface photoListener {
         void getPhotoId (String id, int position);
     }
 
 
-    photoListner photoListner;
-    private List<ModelData> developersInfoList;
-    private String currency;
+    final photoListener photoListner;
+    private final List<ModelData> developersInfoList;
 
 
     public static class DevViewHolder extends RecyclerView.ViewHolder {
-        private TextView adminArea;
-        private TextView site;
-        private TextView type;
-        private TextView price;
-        private ImageView image;
-        private TextView info;
-        private Context myParent;
+        private final TextView adminArea;
+        private final TextView site;
+        private final TextView type;
+        private final TextView price;
+        private final ImageView image;
+        private final TextView info;
+        private final Context myParent;
         //private ImageView backgroundColor;
 
         DevViewHolder (View itemView) {
@@ -56,9 +55,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         }
     }
 
-    public MyAdapter (List<ModelData> developersInfoList, photoListner photoListner) {
+    public MyAdapter (List<ModelData> developersInfoList, photoListener photoListener) {
         this.developersInfoList = developersInfoList;
-        this.photoListner = photoListner;
+        this.photoListner = photoListener;
     }
 
     @Override
@@ -71,6 +70,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
 
     @Override
     public void onBindViewHolder (DevViewHolder holder, final int i) {
+        Log.d("MyAdapter", "holder.getAdapterPosition():" + holder.getAdapterPosition());
+        Log.d("MyAdapter", "i:" + i);
+        String currency;
         if ( developersInfoList.get(i).table.equals("rent_living") || developersInfoList.get(i).table.equals("rent_not_living") )
             currency = "грн";
         else
@@ -104,8 +106,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
 
         // Информация
         String info;
-        if ( developersInfoList.get(i).info.length() > 100 ) {
-            info = developersInfoList.get(i).info.substring(0, 100);
+        if ( developersInfoList.get(i).info.length() > 40 ) {
+            info = developersInfoList.get(i).info.substring(0, 40);
         } else
             info = developersInfoList.get(i).info;
         // Слушатель

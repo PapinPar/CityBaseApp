@@ -31,8 +31,6 @@ import chi_software.citybase.data.getBase.MyObject;
  */
 
 public class PagerViwer extends BaseActivity {
-    private ViewPager pager;
-    private PagerAdapter pagerAdapter;
     private ArrayList<String> UrlList;
     private List<MyObject> myObjectsList;
     private int position;
@@ -40,7 +38,6 @@ public class PagerViwer extends BaseActivity {
     private String _uid, _key, table;
     private TextView updData, publishedDa, price, roomsType, areaSize, metroName, info, address, phoneNmber;
     private LinearLayout line2, line3;
-    private ImageView webLink;
 
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,14 +50,14 @@ public class PagerViwer extends BaseActivity {
         _key = getIntent().getStringExtra("key");
         table = getIntent().getStringExtra("table");
 
-        pager = (ViewPager) findViewById(R.id.myPager);
-        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        ViewPager pager = (ViewPager) findViewById(R.id.myPager);
+        PagerAdapter pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
 
         line2 = (LinearLayout) findViewById(R.id.line2);
         line3 = (LinearLayout) findViewById(R.id.line3);
 
-        webLink = (ImageView) findViewById(R.id.imageWebLink);
+        ImageView webLink = (ImageView) findViewById(R.id.imageWebLink);
         webLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {

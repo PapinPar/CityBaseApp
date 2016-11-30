@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -25,10 +26,11 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     private MaterialEditText pass;
     private MaterialEditText phone;
     private MaterialEditText name;
-    private Button butOk;
-    private String passS, phoneS, nameS;
+    private String passS;
+    private String phoneS;
     private String key, mId;
     private SpotsDialog dialogLoading;
+    private int user_type;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
@@ -38,7 +40,26 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         pass = (MaterialEditText) findViewById(R.id.registPassET);
         phone = (MaterialEditText) findViewById(R.id.registNumberET);
         name = (MaterialEditText) findViewById(R.id.registNameET);
-        butOk = (Button) findViewById(R.id.buttonReg);
+        Button butOk = (Button) findViewById(R.id.buttonReg);
+        user_type = 0;
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged (RadioGroup group, int checkedId) {
+                switch ( checkedId ) {
+                    case R.id.radioButton1:
+                        user_type = 1;
+                        break;
+                    case R.id.radioButton2:
+                        user_type = 2;
+                        break;
+                    case R.id.radioButton3:
+                        user_type = 3;
+                        break;
+                }
+            }
+        });
         butOk.setOnClickListener(this);
     }
 
@@ -48,10 +69,13 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             case R.id.buttonReg:
                 passS = pass.getText().toString();
                 phoneS = phone.getText().toString();
+                String nameS = name.getText().toString();
                 nameS = name.getText().toString();
-                nameS = name.getText().toString();
-                app.getNet().registration(phoneS, passS, nameS);
-                dialogLoading.show();
+                if ( user_type != 0 ) {
+                    app.getNet().registration(phoneS, passS, nameS, user_type);
+                    dialogLoading.show();
+                }else
+                    Toast.makeText(this, "Выберите один из типов использования", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

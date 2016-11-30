@@ -37,6 +37,9 @@
             android:name=".ui.SmsDialog"
             android:theme="@style/windowBack">
         </activity>
+        <activity android:name=".ui.EditUserActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
     </application>
 

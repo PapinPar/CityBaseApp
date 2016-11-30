@@ -25,8 +25,4 @@
     <style name="MySpinerStyle">
         <item name="colorAccent">@color/backGray</item>
     </style>
-
-    <style name="windowBack" parent="AppTheme.NoActionBar">
-        <item name="android:windowBackground">@drawable/login_bg</item>
-    </style>
 </resources>

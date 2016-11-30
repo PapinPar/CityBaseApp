@@ -51,8 +51,8 @@ public class RestApiWrapper {
         return response;
     }
 
-    public Response<FieldResponse> registration (String phone, String pass, String name) throws IOException{
-        Call<FieldResponse> callRegistration = api.registration(phone, pass, name);
+    public Response<FieldResponse> registration (String phone, String pass, String name,Integer user_type) throws IOException{
+        Call<FieldResponse> callRegistration = api.registration(phone, pass, name,user_type);
         Response response = callRegistration.execute();
         return response;
     }

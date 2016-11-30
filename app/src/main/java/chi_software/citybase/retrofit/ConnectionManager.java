@@ -106,12 +106,12 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void registration (@NonNull final String phone, @NonNull final String pass, @NonNull final String name) {
+    public void registration (@NonNull final String phone, @NonNull final String pass, @NonNull final String name, final Integer user_type) {
         executor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
-                    Response<FieldResponse> response = RestApiWrapper.getInstanse().registration(phone, pass, name);
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().registration(phone, pass, name,user_type);
                     FieldResponse body = response.body();
 
                     if ( body.getServerResponse() != null )

@@ -39,20 +39,16 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
     private EditText priceTo;
     private EditText text_phone;
     private EditText comment;
-    private Button button;
-    private ArrayList<String> listType;
-    private ArrayList<String> listArea;
-    private ArrayList<String> listPunkt;
     private Button sell, sellComer, arenda, arendaComer;
 
     private String table;
 
-    List<String> typeSelected;
-    List<String> areaSelected;
-    List<String> punktSelected;
+    private List<String> typeSelected;
+    private List<String> areaSelected;
+    private List<String> punktSelected;
 
-    MenuSearch menuSearch;
-    GetSpinnerListner getSpinnerListner;
+    private MenuSearch menuSearch;
+    private GetSpinnerListner getSpinnerListner;
 
 
     public interface GetSpinnerListner {
@@ -77,7 +73,7 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
         priceTo = (EditText) view.findViewById(R.id.priceToET);
         text_phone = (EditText) view.findViewById(R.id.phoneET);
         comment = (EditText) view.findViewById(R.id.comentET);
-        button = (Button) view.findViewById(R.id.buttFind);
+        Button button = (Button) view.findViewById(R.id.buttFind);
 
         arenda = (Button) view.findViewById(R.id.arendaBUT);
         arendaComer = (Button) view.findViewById(R.id.arendaComerBUT);
@@ -89,9 +85,9 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
         arenda.setOnClickListener(this);
         arendaComer.setOnClickListener(this);
 
-        listType = new ArrayList<>(); //тип
-        listPunkt = new ArrayList<>(); // населенный пункт
-        listArea = new ArrayList<>();// район
+        ArrayList<String> listType = new ArrayList<>();
+        ArrayList<String> listPunkt = new ArrayList<>();
+        ArrayList<String> listArea = new ArrayList<>();
         typeSelected = new ArrayList<>();
         areaSelected = new ArrayList<>();
         punktSelected = new ArrayList<>();

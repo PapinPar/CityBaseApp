@@ -10,14 +10,15 @@
         android:id="@+id/mainLinear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backSearch"
+        android:background="@color/backWhite"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/backGray">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/myPager"
@@ -36,13 +37,7 @@
             android:background="@color/backGray"
             android:orientation="vertical"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:id="@+id/imageWebLink"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@color/backGreen"/>
+            >
 
             <TextView
                 android:id="@+id/textView10"
@@ -92,6 +87,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"/>
 
+            <ImageView
+                android:id="@+id/imageWebLink"
+                app:srcCompat="@drawable/global"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="37dp"
+                android:layout_width="@dimen/iconSize"
+                android:layout_height="@dimen/iconSize"/>
+
         </RelativeLayout>
 
         <TextView
@@ -108,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/backGray">
+            >
 
 
             <LinearLayout
@@ -120,9 +125,9 @@
 
                 <ImageView
                     android:id="@+id/imageView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_menu_camera"
+                    android:layout_width="@dimen/iconSize"
+                    android:layout_height="@dimen/iconSize"
+                    app:srcCompat="@drawable/house"
                     />
 
 
@@ -147,9 +152,9 @@
                 android:gravity="left|center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_menu_share"
+                    android:layout_width="@dimen/iconSize"
+                    android:layout_height="@dimen/iconSize"
+                    app:srcCompat="@drawable/sizes"
                     android:id="@+id/imageView15"
                     />
 
@@ -174,9 +179,9 @@
                 android:id="@+id/line3">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_menu_manage"
+                    android:layout_width="@dimen/iconSize"
+                    android:layout_height="@dimen/iconSize"
+                    app:srcCompat="@drawable/metro"
                     android:id="@+id/imageView16"
                     />
 
@@ -211,7 +216,7 @@
             android:textAllCaps="false"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize"
-            android:background="@color/backGray"/>
+            />
 
         <TextView
             android:id="@+id/textView19"
@@ -231,7 +236,7 @@
             android:text="TextView"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize"
-            android:background="@color/backGray"/>
+            />
 
         <TextView
             android:id="@+id/textView21"

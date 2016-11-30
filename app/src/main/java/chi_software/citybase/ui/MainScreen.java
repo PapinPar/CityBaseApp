@@ -31,17 +31,11 @@ import chi_software.citybase.ui.pager.PagerViwer;
 import dmax.dialog.SpotsDialog;
 
 
-public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchDialog.GetSpinnerListner, MyAdapter.photoListner {
+public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchDialog.GetSpinnerListner, MyAdapter.photoListener {
 
-    private Toolbar toolbar;
-    private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
-    private NavigationView navigationView;
     private Button findBut;
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
     private MyAdapter adapter;
-    private List<ModelData> modelDataList = new ArrayList<>();
+    private List<ModelData> modelDataList;
     private SearchDialog searchDialog;
     private MenuSearch myMenu;
     private BaseResponse baseResponse;
@@ -53,6 +47,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         search = "";
+        modelDataList = new ArrayList<>();
         _key = getIntent().getStringExtra("_key");
         _id = getIntent().getStringExtra("_id");
         table = "rent_living";
@@ -62,8 +57,8 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         findBut.setOnClickListener(this);
         findBut.setClickable(false);
         findBut.setAlpha((float) 0.4);
-        recyclerView = (RecyclerView) findViewById(R.id.MyRecycle);
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.MyRecycle);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         adapter = new MyAdapter(modelDataList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
@@ -127,7 +122,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     @Override
-    public void getSpinner (String json,String tableM) {
+    public void getSpinner (String json, String tableM) {
         search = json;
         table = tableM;
         modelDataList.clear();
@@ -152,38 +147,36 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         String info = "";
         for ( int i = 0 ; i < baseResponse.getBaseGet().getGetResponse().getModel().size() ; i++ ) {
             String id = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId();
-            if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null &&
-                    baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1 ){
+            if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null && baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1 ) {
                 info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
-        }else
-        if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null &&
-                baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1 ){
-                info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
-        } else
-            info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
-        if ( baseResponse.getMap().containsKey(id) ) {
-            list = (ArrayList) baseResponse.getMap().get(id);
-            modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
-                    //baseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                    "перейти на сайт", baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), table));
-        } else
-            modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
-                    //baseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                    "перейти на сайт", baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, table));
+            } else
+                if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null && baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1 ) {
+                    info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
+                } else
+                    info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
+            if ( baseResponse.getMap().containsKey(id) ) {
+                list = (ArrayList) baseResponse.getMap().get(id);
+                modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
+                        //baseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
+                        "перейти на сайт", baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), table));
+            } else
+                modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
+                        //baseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
+                        "перейти на сайт", baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, table));
+        }
+
+        dialog.dismiss();
+        adapter.notifyDataSetChanged();
     }
 
-    dialog.dismiss();
-    adapter.notifyDataSetChanged();
-}
-
     private void navigationInitial () {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -197,6 +190,8 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 apiCalls();
                 break;
             case R.id.myProfile:
+                Intent profile = new Intent(MainScreen.this, EditUserActivity.class);
+                startActivity(profile);
                 break;
             case R.id.tarifs:
                 break;

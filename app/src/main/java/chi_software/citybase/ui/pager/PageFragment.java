@@ -20,9 +20,9 @@ import chi_software.citybase.R;
 
 public class PageFragment extends Fragment {
 
-    final static String ARGUMENT_PAGE_NUMBER = "arg_page_number";
+    private final static String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     private static ArrayList<String> url1;
-    int pageNumber;
+    private int pageNumber;
     static PageFragment newInstance (int page,ArrayList<String> url) {
         PageFragment pageFragment = new PageFragment();
         url1 = url;
