@@ -15,24 +15,23 @@ import chi_software.citybase.retrofit.ConnectionManager;
  */
 
 public class CityApplication extends Application implements App {
-    private Executor executor;
-    private Net net;
+    private Executor mExecutor;
+    private Net mNet;
 
     @Override
     public void onCreate () {
         super.onCreate();
-        executor = Executors.newFixedThreadPool(2);
-        net = new ConnectionManager(executor);
+        mExecutor = Executors.newFixedThreadPool(2);
+        mNet = new ConnectionManager(mExecutor);
     }
 
     @Override
     public Net getNet () {
-        return net;
+        return mNet;
     }
 
-    @Override
-    public Executor getExecutor () {
-        return executor;
+    public Executor getmExecutor () {
+        return mExecutor;
     }
 
     public static App getApp(Context context){

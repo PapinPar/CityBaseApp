@@ -31,31 +31,40 @@ import chi_software.citybase.data.getBase.MyObject;
  */
 
 public class PagerViwer extends BaseActivity {
-    private ArrayList<String> UrlList;
-    private List<MyObject> myObjectsList;
-    private int position;
-    private int size;
-    private String _uid, _key, table;
-    private TextView updData, publishedDa, price, roomsType, areaSize, metroName, info, address, phoneNmber;
-    private LinearLayout line2, line3;
+
+    public static final String UID = "uid";
+    public static final String URL = "url";
+    public static final String SIZE = "size";
+    public static final String POSITION = "position";
+    public static final String MODEL = "model";
+    public static final String KEY = "key";
+    public static final String TABLE = "table";
+
+    private ArrayList<String> mUrlList;
+    private List<MyObject> mMyObjectsList;
+    private int mPosition;
+    private int mSize;
+    private String mUid, mKey, mTable;
+    private TextView mUpdData, mPublishedData, mPrice, mRoomsType, mAreaSize, mMetroName, mInfo, mAddress, mPhoneNmber;
+    private LinearLayout mLine2, mLine3;
 
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_info_layout);
-        UrlList = getIntent().getStringArrayListExtra("test");
-        size = getIntent().getIntExtra("size", 0);
-        position = getIntent().getIntExtra("position", 0);
-        myObjectsList = (List<MyObject>) getIntent().getSerializableExtra("model");
-        _uid = getIntent().getStringExtra("uid");
-        _key = getIntent().getStringExtra("key");
-        table = getIntent().getStringExtra("table");
+        mUrlList = getIntent().getStringArrayListExtra(URL);
+        mSize = getIntent().getIntExtra(SIZE, 0);
+        mPosition = getIntent().getIntExtra(POSITION, 0);
+        mMyObjectsList = (List<MyObject>) getIntent().getSerializableExtra(MODEL);
+        mUid = getIntent().getStringExtra(UID);
+        mKey = getIntent().getStringExtra(KEY);
+        mTable = getIntent().getStringExtra(TABLE);
 
         ViewPager pager = (ViewPager) findViewById(R.id.myPager);
         PagerAdapter pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
 
-        line2 = (LinearLayout) findViewById(R.id.line2);
-        line3 = (LinearLayout) findViewById(R.id.line3);
+        mLine2 = (LinearLayout) findViewById(R.id.line2);
+        mLine3 = (LinearLayout) findViewById(R.id.line3);
 
         ImageView webLink = (ImageView) findViewById(R.id.imageWebLink);
         webLink.setOnClickListener(new View.OnClickListener() {
@@ -64,37 +73,30 @@ public class PagerViwer extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse(myObjectsList.get(position).getUrl()));
+                intent.setData(Uri.parse(mMyObjectsList.get(mPosition).getUrl()));
                 startActivity(intent);
             }
         });
 
-        updData = (TextView) findViewById(R.id.updTW);
-        publishedDa = (TextView) findViewById(R.id.publichedTW);
-        price = (TextView) findViewById(R.id.priceTW);
-        roomsType = (TextView) findViewById(R.id.roomsTypeTW);
-        areaSize = (TextView) findViewById(R.id.areaSizeTW);
-        metroName = (TextView) findViewById(R.id.metroNameTW);
-        info = (TextView) findViewById(R.id.infoAbout);
-        address = (TextView) findViewById(R.id.addressTW);
-        phoneNmber = (TextView) findViewById(R.id.phoneNumberTW);
+        mUpdData = (TextView) findViewById(R.id.updTW);
+        mPublishedData = (TextView) findViewById(R.id.publichedTW);
+        mPrice = (TextView) findViewById(R.id.priceTW);
+        mRoomsType = (TextView) findViewById(R.id.roomsTypeTW);
+        mAreaSize = (TextView) findViewById(R.id.areaSizeTW);
+        mMetroName = (TextView) findViewById(R.id.metroNameTW);
+        mInfo = (TextView) findViewById(R.id.infoAbout);
+        mAddress = (TextView) findViewById(R.id.addressTW);
+        mPhoneNmber = (TextView) findViewById(R.id.phoneNumberTW);
 
-        phoneNmber.setOnClickListener(new View.OnClickListener() {
+        mPhoneNmber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                if ( myObjectsList.get(position).getPhone() != null )
+                if ( mMyObjectsList.get(mPosition).getPhone() != null )
                     if ( ActivityCompat.checkSelfPermission(PagerViwer.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
                         return;
                     }
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" +phoneNmber.getText().toString()));
+                intent.setData(Uri.parse("tel:" + mPhoneNmber.getText().toString()));
                 startActivity(intent);
             }
         });
@@ -116,46 +118,46 @@ public class PagerViwer extends BaseActivity {
     }
 
     private void setInfo () {
-        updData.setText(myObjectsList.get(position).getDateUp());
-        publishedDa.setText(myObjectsList.get(position).getDatePub());
-        price.setText(myObjectsList.get(position).getPrice() + "грн");
-        roomsType.setText(myObjectsList.get(position).getType());
+        mUpdData.setText(mMyObjectsList.get(mPosition).getDateUp());
+        mPublishedData.setText(mMyObjectsList.get(mPosition).getDatePub());
+        mPrice.setText(mMyObjectsList.get(mPosition).getPrice() + "грн");
+        mRoomsType.setText(mMyObjectsList.get(mPosition).getType());
         String areaFloor = "";
-        if ( myObjectsList.get(position).getArea() != null )
-            areaFloor = myObjectsList.get(position).getArea() + "м^2, ";
-        if ( myObjectsList.get(position).getFloor() != null )
-            areaFloor = areaFloor + myObjectsList.get(position).getFloor() + "этаж";
+        if ( mMyObjectsList.get(mPosition).getArea() != null )
+            areaFloor = mMyObjectsList.get(mPosition).getArea() + "м^2, ";
+        if ( mMyObjectsList.get(mPosition).getFloor() != null )
+            areaFloor = areaFloor + mMyObjectsList.get(mPosition).getFloor() + "этаж";
         if ( !areaFloor.equals("") )
-            areaSize.setText(areaFloor);
+            mAreaSize.setText(areaFloor);
         else
-            line2.setVisibility(View.GONE);
+            mLine2.setVisibility(View.GONE);
 
         String metroDistanse = "";
-        if ( myObjectsList.get(position).getGuide() != null )
-            metroDistanse = "метро " + myObjectsList.get(position).getGuide() + " ";
-        if ( myObjectsList.get(position).getDistanceMetro() != null )
-            metroDistanse = metroDistanse + myObjectsList.get(position).getDistanceMetro() + " м.";
+        if ( mMyObjectsList.get(mPosition).getGuide() != null )
+            metroDistanse = "метро " + mMyObjectsList.get(mPosition).getGuide() + " ";
+        if ( mMyObjectsList.get(mPosition).getDistanceMetro() != null )
+            metroDistanse = metroDistanse + mMyObjectsList.get(mPosition).getDistanceMetro() + " м.";
         if ( !metroDistanse.equals("") )
-            metroName.setText(metroDistanse);
+            mMetroName.setText(metroDistanse);
         else
-            line3.setVisibility(View.GONE);
+            mLine3.setVisibility(View.GONE);
 
-        info.setText(myObjectsList.get(position).getText());
+        mInfo.setText(mMyObjectsList.get(mPosition).getText());
         String streetHouse = "";
-        if ( myObjectsList.get(position).getStreet() != null ) {
-            streetHouse = myObjectsList.get(position).getStreet() + " ";
-            if ( myObjectsList.get(position).getHouse() != null )
-                streetHouse = streetHouse + myObjectsList.get(position).getHouse();
+        if ( mMyObjectsList.get(mPosition).getStreet() != null ) {
+            streetHouse = mMyObjectsList.get(mPosition).getStreet() + " ";
+            if ( mMyObjectsList.get(mPosition).getHouse() != null )
+                streetHouse = streetHouse + mMyObjectsList.get(mPosition).getHouse();
         }
         if ( !streetHouse.equals("") )
-            address.setText(streetHouse);
+            mAddress.setText(streetHouse);
         else
-            address.setVisibility(View.GONE);
+            mAddress.setVisibility(View.GONE);
 
-        if ( myObjectsList.get(position).getPhone() != null )
-            phoneNmber.setText(myObjectsList.get(position).getPhone());
+        if ( mMyObjectsList.get(mPosition).getPhone() != null )
+            mPhoneNmber.setText(mMyObjectsList.get(mPosition).getPhone());
         else
-            phoneNmber.setVisibility(View.GONE);
+            mPhoneNmber.setVisibility(View.GONE);
     }
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -166,12 +168,12 @@ public class PagerViwer extends BaseActivity {
 
         @Override
         public Fragment getItem (int position) {
-            return PageFragment.newInstance(position, UrlList);
+            return PageFragment.newInstance(position, mUrlList);
         }
 
         @Override
         public int getCount () {
-            return size;
+            return mSize;
         }
     }
 
@@ -185,19 +187,19 @@ public class PagerViwer extends BaseActivity {
     public boolean onOptionsItemSelected (MenuItem item) {
         switch ( item.getItemId() ) {
             case R.id.action_green:
-                app.getNet().setColor(_uid, _key, "_Kharkov", table, myObjectsList.get(position).getId(), "color", 1);
+                app.getNet().setColor(mUid, mKey, "_Kharkov", mTable, mMyObjectsList.get(mPosition).getId(), "color", 1);
                 break;
             case R.id.action_red:
-                app.getNet().setColor(_uid, _key, "_Kharkov", table, myObjectsList.get(position).getId(), "color", 3);
+                app.getNet().setColor(mUid, mKey, "_Kharkov", mTable, mMyObjectsList.get(mPosition).getId(), "color", 3);
                 break;
             case R.id.action_yellow:
-                app.getNet().setColor(_uid, _key, "_Kharkov", table, myObjectsList.get(position).getId(), "color", 2);
+                app.getNet().setColor(mUid, mKey, "_Kharkov", mTable, mMyObjectsList.get(mPosition).getId(), "color", 2);
                 break;
             case R.id.action_no_color:
-                app.getNet().setColor(_uid, _key, "_Kharkov", table, myObjectsList.get(position).getId(), "color", 0);
+                app.getNet().setColor(mUid, mKey, "_Kharkov", mTable, mMyObjectsList.get(mPosition).getId(), "color", 0);
                 break;
             case R.id.action_comment:
-                app.getNet().setComment(_uid, _key, "_Kharkov", table, myObjectsList.get(position).getId(), "comment", "Пробный комментарий");
+                app.getNet().setComment(mUid, mKey, "_Kharkov", mTable, mMyObjectsList.get(mPosition).getId(), "comment", "Пробный комментарий");
                 break;
         }
         return super.onOptionsItemSelected(item);

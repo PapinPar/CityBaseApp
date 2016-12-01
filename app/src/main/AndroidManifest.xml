@@ -34,7 +34,7 @@
             android:name=".ui.RegistrationActivity">
         </activity>
         <activity
-            android:name=".ui.SmsDialog"
+            android:name=".ui.SmsActivity"
             android:theme="@style/windowBack">
         </activity>
         <activity android:name=".ui.EditUserActivity"

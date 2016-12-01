@@ -9,72 +9,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TableLayout
-            android:id="@+id/tableLayout"
+        <LinearLayout
+            android:id="@+id/radioGroupSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:background="@color/backGreen"
-            android:padding="2dp">
+            android:padding="2dp"
+            android:gravity="center">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/radioLong"
+                android:layout_width="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@color/backGray"
+                android:text="Долгосрочно"
+                android:textSize="@dimen/textSize"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:checked="false"/>
 
-                <Button
-                    android:id="@+id/arendaBUT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/searchTableButton"
-                    android:layout_margin="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/backGray"
-                    android:text="Аренда жилой"
-                    android:textSize="@dimen/textSize"/>
+            <CheckBox
+                android:id="@+id/radioShort"
+                android:layout_width="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@color/backGray"
+                android:text="Посуточно"
+                android:textSize="@dimen/textSize"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
 
-                <Button
-                    android:id="@+id/sellBUTT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/searchTableButton"
-                    android:layout_margin="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/backGray"
-                    android:text="Продажа жилой"
-                    android:textSize="@dimen/textSize"/>
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/arendaComerBUT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/searchTableButton"
-                    android:layout_margin="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/backGray"
-                    android:text="Аренда комерческой"
-                    android:textSize="@dimen/textSize"/>
-
-                <Button
-                    android:id="@+id/sellComerBUTT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/searchTableButton"
-                    android:layout_margin="2dp"
-                    android:layout_weight="1"
-                    android:background="@color/backGray"
-                    android:text="Продажа комерческой"
-                    android:textSize="@dimen/textSize"/>
-            </TableRow>
-
-        </TableLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linear1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tableLayout"
+            android:layout_below="@+id/radioGroupSearch"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:background="@color/backGray"

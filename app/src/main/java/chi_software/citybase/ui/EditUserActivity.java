@@ -53,8 +53,6 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
                 break;
             case R.id.tarifs:
                 break;
-            case R.id.contacts:
-                break;
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_edit);

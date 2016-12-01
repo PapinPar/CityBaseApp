@@ -47,20 +47,17 @@ public class RestApiWrapper {
     // **************** AUTH **************
     public Response<LoginResponse> login (String login, String password) throws IOException {
         Call<LoginResponse> myResponseCall = api.login(login, password);
-        Response response = myResponseCall.execute();
-        return response;
+        return myResponseCall.execute();
     }
 
-    public Response<FieldResponse> registration (String phone, String pass, String name,Integer user_type) throws IOException{
-        Call<FieldResponse> callRegistration = api.registration(phone, pass, name,user_type);
-        Response response = callRegistration.execute();
-        return response;
+    public Response<FieldResponse> registration (String phone, String pass, String name,Integer userType) throws IOException{
+        Call<FieldResponse> callRegistration = api.registration(phone, pass, name,userType);
+        return  callRegistration.execute();
     }
 
     public Response<FieldResponse> activateAcount (String uid, String key, String code) throws IOException {
         Call<FieldResponse> callActivate = api.activationAccount(uid, key, code);
-        Response response = callActivate.execute();
-        return response;
+        return callActivate.execute();
     }
 
 
@@ -68,8 +65,7 @@ public class RestApiWrapper {
     // ******************** SMS *******************
     public Response<FieldResponse> sendSMS (String id, String key) throws IOException {
         Call<FieldResponse> callSendSMS = api.sendSms(id, key);
-        Response response = callSendSMS.execute();
-        return response;
+        return callSendSMS.execute();
     }
 
 
@@ -77,20 +73,17 @@ public class RestApiWrapper {
     // ******************* SEARCH ***************
     public Response<BaseGet> getBase (String search, String city, String table, String uid, String key) throws IOException {
         Call<BaseGet> baseGetCall = api.getBase(search, city, table, uid, key);
-        Response response = baseGetCall.execute();
-        return response;
+        return baseGetCall.execute();
     }
 
     public Response<MenuSearch> searchMenu (String city, String table, String uid, String key) throws IOException {
         Call<MenuSearch> menuSearchCall = api.getMenuSearch(city, table, uid, key);
-        Response response = menuSearchCall.execute();
-        return response;
+        return menuSearchCall.execute();
     }
 
     public Response<BaseGet> getTrialBase(String city,  String table,  String ruscity,String type,  String place,  String basetype,  String basetype2) throws IOException{
         Call<BaseGet> baseGetCall = api.getTrialBase(city, table, ruscity, type, place, basetype, basetype2);
-        Response response = baseGetCall.execute();
-        return response;
+        return baseGetCall.execute();
     }
 
 
@@ -98,39 +91,33 @@ public class RestApiWrapper {
     // *************** EDIT FIELD *******************
     public Response<FieldResponse> setColor (String uid, String key, String city, String table, String objId, String field, Integer color) throws  IOException {
         Call<FieldResponse> callColor = api.setColor(uid, key, city, table, objId, field, color);
-        Response response = callColor.execute();
-        return response;
+        return callColor.execute();
     }
 
     public Response<FieldResponse> setComment(String uid, String key, String city, String table, String objId, String field, String comment) throws  IOException {
         Call<FieldResponse> calComment = api.setComment(uid,key,city,table,objId,field,comment);
-        Response response = calComment.execute();
-        return response;
+        return calComment.execute();
     }
 
 
     // *************** EDIT USER *********************
     public Response<FieldResponse> addUserEmail (String uid, String key, String email) throws IOException {
         Call<FieldResponse> callAddEmail = api.addUserEmail(uid, key, email);
-        Response response = callAddEmail.execute();
-        return response;
+        return callAddEmail.execute();
     }
 
     public Response<FieldResponse> deleteUserEmail (String uid, String key)  throws IOException{
         Call<FieldResponse> callDeleteEmail = api.deleteUserEmail(uid, key);
-        Response response = callDeleteEmail.execute();
-        return response;
+        return callDeleteEmail.execute();
     }
 
     public Response<FieldResponse> editUserLogin (String uid, String key, String name, String login) throws IOException{
         Call<FieldResponse> callEditLogin = api.editUserLogin(uid, key, name, login);
-        Response response = callEditLogin.execute();
-        return response;
+        return callEditLogin.execute();
     }
 
     public Response<FieldResponse> editUserPassword (String uid, String key, String password, String reenterpassword) throws IOException{
         Call<FieldResponse> callEditPassword = api.editUserPassword(uid, key, password, reenterpassword);
-        Response response = callEditPassword.execute();
-        return response;
+        return callEditPassword.execute();
     }
 }

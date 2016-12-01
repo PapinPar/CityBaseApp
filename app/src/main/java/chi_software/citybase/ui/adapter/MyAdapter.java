@@ -29,7 +29,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
 
 
     final photoListener photoListner;
-    private final List<ModelData> developersInfoList;
+    private final List<ModelData> mDevelopersInfoList;
 
 
     public static class DevViewHolder extends RecyclerView.ViewHolder {
@@ -56,7 +56,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
     }
 
     public MyAdapter (List<ModelData> developersInfoList, photoListener photoListener) {
-        this.developersInfoList = developersInfoList;
+        this.mDevelopersInfoList = developersInfoList;
         this.photoListner = photoListener;
     }
 
@@ -73,48 +73,48 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         Log.d("MyAdapter", "holder.getAdapterPosition():" + holder.getAdapterPosition());
         Log.d("MyAdapter", "i:" + i);
         String currency;
-        if ( developersInfoList.get(i).table.equals("rent_living") || developersInfoList.get(i).table.equals("rent_not_living") )
+        if ( mDevelopersInfoList.get(i).getTable().equals("rent_living") || mDevelopersInfoList.get(i).getTable().equals("rent_not_living") )
             currency = "грн";
         else
             currency = "$";
         // Местоположение
-        if ( developersInfoList.get(i).AdminArea.length() > 1 ) {
-            holder.adminArea.setText("Район: "+developersInfoList.get(i).AdminArea);
-            Log.d("MyAdapter", developersInfoList.get(i).AdminArea);
+        if ( mDevelopersInfoList.get(i).getAdminArea().length() > 1 ) {
+            holder.adminArea.setText("Район: "+mDevelopersInfoList.get(i).getAdminArea());
+            Log.d("MyAdapter", mDevelopersInfoList.get(i).getAdminArea());
         } else
             holder.adminArea.setVisibility(View.INVISIBLE);
         // Сайт
-        if ( developersInfoList.get(i).data.length() > 0 ) {
-            holder.site.setText(developersInfoList.get(i).data);
+        if ( mDevelopersInfoList.get(i).getData().length() > 0 ) {
+            holder.site.setText(mDevelopersInfoList.get(i).getData());
         } else
             holder.site.setVisibility(View.INVISIBLE);
         // Цена
-        if ( developersInfoList.get(i).price != null )
-            holder.price.setText(developersInfoList.get(i).price + " " + currency);
+        if ( mDevelopersInfoList.get(i).getPrice() != null )
+            holder.price.setText(mDevelopersInfoList.get(i).getPrice() + " " + currency);
         else
             holder.price.setText("?" + currency);
         // Сроки
-        if ( developersInfoList.get(i).type != null && developersInfoList.get(i).type.length() > 0 )
-            holder.type.setText(developersInfoList.get(i).type);
+        if ( mDevelopersInfoList.get(i).getType() != null && mDevelopersInfoList.get(i).getType().length() > 0 )
+            holder.type.setText(mDevelopersInfoList.get(i).getType());
         else
             holder.type.setVisibility(View.INVISIBLE);
         // Картинка
-        if ( developersInfoList.get(i).url != null )
-            Picasso.with(holder.myParent).load(developersInfoList.get(i).url).error(R.drawable.icon_logo).into(holder.image);
+        if ( mDevelopersInfoList.get(i).getUrl() != null )
+            Picasso.with(holder.myParent).load(mDevelopersInfoList.get(i).getUrl()).error(R.drawable.icon_logo).into(holder.image);
         else
             holder.image.setImageResource(R.drawable.icon_logo);
 
         // Информация
         String info;
-        if ( developersInfoList.get(i).info.length() > 40 ) {
-            info = developersInfoList.get(i).info.substring(0, 40);
+        if ( mDevelopersInfoList.get(i).getInfo().length() > 40 ) {
+            info = mDevelopersInfoList.get(i).getInfo().substring(0, 40);
         } else
-            info = developersInfoList.get(i).info;
+            info = mDevelopersInfoList.get(i).getInfo();
         // Слушатель
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                photoListner.getPhotoId(developersInfoList.get(i).id, i);
+                photoListner.getPhotoId(mDevelopersInfoList.get(i).getId(), i);
             }
         });
         // Информация
@@ -137,7 +137,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
 
     @Override
     public int getItemCount () {
-        return developersInfoList.size();
+        return mDevelopersInfoList.size();
     }
 
 }

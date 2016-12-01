@@ -31,36 +31,36 @@ import retrofit2.Response;
 
 public class ConnectionManager implements Net {
 
-    private final List<NetSubscriber> observers = new ArrayList<>();
+    private final List<NetSubscriber> mObservers = new ArrayList<>();
     private Handler mHandler;
-    Executor executor;
+    Executor mExecutor;
 
-    public ConnectionManager (Executor executor) {
-        this.executor = executor;
+    public ConnectionManager (Executor mExecutor) {
+        this.mExecutor = mExecutor;
         mHandler = new Handler(Looper.getMainLooper());
     }
 
     //  **************  IMPLEMENTATION METHODS
     @Override
     public void Subscribe (NetSubscriber observer) {
-        if ( !observers.contains(observer) )
-            observers.add(observer);
+        if ( !mObservers.contains(observer) )
+            mObservers.add(observer);
     }
 
     @Override
     public void UnSubscribe (NetSubscriber observer) {
-        if ( observers.contains(observer) )
-            observers.remove(observer);
+        if ( mObservers.contains(observer) )
+            mObservers.remove(observer);
     }
 
     @Override
     public boolean IsSubscribe (NetSubscriber observer) {
-        return observers.contains(observer);
+        return mObservers.contains(observer);
     }
 
     @Override
     public void notifySuccessSubscribers (final int eventId, final Object object) {
-        for ( final NetSubscriber observer : observers ) {
+        for ( final NetSubscriber observer : mObservers ) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run () {
@@ -72,7 +72,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void notifyErrorSubscribers (final int eventId, final Object object) {
-        for ( final NetSubscriber observer : observers ) {
+        for ( final NetSubscriber observer : mObservers ) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run () {
@@ -86,7 +86,7 @@ public class ConnectionManager implements Net {
     // ************ AUTH *************
     @Override
     public void login (@NonNull final String login, @NonNull final String password) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -106,12 +106,12 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void registration (@NonNull final String phone, @NonNull final String pass, @NonNull final String name, final Integer user_type) {
-        executor.execute(new Runnable() {
+    public void registration (@NonNull final String phone, @NonNull final String pass, @NonNull final String name, final Integer userType) {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
-                    Response<FieldResponse> response = RestApiWrapper.getInstanse().registration(phone, pass, name,user_type);
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().registration(phone, pass, name, userType);
                     FieldResponse body = response.body();
 
                     if ( body.getServerResponse() != null )
@@ -127,7 +127,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void ActivateAcount (@NonNull final String uid, @NonNull final String key, @NonNull final String code) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -147,7 +147,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void addUserEmail (@NonNull final String uid, @NonNull final String key, @NonNull final String email) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -165,7 +165,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void deleteUserEmail (@NonNull final String uid, @NonNull final String key) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -184,7 +184,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void editUserLogin (@NonNull final String uid, @NonNull final String key, @NonNull final String name, @NonNull final String login) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -202,7 +202,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void editUserPassword (@NonNull final String uid, @NonNull final String key, @NonNull final String password, @NonNull final String reenterpassword) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -222,7 +222,7 @@ public class ConnectionManager implements Net {
     // ************ SEARCH ***************
     @Override
     public void searchMenu (@NonNull final String city, @NonNull final String table, @NonNull final String uid, @NonNull final String key) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -241,7 +241,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void getBase (final String search, final String city, final String table, final String uid, final String key) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -264,7 +264,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void tryBase (@NonNull final String city, @NonNull final String table, @NonNull final String ruscity, @NonNull final String type, @NonNull final String place, @NonNull final String basetype, @NonNull final String basetype2) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -287,7 +287,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void sendSms (@NonNull final String uid, @NonNull final String key) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -306,7 +306,7 @@ public class ConnectionManager implements Net {
     // *************** EDIT FIELD ****************
     @Override
     public void setColor (@NonNull final String uid, @NonNull final String key, @NonNull final String city, @NonNull final String table, @NonNull final String objId, @NonNull final String field, @NonNull final Integer color) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
@@ -321,7 +321,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void setComment (@NonNull final String uid, @NonNull final String key, @NonNull final String city, @NonNull final String table, @NonNull final String objId, @NonNull final String field, @NonNull final String comment) {
-        executor.execute(new Runnable() {
+        mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {

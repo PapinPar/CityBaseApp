@@ -21,11 +21,11 @@ import chi_software.citybase.R;
 public class PageFragment extends Fragment {
 
     private final static String ARGUMENT_PAGE_NUMBER = "arg_page_number";
-    private static ArrayList<String> url1;
-    private int pageNumber;
+    private static ArrayList<String> mUrl;
+    private int mPageNumber;
     static PageFragment newInstance (int page,ArrayList<String> url) {
         PageFragment pageFragment = new PageFragment();
-        url1 = url;
+        mUrl = url;
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         pageFragment.setArguments(arguments);
@@ -35,7 +35,7 @@ public class PageFragment extends Fragment {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        mPageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
     }
 
     @Override
@@ -45,9 +45,9 @@ public class PageFragment extends Fragment {
 
         ImageView tvPage = (ImageView) view.findViewById(R.id.iwPage);
         Picasso.with(getContext())
-                .load(url1.get(pageNumber))
+                .load(mUrl.get(mPageNumber))
                 .into(tvPage);
-        //Pearl.imageLoader(getContext(),url1.get(pageNumber),tvPage,R.color.black);
+        //Pearl.imageLoader(getContext(),mUrl.get(mPageNumber),tvPage,R.color.black);
         return view;
     }
 }

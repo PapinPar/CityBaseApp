@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/arenda"
-        android:icon="@drawable/ic_main_nav"
-        android:title="Главная"/>
-    <item
-        android:id="@+id/myProfile"
-        android:icon="@drawable/ic_cabinet_nav"
-        android:title="Kабинет"/>
-    <item
-        android:id="@+id/tarifs"
-        android:icon="@drawable/ic_tarif_nav"
-        android:title="Тарифы"/>
-    <item
-        android:id="@+id/contacts"
-        android:icon="@drawable/ic_about_nav"
-        android:title="О нас"/>
+
+    <item android:title="Базы Объектов"
+        android:icon="@drawable/ic_main_nav">
+        <menu>
+            <item
+                android:id="@+id/arenda"
+                android:title="Аренда жилой"/>
+            <item
+                android:id="@+id/sell"
+                android:title="Продажа жилой"/>
+            <item
+                android:id="@+id/arendaComer"
+                android:title="Аренда коммерческой"/>
+            <item
+                android:id="@+id/sellComer"
+                android:title="Продажа коммерческой"/>
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:icon="@drawable/ic_cabinet_nav"
+            android:id="@+id/myProfile"
+            android:title="Личный кабинет"/>
+        <item
+            android:icon="@drawable/ic_tarif_nav"
+            android:id="@+id/tarifs"
+            android:title="Тарифы"/>
+        <item
+            android:icon="@drawable/ic_about_nav"
+            android:id="@+id/study"
+            android:title="Обучение"/>
+    </group>
+
 </menu>

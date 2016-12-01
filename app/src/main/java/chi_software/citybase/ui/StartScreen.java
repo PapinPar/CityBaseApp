@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -24,22 +22,17 @@ import chi_software.citybase.data.login.LoginResponse;
 
 public class StartScreen extends BaseActivity implements View.OnClickListener {
 
-    private MaterialEditText phoneLogin, passLogin;
+    private MaterialEditText mPhoneLoginEditText, mPassLoginEditText;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_screen_layout);
-        phoneLogin = (MaterialEditText) findViewById(R.id.phoneLoginNew);
-        passLogin = (MaterialEditText) findViewById(R.id.passwordLoginNew);
-        Button butOk = (Button) findViewById(R.id.butOkNew);
-        Button butTryBase = (Button) findViewById(R.id.butTryBaseNew);
-        TextView registration = (TextView) findViewById(R.id.registNewTW);
-
-        butOk.setOnClickListener(this);
-        butTryBase.setOnClickListener(this);
-        registration.setOnClickListener(this);
-
+        mPhoneLoginEditText = (MaterialEditText) findViewById(R.id.phoneLoginNew);
+        mPassLoginEditText = (MaterialEditText) findViewById(R.id.passwordLoginNew);
+        findViewById(R.id.butOkNew).setOnClickListener(this);
+        findViewById(R.id.butTryBaseNew).setOnClickListener(this);
+        findViewById(R.id.registNewTW).setOnClickListener(this);
     }
 
     @Override
@@ -54,8 +47,8 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                 LoginResponse loginResponse = (LoginResponse) NetObjects;
                 if ( loginResponse.getMyResponse().getActive().equals("1") ) {
                     Intent startMainScreen = new Intent(StartScreen.this, MainScreen.class);
-                    startMainScreen.putExtra("_id", loginResponse.getMyResponse().getId());
-                    startMainScreen.putExtra("_key", loginResponse.getMyResponse().getKey());
+                    startMainScreen.putExtra(MainScreen.UID, loginResponse.getMyResponse().getId());
+                    startMainScreen.putExtra(MainScreen.KEY, loginResponse.getMyResponse().getKey());
                     startActivity(startMainScreen);
                     finish();
                 }
@@ -95,8 +88,8 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
     }
 
     private void signIn () {
-        String sEmai = phoneLogin.getText().toString();
-        String sPass = passLogin.getText().toString();
+        String email = mPhoneLoginEditText.getText().toString();
+        String password = mPassLoginEditText.getText().toString();
         //app.getNet().login(sEmai, sPass);
         //app.getNet().login("0664382589", "test123456");
         app.getNet().login("0638367925", "papin0");

@@ -14,33 +14,35 @@ import chi_software.citybase.core.BaseActivity;
  * Created by Papin on 17.11.2016.
  */
 
-public class SmsDialog extends BaseActivity {
+public class SmsActivity extends BaseActivity {
+
+    public static final String KEY = "key";
+    public static final String MYID = "mId";
 
     private EditText smsET;
-    private Button butOK;
-    private String mId, key, code;
+    private Button mButOK;
+    private String mId, mKey, mCode;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sms_activate_layout);
         smsET = (EditText) findViewById(R.id.smsCodeET);
-        butOK = (Button) findViewById(R.id.butConfirnSMS);
-        key = getIntent().getStringExtra("key");
-        mId = getIntent().getStringExtra(mId);
+        mButOK = (Button) findViewById(R.id.butConfirnSMS);
+        mKey = getIntent().getStringExtra(KEY);
+        mId = getIntent().getStringExtra(MYID);
 
-        butOK.setOnClickListener(new View.OnClickListener() {
+        mButOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
 
-                code = smsET.getText().toString();
-                if ( code.length() > 1 ) {
-                    app.getNet().ActivateAcount(mId, key, code);
+                mCode = smsET.getText().toString();
+                if ( mCode.length() > 1 ) {
+                    app.getNet().ActivateAcount(mId, mKey, mCode);
                     finish();
                 }
                 else
-                    Toast.makeText(SmsDialog.this, "Введите код из СМС", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(SmsActivity.this, "Введите код из СМС", Toast.LENGTH_SHORT).show();
             }
         });
     }

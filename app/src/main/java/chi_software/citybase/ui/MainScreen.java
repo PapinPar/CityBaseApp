@@ -33,56 +33,59 @@ import dmax.dialog.SpotsDialog;
 
 public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchDialog.GetSpinnerListner, MyAdapter.photoListener {
 
-    private Button findBut;
-    private MyAdapter adapter;
-    private List<ModelData> modelDataList;
-    private SearchDialog searchDialog;
-    private MenuSearch myMenu;
-    private BaseResponse baseResponse;
-    private SpotsDialog dialog;
-    private String table, _key, _id, search;
+    public static final String KEY = "key";
+    public static final String UID = "uid";
+
+    private Button mFindBut;
+    private MyAdapter mAdapter;
+    private List<ModelData> mModelDataList;
+    private SearchDialog mSearchDialog;
+    private MenuSearch mMyMenu;
+    private BaseResponse mBaseResponse;
+    private SpotsDialog mDialog;
+    private String mTable, mKey, mUid, mSearch;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-        search = "";
-        modelDataList = new ArrayList<>();
-        _key = getIntent().getStringExtra("_key");
-        _id = getIntent().getStringExtra("_id");
-        table = "rent_living";
+        mSearch = "";
+        mModelDataList = new ArrayList<>();
+        mKey = getIntent().getStringExtra(KEY);
+        mUid = getIntent().getStringExtra(UID);
+        mTable = "rent_living";
         navigationInitial();
-        searchDialog = new SearchDialog();
-        findBut = (Button) findViewById(R.id.findButton);
-        findBut.setOnClickListener(this);
-        findBut.setClickable(false);
-        findBut.setAlpha((float) 0.4);
+        mSearchDialog = new SearchDialog();
+        mFindBut = (Button) findViewById(R.id.findButton);
+        mFindBut.setOnClickListener(this);
+        mFindBut.setClickable(false);
+        mFindBut.setAlpha((float) 0.4);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.MyRecycle);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        adapter = new MyAdapter(modelDataList, this);
-        recyclerView.setAdapter(adapter);
+        mAdapter = new MyAdapter(mModelDataList, this);
+        recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(layoutManager);
-        table = "rent_living";
-        dialog = new SpotsDialog(MainScreen.this);
+        mTable = "rent_living";
+        mDialog = new SpotsDialog(MainScreen.this);
         apiCalls();
 
     }
 
     private void apiCalls () {
-        app.getNet().getBase(search, "_Kharkov", table, _id, _key);
-        app.getNet().searchMenu("_Kharkov", table, _id, _key);
-        dialog.show();
-        dialog.setCancelable(false);
-        modelDataList.clear();
-        adapter.notifyDataSetChanged();
+        app.getNet().getBase(mSearch, "_Kharkov", mTable, mUid, mKey);
+        app.getNet().searchMenu("_Kharkov", mTable, mUid, mKey);
+        mDialog.show();
+        mDialog.setCancelable(false);
+        mModelDataList.clear();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick (View v) {
         switch ( v.getId() ) {
             case R.id.findButton:
-                searchDialog.getListner(this, myMenu);
-                searchDialog.show(getFragmentManager(), "Поиск");
+                mSearchDialog.getListner(this, mMyMenu);
+                mSearchDialog.show(getFragmentManager(), "Поиск");
                 break;
         }
     }
@@ -91,21 +94,21 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     public void getPhotoId (String id, int position) {
         String url = "http://api.citybase.in.ua/api/img/";
         ArrayList list = new ArrayList();
-        if ( baseResponse.getMap().containsKey(id) )
-            list = (ArrayList) baseResponse.getMap().get(id);
+        if ( mBaseResponse.getMap().containsKey(id) )
+            list = (ArrayList) mBaseResponse.getMap().get(id);
         ArrayList<String> urlList = new ArrayList<>();
         for ( int i = 0 ; i < list.size() ; i++ )
             urlList.add(url + list.get(i));
 
         Intent s = new Intent(MainScreen.this, PagerViwer.class);
-        s.putExtra("uid", _id);
-        s.putExtra("key", _key);
-        s.putExtra("table", table);
-        s.putExtra("position", position);
-        s.putExtra("size", urlList.size());
-        s.putStringArrayListExtra("test", (ArrayList<String>) urlList);
-        List<MyObject> baseGets = baseResponse.getBaseGet().getGetResponse().getModel();
-        s.putExtra("model", (Serializable) baseGets);
+        s.putExtra(PagerViwer.UID, mUid);
+        s.putExtra(PagerViwer.KEY, mKey);
+        s.putExtra(PagerViwer.TABLE, mTable);
+        s.putExtra(PagerViwer.POSITION, position);
+        s.putExtra(PagerViwer.SIZE, urlList.size());
+        s.putStringArrayListExtra(PagerViwer.URL, (ArrayList<String>) urlList);
+        List<MyObject> baseGets = mBaseResponse.getBaseGet().getGetResponse().getModel();
+        s.putExtra(PagerViwer.MODEL, (Serializable) baseGets);
         startActivity(s);
     }
 
@@ -122,51 +125,50 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     @Override
-    public void getSpinner (String json, String tableM) {
-        search = json;
-        table = tableM;
-        modelDataList.clear();
-        adapter.notifyDataSetChanged();
-        Log.d("MainScreen", table);
-        app.getNet().getBase(search, "_Kharkov", table, _id, _key);
-        dialog.show();
+    public void getSpinner (String json) {
+        mSearch = json;
+        mModelDataList.clear();
+        mAdapter.notifyDataSetChanged();
+        Log.d("MainScreen", mTable);
+        app.getNet().getBase(mSearch, "_Kharkov", mTable, mUid, mKey);
+        mDialog.show();
     }
 
     private void fillsearch (MenuSearch netObjects) {
-        myMenu = netObjects;
-        findBut.setClickable(true);
-        findBut.setAlpha(1);
+        mMyMenu = netObjects;
+        mFindBut.setClickable(true);
+        mFindBut.setAlpha(1);
     }
 
     private void filldata (Object netObjects) {
-        Log.d("MainScreenFill", table);
-        modelDataList.clear();
-        baseResponse = (BaseResponse) netObjects;
+        Log.d("MainScreenFill", mTable);
+        mModelDataList.clear();
+        mBaseResponse = (BaseResponse) netObjects;
         String url = "http://api.citybase.in.ua/api/img/";
         ArrayList list = new ArrayList();
         String info = "";
-        for ( int i = 0 ; i < baseResponse.getBaseGet().getGetResponse().getModel().size() ; i++ ) {
-            String id = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId();
-            if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null && baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1 ) {
-                info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
+        for ( int i = 0 ; i < mBaseResponse.getBaseGet().getGetResponse().getModel().size() ; i++ ) {
+            String id = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId();
+            if ( mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1 ) {
+                info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
             } else
-                if ( baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null && baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1 ) {
-                    info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
+                if ( mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1 ) {
+                    info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
                 } else
-                    info = baseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
-            if ( baseResponse.getMap().containsKey(id) ) {
-                list = (ArrayList) baseResponse.getMap().get(id);
-                modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
-                        //baseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                        "перейти на сайт", baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), table));
+                    info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
+            if ( mBaseResponse.getMap().containsKey(id) ) {
+                list = (ArrayList) mBaseResponse.getMap().get(id);
+                mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
+                        //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
+                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), mTable));
             } else
-                modelDataList.add(new ModelData(baseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
-                        //baseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                        "перейти на сайт", baseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), baseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, table));
+                mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
+                        //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
+                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, mTable));
         }
 
-        dialog.dismiss();
-        adapter.notifyDataSetChanged();
+        mDialog.dismiss();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void navigationInitial () {
@@ -185,8 +187,19 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     public boolean onNavigationItemSelected (MenuItem item) {
         switch ( item.getItemId() ) {
             case R.id.arenda:
-                table = "rent_living";
-                search = "";
+                mTable = "rent_living";
+                apiCalls();
+                break;
+            case R.id.sell:
+                mTable = "sale_living";
+                apiCalls();
+                break;
+            case R.id.arendaComer:
+                mTable = "rent_not_living";
+                apiCalls();
+                break;
+            case R.id.sellComer:
+                mTable = "sale_not_living";
                 apiCalls();
                 break;
             case R.id.myProfile:
@@ -194,8 +207,6 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 startActivity(profile);
                 break;
             case R.id.tarifs:
-                break;
-            case R.id.contacts:
                 break;
 
         }

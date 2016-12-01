@@ -23,25 +23,26 @@ import dmax.dialog.SpotsDialog;
 
 public class RegistrationActivity extends BaseActivity implements View.OnClickListener {
 
-    private MaterialEditText pass;
-    private MaterialEditText phone;
-    private MaterialEditText name;
-    private String passS;
-    private String phoneS;
-    private String key, mId;
-    private SpotsDialog dialogLoading;
-    private int user_type;
+    private MaterialEditText metPass;
+    private MaterialEditText metPhone;
+    private MaterialEditText metName;
+    private String mPass;
+    private String mPhone;
+    private String mName;
+    private String mKey, mId;
+    private SpotsDialog mDialogLoading;
+    private int mUserType;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_layout);
-        dialogLoading = new SpotsDialog(RegistrationActivity.this);
-        pass = (MaterialEditText) findViewById(R.id.registPassET);
-        phone = (MaterialEditText) findViewById(R.id.registNumberET);
-        name = (MaterialEditText) findViewById(R.id.registNameET);
+        mDialogLoading = new SpotsDialog(RegistrationActivity.this);
+        metPass = (MaterialEditText) findViewById(R.id.registPassET);
+        metPhone = (MaterialEditText) findViewById(R.id.registNumberET);
+        metName = (MaterialEditText) findViewById(R.id.registNameET);
         Button butOk = (Button) findViewById(R.id.buttonReg);
-        user_type = 0;
+        mUserType = 0;
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -49,13 +50,13 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             public void onCheckedChanged (RadioGroup group, int checkedId) {
                 switch ( checkedId ) {
                     case R.id.radioButton1:
-                        user_type = 1;
+                        mUserType = 1;
                         break;
                     case R.id.radioButton2:
-                        user_type = 2;
+                        mUserType = 2;
                         break;
                     case R.id.radioButton3:
-                        user_type = 3;
+                        mUserType = 3;
                         break;
                 }
             }
@@ -67,13 +68,12 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     public void onClick (View v) {
         switch ( v.getId() ) {
             case R.id.buttonReg:
-                passS = pass.getText().toString();
-                phoneS = phone.getText().toString();
-                String nameS = name.getText().toString();
-                nameS = name.getText().toString();
-                if ( user_type != 0 ) {
-                    app.getNet().registration(phoneS, passS, nameS, user_type);
-                    dialogLoading.show();
+                mPass = metPass.getText().toString();
+                mPhone = metPhone.getText().toString();
+                mName = metName.getText().toString();
+                if ( mUserType != 0 ) {
+                    app.getNet().registration(mPhone, mPass, mName, mUserType);
+                    mDialogLoading.show();
                 }else
                     Toast.makeText(this, "Выберите один из типов использования", Toast.LENGTH_SHORT).show();
                 break;
@@ -85,24 +85,24 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         super.onNetRequestDone(eventId, NetObjects);
         switch ( eventId ) {
             case Net.REGISTRATION:
-                app.getNet().login(phoneS, passS);
+                app.getNet().login(mPhone, mPass);
                 break;
             case Net.SIGN_IN:
                 LoginResponse loginResponse = (LoginResponse) NetObjects;
-                key = loginResponse.getMyResponse().getKey();
+                mKey = loginResponse.getMyResponse().getKey();
                 mId = loginResponse.getMyResponse().getId();
-                app.getNet().sendSms(mId, key);
+                app.getNet().sendSms(mId, mKey);
                 break;
             case Net.SEND_SMS:
                 Log.d("PAPIN_TAG", "sms");
-                dialogLoading.dismiss();
-                Intent sms = new Intent(RegistrationActivity.this, SmsDialog.class);
-                sms.putExtra("key", key);
-                sms.putExtra("mId", mId);
+                mDialogLoading.dismiss();
+                Intent sms = new Intent(RegistrationActivity.this, SmsActivity.class);
+                sms.putExtra(SmsActivity.KEY, mKey);
+                sms.putExtra(SmsActivity.MYID, mId);
                 startActivity(sms);
                 break;
             case Net.ACTIVATE_ACOUNT:
-                dialogLoading.dismiss();
+                mDialogLoading.dismiss();
                 Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
@@ -114,7 +114,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         super.onNetRequestFail(eventId, NetObjects);
         switch ( eventId ) {
             case Net.REGISTRATION:
-                dialogLoading.dismiss();
+                mDialogLoading.dismiss();
                 Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
                 break;
             case Net.ACTIVATE_ACOUNT:

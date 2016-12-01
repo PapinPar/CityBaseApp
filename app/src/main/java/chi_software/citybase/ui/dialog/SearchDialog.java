@@ -8,8 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,30 +30,30 @@ import chi_software.citybase.multiSpinner.MultiSelectionSpinner;
  * Created by Papin on 10.11.2016.
  */
 
-public class SearchDialog extends DialogFragment implements MultiSelectionSpinner.OnMultipleItemsSelectedListener, View.OnClickListener {
+public class SearchDialog extends DialogFragment implements MultiSelectionSpinner.OnMultipleItemsSelectedListener {
 
     private View view;
-    private MultiSelectionSpinner spinerType;
-    private MultiSelectionSpinner spinerArea;
-    private MultiSelectionSpinner spinerPunrkt;
-    private EditText priceFrom;
-    private EditText priceTo;
-    private EditText text_phone;
-    private EditText comment;
-    private Button sell, sellComer, arenda, arendaComer;
+    private MultiSelectionSpinner mSpinerType;
+    private MultiSelectionSpinner mSpinerArea;
+    private MultiSelectionSpinner mSpinerPunrkt;
+    private EditText priceFromET;
+    private EditText priceToET;
+    private EditText textPhoneET;
+    private EditText commentET;
 
-    private String table;
+    private List<String> mTypeSelected;
+    private List<String> mAreaSelected;
+    private List<String> mPunktSelected;
 
-    private List<String> typeSelected;
-    private List<String> areaSelected;
-    private List<String> punktSelected;
+    private CheckBox mRadioLong;
+    private CheckBox mRadioShort;
 
     private MenuSearch menuSearch;
     private GetSpinnerListner getSpinnerListner;
 
 
     public interface GetSpinnerListner {
-        void getSpinner (String json, String table);
+        void getSpinner (String json);
     }
 
     public void getListner (GetSpinnerListner getSpinnerListner, MenuSearch menuSearch) {
@@ -64,36 +65,51 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().setTitle("");
-        table = "0";
         view = inflater.inflate(R.layout.search_dialog_layout, null);
-        spinerType = (MultiSelectionSpinner) view.findViewById(R.id.spinnerTypeNew);
-        spinerArea = (MultiSelectionSpinner) view.findViewById(R.id.spinnerAreaNew);
-        spinerPunrkt = (MultiSelectionSpinner) view.findViewById(R.id.spinnerPunktNew);
-        priceFrom = (EditText) view.findViewById(R.id.priceFromET);
-        priceTo = (EditText) view.findViewById(R.id.priceToET);
-        text_phone = (EditText) view.findViewById(R.id.phoneET);
-        comment = (EditText) view.findViewById(R.id.comentET);
+
+        mSpinerType = (MultiSelectionSpinner) view.findViewById(R.id.spinnerTypeNew);
+        mSpinerArea = (MultiSelectionSpinner) view.findViewById(R.id.spinnerAreaNew);
+        mSpinerPunrkt = (MultiSelectionSpinner) view.findViewById(R.id.spinnerPunktNew);
+        priceFromET = (EditText) view.findViewById(R.id.priceFromET);
+        priceToET = (EditText) view.findViewById(R.id.priceToET);
+        textPhoneET = (EditText) view.findViewById(R.id.phoneET);
+        commentET = (EditText) view.findViewById(R.id.comentET);
         Button button = (Button) view.findViewById(R.id.buttFind);
 
-        arenda = (Button) view.findViewById(R.id.arendaBUT);
-        arendaComer = (Button) view.findViewById(R.id.arendaComerBUT);
-        sell = (Button) view.findViewById(R.id.sellBUTT);
-        sellComer = (Button) view.findViewById(R.id.sellComerBUTT);
+        final List<String> mListTerm = new ArrayList<>();
+        mRadioLong = (CheckBox) view.findViewById(R.id.radioLong);
+        mRadioShort = (CheckBox) view.findViewById(R.id.radioShort);
 
-        sell.setOnClickListener(this);
-        sellComer.setOnClickListener(this);
-        arenda.setOnClickListener(this);
-        arendaComer.setOnClickListener(this);
+        mRadioLong.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    mListTerm.add("Д");
+                else
+                    mListTerm.remove("Д");
+            }
+        });
+
+        mRadioShort.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked) {
+                if ( isChecked ){
+                    mListTerm.add("С");}
+                else{
+                    mRadioShort.setChecked(false);
+                    mListTerm.remove("С");}
+            }
+        });
 
         ArrayList<String> listType = new ArrayList<>();
         ArrayList<String> listPunkt = new ArrayList<>();
         ArrayList<String> listArea = new ArrayList<>();
-        typeSelected = new ArrayList<>();
-        areaSelected = new ArrayList<>();
-        punktSelected = new ArrayList<>();
-        typeSelected.clear();
-        areaSelected.clear();
-        punktSelected.clear();
+        mTypeSelected = new ArrayList<>();
+        mAreaSelected = new ArrayList<>();
+        mPunktSelected = new ArrayList<>();
+        mTypeSelected.clear();
+        mAreaSelected.clear();
+        mPunktSelected.clear();
 
         listType.add("Все");
         listPunkt.add("Все");
@@ -109,49 +125,51 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
             listArea.add(menuSearch.getMenuResponse().getPlaces().get(i));
         }
 
-        spinerType.setItems(listType);
-        spinerType.setListener(this);
+        mSpinerType.setItems(listType);
+        mSpinerType.setListener(this);
 
-        spinerArea.setItems(listArea);
-        spinerArea.setListener(this);
+        mSpinerArea.setItems(listArea);
+        mSpinerArea.setListener(this);
 
-        spinerPunrkt.setItems(listPunkt);
-        spinerPunrkt.setListener(this);
+        mSpinerPunrkt.setItems(listPunkt);
+        mSpinerPunrkt.setListener(this);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                if ( table.equals("0") ) {
-                    Toast.makeText(view.getContext(), "Не выбран тип съема", Toast.LENGTH_SHORT).show();
-                } else {
-                    String dateFrom = new SimpleDateFormat("yyyy-MM").format(new Date());
-                    int day = Integer.parseInt(new SimpleDateFormat("dd").format(new Date()));
+                String year = new SimpleDateFormat("yyyy").format(new Date());
+                int month = Integer.parseInt(new SimpleDateFormat("MM").format(new Date()));
+                int day = Integer.parseInt(new SimpleDateFormat("dd").format(new Date()));
+                if ( day >= 8 )
                     day = day - 7;
-                    dateFrom = dateFrom + "-" + day;
-                    Search searchJson = new Search();
-                    searchJson.setCity(punktSelected);
-                    searchJson.setPlace(areaSelected);
-                    searchJson.setTypes(typeSelected);
-                    searchJson.setDatefrom(dateFrom);
-                    if ( priceFrom.getText().toString().length() > 0 )
-                        searchJson.setPricefrom(priceFrom.getText().toString());
-                    if ( priceTo.getText().toString().length() > 0 )
-                        searchJson.setPriceto(priceTo.getText().toString());
-                    if ( comment.getText().toString().length() > 0 )
-                        searchJson.setComment(comment.getText().toString());
-                    if ( text_phone.getText().toString().length() > 0 )
-                        searchJson.setTextorphone(text_phone.getText().toString());
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.create();
-                    Log.i("GSON", gson.toJson(searchJson));
-                    String json = gson.toJson(searchJson);
-                    Log.d("SearchDialog", table);
-                    getSpinnerListner.getSpinner(json, table);
-                    dismiss();
+                else {
+                    month = month - 1;
+                    day = 28;
                 }
+                String dateFrom = year + "-" + month + "-" + day;
+                Search searchJson = new Search();
+                if ( mListTerm.size() >= 1 )
+                    searchJson.setTerm(mListTerm);
+                searchJson.setCity(mPunktSelected);
+                searchJson.setPlace(mAreaSelected);
+                searchJson.setTypes(mTypeSelected);
+                searchJson.setDatefrom(dateFrom);
+                if ( priceFromET.getText().toString().length() > 0 )
+                    searchJson.setPricefrom(priceFromET.getText().toString());
+                if ( priceToET.getText().toString().length() > 0 )
+                    searchJson.setPriceto(priceToET.getText().toString());
+                if ( commentET.getText().toString().length() > 0 )
+                    searchJson.setComment(commentET.getText().toString());
+                if ( textPhoneET.getText().toString().length() > 0 )
+                    searchJson.setTextorphone(textPhoneET.getText().toString());
+                GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
+                Log.i("GSON", gson.toJson(searchJson));
+                String json = gson.toJson(searchJson);
+                getSpinnerListner.getSpinner(json);
+                dismiss();
             }
         });
-
         return view;
     }
 
@@ -161,64 +179,30 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
     @Override
     public void selectedStrings (List<String> strings) {
-        if ( spinerType.getSelectedStrings().contains("Все") && spinerType.getSelectedStrings().size() > 1 ) {
-            typeSelected = spinerType.getSelectedStrings();
-            typeSelected.remove(0);
-            spinerType.setSelection(typeSelected);
+        if ( mSpinerType.getSelectedStrings().contains("Все") && mSpinerType.getSelectedStrings().size() > 1 ) {
+            mTypeSelected = mSpinerType.getSelectedStrings();
+            mTypeSelected.remove(0);
+            mSpinerType.setSelection(mTypeSelected);
         }
-        if ( spinerArea.getSelectedStrings().contains("Все") && spinerArea.getSelectedStrings().size() > 1 ) {
-            areaSelected = spinerArea.getSelectedStrings();
-            areaSelected.remove(0);
-            spinerArea.setSelection(areaSelected);
+        if ( mSpinerArea.getSelectedStrings().contains("Все") && mSpinerArea.getSelectedStrings().size() > 1 ) {
+            mAreaSelected = mSpinerArea.getSelectedStrings();
+            mAreaSelected.remove(0);
+            mSpinerArea.setSelection(mAreaSelected);
         }
-        if ( spinerPunrkt.getSelectedStrings().contains("Все") && spinerPunrkt.getSelectedStrings().size() > 1 ) {
-            punktSelected = spinerPunrkt.getSelectedStrings();
-            punktSelected.remove(0);
-            spinerPunrkt.setSelection(punktSelected);
+        if ( mSpinerPunrkt.getSelectedStrings().contains("Все") && mSpinerPunrkt.getSelectedStrings().size() > 1 ) {
+            mPunktSelected = mSpinerPunrkt.getSelectedStrings();
+            mPunktSelected.remove(0);
+            mSpinerPunrkt.setSelection(mPunktSelected);
         }
 
-        if ( spinerType.getSelectedStrings().size() == 0 )
-            spinerType.setSelection(0);
+        if ( mSpinerType.getSelectedStrings().size() == 0 )
+            mSpinerType.setSelection(0);
 
-        if ( spinerArea.getSelectedStrings().size() == 0 )
-            spinerArea.setSelection(0);
+        if ( mSpinerArea.getSelectedStrings().size() == 0 )
+            mSpinerArea.setSelection(0);
 
-        if ( spinerPunrkt.getSelectedStrings().size() == 0 )
-            spinerPunrkt.setSelection(0);
-    }
-
-    @Override
-    public void onClick (View v) {
-        switch ( v.getId() ) {
-            case R.id.sellBUTT:
-                sell.setBackgroundResource(R.color.greenButton);
-                sellComer.setBackgroundResource(R.color.backGray);
-                arenda.setBackgroundResource(R.color.backGray);
-                arendaComer.setBackgroundResource(R.color.backGray);
-                table = "sale_living";
-                break;
-            case R.id.sellComerBUTT:
-                sell.setBackgroundResource(R.color.backGray);
-                sellComer.setBackgroundResource(R.color.greenButton);
-                arenda.setBackgroundResource(R.color.backGray);
-                arendaComer.setBackgroundResource(R.color.backGray);
-                table = "sale_not_living";
-                break;
-            case R.id.arendaBUT:
-                sell.setBackgroundResource(R.color.backGray);
-                sellComer.setBackgroundResource(R.color.backGray);
-                arenda.setBackgroundResource(R.color.greenButton);
-                arendaComer.setBackgroundResource(R.color.backGray);
-                table = "rent_living";
-                break;
-            case R.id.arendaComerBUT:
-                sell.setBackgroundResource(R.color.backGray);
-                sellComer.setBackgroundResource(R.color.backGray);
-                arenda.setBackgroundResource(R.color.backGray);
-                arendaComer.setBackgroundResource(R.color.greenButton);
-                table = "rent_not_living";
-                break;
-        }
+        if ( mSpinerPunrkt.getSelectedStrings().size() == 0 )
+            mSpinerPunrkt.setSelection(0);
     }
 
 }
