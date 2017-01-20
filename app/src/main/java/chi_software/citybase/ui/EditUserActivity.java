@@ -43,7 +43,7 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
 
     public static final String KEY = "key";
     public static final String UID = "uid";
-    public static final String CITY = "city" ;
+    public static final String CITY = "city";
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -180,7 +180,12 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
         if ( userResonse.getResponse().getEmail() == null || userResonse.getResponse().getEmail().toString().equals("") )
             mOldMailS = "NULL";
         mEditMail.setText(userResonse.getResponse().getEmail());
-        mCity.setText(userCity);
+        if ( userCity.equals("_Kyiv") )
+            mCity.setText("Киев");
+        if ( userCity.equals("_Kharkov") )
+            mCity.setText("Харьков");
+        if ( userCity.equals("_Odessa") )
+            mCity.setText("Одесса");
     }
 
     private void fillServiceData (ServiceResponse serviceResponse) {
