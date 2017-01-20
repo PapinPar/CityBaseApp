@@ -43,7 +43,7 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
 
     public static final String KEY = "key";
     public static final String UID = "uid";
-    public static final String CITY = "city";
+    public static final String CITY = "city" ;
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
