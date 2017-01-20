@@ -15,7 +15,6 @@ public class FieldResponse {
     public String getServerResponse () {
         return serverResponse;
     }
-
     public void getColorResponse (String colorResponse) {
         this.serverResponse = colorResponse;
     }

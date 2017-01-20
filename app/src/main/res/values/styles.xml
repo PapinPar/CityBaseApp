@@ -11,7 +11,7 @@
     </style>
 
     <style name="WhiteButton_Green" parent="@android:style/Widget.Button">
-        <item name="android:background">@drawable/white_button</item>
+        <item name="android:background">@drawable/recycler_view_item</item>
         <item name="android:textColor">@color/buttonTextGreen</item>
     </style>
 

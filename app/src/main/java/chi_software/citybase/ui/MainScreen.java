@@ -1,5 +1,8 @@
 package chi_software.citybase.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,25 +29,25 @@ import chi_software.citybase.data.BaseResponse;
 import chi_software.citybase.data.ModelData;
 import chi_software.citybase.data.getBase.MyObject;
 import chi_software.citybase.data.menuSearch.MenuSearch;
-import chi_software.citybase.ui.adapter.MyAdapter;
+import chi_software.citybase.ui.adapter.PostAdapter;
 import chi_software.citybase.ui.dialog.SearchDialog;
 import chi_software.citybase.ui.pager.PagerViwer;
 import dmax.dialog.SpotsDialog;
 
 
-public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchDialog.GetSpinnerListner, MyAdapter.photoListener {
+public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchDialog.GetSpinnerListner, PostAdapter.photoListener {
 
     public static final String KEY = "key";
     public static final String UID = "uid";
 
     private Button mFindBut;
-    private MyAdapter mAdapter;
+    private PostAdapter mAdapter;
     private List<ModelData> mModelDataList;
     private SearchDialog mSearchDialog;
     private MenuSearch mMyMenu;
     private BaseResponse mBaseResponse;
     private SpotsDialog mDialog;
-    private String mTable, mKey, mUid, mSearch;
+    private String mTable, mKey, mUid, mSearch, mCity;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -62,18 +66,17 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         mFindBut.setAlpha((float) 0.4);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.MyRecycle);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mAdapter = new MyAdapter(mModelDataList, this);
+        mAdapter = new PostAdapter(mModelDataList, this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(layoutManager);
         mTable = "rent_living";
         mDialog = new SpotsDialog(MainScreen.this);
-        apiCalls();
-
+        showDialog(0);
     }
 
     private void apiCalls () {
-        app.getNet().getBase(mSearch, "_Kharkov", mTable, mUid, mKey);
-        app.getNet().searchMenu("_Kharkov", mTable, mUid, mKey);
+        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey);
+        app.getNet().searchMenu(mCity, mTable, mUid, mKey);
         mDialog.show();
         mDialog.setCancelable(false);
         mModelDataList.clear();
@@ -130,7 +133,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         mModelDataList.clear();
         mAdapter.notifyDataSetChanged();
         Log.d("MainScreen", mTable);
-        app.getNet().getBase(mSearch, "_Kharkov", mTable, mUid, mKey);
+        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey);
         mDialog.show();
     }
 
@@ -204,6 +207,9 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 break;
             case R.id.myProfile:
                 Intent profile = new Intent(MainScreen.this, EditUserActivity.class);
+                profile.putExtra(EditUserActivity.UID, mUid);
+                profile.putExtra(EditUserActivity.KEY, mKey);
+                profile.putExtra(EditUserActivity.CITY, mCity);
                 startActivity(profile);
                 break;
             case R.id.tarifs:
@@ -215,7 +221,6 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         return true;
     }
 
-
     @Override
     public void onBackPressed () {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -224,5 +229,32 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected Dialog onCreateDialog (final int id) {
+        switch ( id ) {
+            case 0:
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainScreen.this);
+                final String[] mCityChoose = { "Киев", "Харьков", "Одесса" };
+                builder = new AlertDialog.Builder(this);
+                builder.setTitle("Выберите Город");
+                builder.setItems(mCityChoose, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick (DialogInterface dialog, int item) {
+                        if ( item == 0 )
+                            mCity = "_Kyiv";
+                        if ( item == 1 )
+                            mCity = "_Kharkov";
+                        if ( item == 2 )
+                            mCity = "_Odessa";
+                        Toast.makeText(getApplicationContext(), "Выбранный город: " + mCityChoose[item], Toast.LENGTH_SHORT).show();
+                        apiCalls();
+                    }
+                });
+                builder.setCancelable(false);
+                return builder.create();
+        }
+        return null;
     }
 }

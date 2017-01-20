@@ -19,8 +19,10 @@ import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
 import chi_software.citybase.data.BaseResponse;
 import chi_software.citybase.data.FieldResponse;
+import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.login.LoginResponse;
+import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
 import retrofit2.Response;
 
@@ -82,7 +84,6 @@ public class ConnectionManager implements Net {
         }
     }
 
-
     // ************ AUTH *************
     @Override
     public void login (@NonNull final String login, @NonNull final String password) {
@@ -135,16 +136,34 @@ public class ConnectionManager implements Net {
                     FieldResponse serverResponse = response.body();
                     if ( serverResponse.getServerResponse() != null )
                         notifySuccessSubscribers(ACTIVATE_ACOUNT, serverResponse);
-                    else notifyErrorSubscribers(ACTIVATE_ACOUNT,"ERROR");
+                    else
+                        notifyErrorSubscribers(ACTIVATE_ACOUNT, "ERROR");
                 } catch ( IOException e ) {
                 }
             }
         });
     }
 
+    @Override
+    public void getUser (@NonNull final String uid, @NonNull final String key) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<UserResonse> response = RestApiWrapper.getInstanse().getUser(uid, key);
+                    UserResonse userResonse = response.body();
+                    if ( userResonse.getResponse() != null ) {
+                        notifySuccessSubscribers(GET_USER, userResonse);
+                    } else
+                        notifyErrorSubscribers(GET_USER, "ERROR");
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     // ************* EDIT USER **********
-
-
     @Override
     public void addUserEmail (@NonNull final String uid, @NonNull final String key, @NonNull final String email) {
         mExecutor.execute(new Runnable() {
@@ -154,9 +173,9 @@ public class ConnectionManager implements Net {
                     Response<FieldResponse> response = RestApiWrapper.getInstanse().addUserEmail(uid, key, email);
                     FieldResponse fieldResponse = response.body();
                     if ( fieldResponse.getServerResponse() != null ) {
-                        notifySuccessSubscribers(AddUserEmail, fieldResponse);
+                        notifySuccessSubscribers(ADD_USER_EMAIL, fieldResponse);
                     } else
-                        notifyErrorSubscribers(AddUserEmail, "ERROR");
+                        notifyErrorSubscribers(ADD_USER_EMAIL, "ERROR");
                 } catch ( IOException e ) {
                 }
             }
@@ -172,9 +191,9 @@ public class ConnectionManager implements Net {
                     Response<FieldResponse> response = RestApiWrapper.getInstanse().deleteUserEmail(uid, key);
                     FieldResponse fieldResponse = response.body();
                     if ( fieldResponse.getServerResponse() != null ) {
-                        notifySuccessSubscribers(DeleteUserEmail, fieldResponse);
+                        notifySuccessSubscribers(DELETE_USER_EMAIL, fieldResponse);
                     } else
-                        notifyErrorSubscribers(DeleteUserEmail, "ERROR");
+                        notifyErrorSubscribers(DELETE_USER_EMAIL, "ERROR");
 
                 } catch ( IOException e ) {
                 }
@@ -191,9 +210,9 @@ public class ConnectionManager implements Net {
                     Response<FieldResponse> response = RestApiWrapper.getInstanse().editUserLogin(uid, key, name, login);
                     FieldResponse fieldResponse = response.body();
                     if ( fieldResponse.getServerResponse() != null ) {
-                        notifySuccessSubscribers(EditUserLogin, fieldResponse);
+                        notifySuccessSubscribers(EDIT_USER_LOGIN, fieldResponse);
                     } else
-                        notifyErrorSubscribers(EditUserLogin, "ERROR");
+                        notifyErrorSubscribers(EDIT_USER_LOGIN, "ERROR");
                 } catch ( IOException e ) {
                 }
             }
@@ -209,9 +228,9 @@ public class ConnectionManager implements Net {
                     Response<FieldResponse> response = RestApiWrapper.getInstanse().editUserPassword(uid, key, password, reenterpassword);
                     FieldResponse fieldResponse = response.body();
                     if ( fieldResponse.getServerResponse() != null ) {
-                        notifySuccessSubscribers(EditUserPassword, fieldResponse);
+                        notifySuccessSubscribers(EDIT_USER_PASSWORD, fieldResponse);
                     } else
-                        notifyErrorSubscribers(EditUserPassword, "ERROR");
+                        notifyErrorSubscribers(EDIT_USER_PASSWORD, "ERROR");
                 } catch ( IOException e ) {
                 }
             }
@@ -283,8 +302,6 @@ public class ConnectionManager implements Net {
     }
 
     // ********************** SMS *************
-
-
     @Override
     public void sendSms (@NonNull final String uid, @NonNull final String key) {
         mExecutor.execute(new Runnable() {
@@ -298,6 +315,44 @@ public class ConnectionManager implements Net {
                     else
                         notifyErrorSubscribers(SEND_SMS, "ERROR");
                 } catch ( IOException e ) {
+                }
+            }
+        });
+    }
+
+    // ******************** AMOUNT ********************
+    @Override
+    public void getMyAmount (@NonNull final String uid, @NonNull final String key) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().getAmount(uid, key);
+                    FieldResponse serverResponse = response.body();
+                    if ( serverResponse.getServerResponse() != null )
+                        notifySuccessSubscribers(GET_MY_AMOUNT, serverResponse);
+                    else
+                        notifyErrorSubscribers(GET_MY_AMOUNT, "ERROR");
+                } catch ( IOException e ) {
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getActivService (@NonNull final String city, @NonNull final String uid, @NonNull final String key) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<ServiceResponse> response = RestApiWrapper.getInstanse().getActivService(city, uid, key);
+                    ServiceResponse serviceResponse = response.body();
+                    if ( response.isSuccessful() && serviceResponse.getResponse() != null ) {
+                        notifySuccessSubscribers(GET_ACTIVE_SERVICE, serviceResponse);
+                    } else
+                        notifyErrorSubscribers(GET_ACTIVE_SERVICE, "ERROR");
+                } catch ( IOException e ) {
+                    notifyErrorSubscribers(GET_ACTIVE_SERVICE, "ERROR");
                 }
             }
         });
@@ -332,7 +387,6 @@ public class ConnectionManager implements Net {
             }
         });
     }
-
 
     // ************ HEPLERS METHODS ************
     private Map getModel (BaseGet baseGet) {

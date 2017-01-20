@@ -21,7 +21,7 @@ import chi_software.citybase.data.ModelData;
  * Created by Papin on 11.11.2016.
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder> {
 
     public interface photoListener {
         void getPhotoId (String id, int position);
@@ -55,7 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         }
     }
 
-    public MyAdapter (List<ModelData> developersInfoList, photoListener photoListener) {
+    public PostAdapter (List<ModelData> developersInfoList, photoListener photoListener) {
         this.mDevelopersInfoList = developersInfoList;
         this.photoListner = photoListener;
     }
@@ -79,7 +79,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
             currency = "$";
         // Местоположение
         if ( mDevelopersInfoList.get(i).getAdminArea().length() > 1 ) {
-            holder.adminArea.setText("Район: "+mDevelopersInfoList.get(i).getAdminArea());
+            holder.adminArea.setText("Район: " + mDevelopersInfoList.get(i).getAdminArea());
             Log.d("MyAdapter", mDevelopersInfoList.get(i).getAdminArea());
         } else
             holder.adminArea.setVisibility(View.INVISIBLE);
@@ -99,10 +99,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.DevViewHolder> {
         else
             holder.type.setVisibility(View.INVISIBLE);
         // Картинка
-        if ( mDevelopersInfoList.get(i).getUrl() != null )
+        if ( mDevelopersInfoList.get(i).getUrl() != null ) {
+            holder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Picasso.with(holder.myParent).load(mDevelopersInfoList.get(i).getUrl()).error(R.drawable.icon_logo).into(holder.image);
-        else
+        } else {
+            holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             holder.image.setImageResource(R.drawable.icon_logo);
+        }
 
         // Информация
         String info;

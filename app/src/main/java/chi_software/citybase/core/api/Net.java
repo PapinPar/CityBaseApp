@@ -10,8 +10,9 @@ import chi_software.citybase.core.observer.Subject;
  * Created by Papin on 08.11.2016.
  */
 public interface Net extends Subject<NetSubscriber> {
-    @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION, SEND_SMS, ACTIVATE_ACOUNT,TRIAL_BASE,
-            EditUserLogin,EditUserPassword,AddUserEmail,DeleteUserEmail})
+    @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION,
+            SEND_SMS, ACTIVATE_ACOUNT,TRIAL_BASE, EDIT_USER_LOGIN, EDIT_USER_PASSWORD,
+            ADD_USER_EMAIL, DELETE_USER_EMAIL, GET_USER, GET_MY_AMOUNT,GET_ACTIVE_SERVICE })
     @interface NetEvent {}
 
 
@@ -24,15 +25,19 @@ public interface Net extends Subject<NetSubscriber> {
     int SEND_SMS = 107;
     int ACTIVATE_ACOUNT = 108;
     int TRIAL_BASE = 109;
-    int EditUserLogin  = 201;
-    int EditUserPassword = 202;
-    int AddUserEmail = 203;
-    int DeleteUserEmail = 204;
+    int EDIT_USER_LOGIN = 201;
+    int EDIT_USER_PASSWORD = 202;
+    int ADD_USER_EMAIL = 203;
+    int DELETE_USER_EMAIL = 204;
+    int GET_USER = 205;
+    int GET_MY_AMOUNT = 206;
+    int GET_ACTIVE_SERVICE = 207;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
-    void registration (@NonNull String phone, @NonNull String pass, @NonNull String name,@NonNull Integer user_type);
+    void registration (@NonNull String phone, @NonNull String pass, @NonNull String name, @NonNull Integer user_type);
     void ActivateAcount (@NonNull String uid, @NonNull String key, @NonNull String code);
+    void getUser (@NonNull String uid, @NonNull String key);
 
     // ************** EDIT USER **********
     void editUserLogin (@NonNull String uid, @NonNull String key, @NonNull String name, @NonNull String login);
@@ -43,8 +48,7 @@ public interface Net extends Subject<NetSubscriber> {
     //************** SEARCH ************
     void searchMenu (@NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
     void getBase (@NonNull String search, @NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
-    void tryBase (@NonNull String city, @NonNull String table, @NonNull String ruscity,
-                  @NonNull String type, @NonNull String place, @NonNull String basetype, @NonNull String basetype2);
+    void tryBase (@NonNull String city, @NonNull String table, @NonNull String ruscity, @NonNull String type, @NonNull String place, @NonNull String basetype, @NonNull String basetype2);
     // *********** SMS *************
     void sendSms (@NonNull String uid, @NonNull String key);
 
@@ -53,4 +57,8 @@ public interface Net extends Subject<NetSubscriber> {
 
     // ********* SET COMMENT ***************
     void setComment (@NonNull String uid, @NonNull String key, @NonNull String city, @NonNull String table, @NonNull String objId, @NonNull String field, @NonNull String comment);
+
+    // ******************** AMOUNT ********************
+    void getMyAmount (@NonNull String uid, @NonNull String key);
+    void getActivService (@NonNull String city, @NonNull String uid, @NonNull String key);
 }

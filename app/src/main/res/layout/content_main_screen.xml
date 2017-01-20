@@ -13,20 +13,6 @@
     tools:showIn="@layout/app_bar_main_screen"
     android:background="@color/backGray">
 
-    <Button
-        android:text="Поиск"
-        android:layout_width="wrap_content"
-        android:layout_height="?android:attr/actionBarSize"
-        android:layout_alignParentTop="true"
-        android:id="@+id/findButton"
-        android:background="@color/findButton2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="@dimen/textSize"
-        android:layout_marginBottom="10dp"/>
-
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,4 +21,15 @@
         android:dividerHeight = "3dp"
         android:layout_below="@+id/findButton">
     </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:text="фильтр"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:id="@+id/findButton"
+        android:background="@color/findButton2"
+        android:textSize="@dimen/textSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>

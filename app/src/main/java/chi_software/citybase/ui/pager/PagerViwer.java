@@ -123,9 +123,11 @@ public class PagerViwer extends BaseActivity {
         mPrice.setText(mMyObjectsList.get(mPosition).getPrice() + "грн");
         mRoomsType.setText(mMyObjectsList.get(mPosition).getType());
         String areaFloor = "";
-        if ( mMyObjectsList.get(mPosition).getArea() != null )
-            areaFloor = mMyObjectsList.get(mPosition).getArea() + "м^2, ";
-        if ( mMyObjectsList.get(mPosition).getFloor() != null )
+        if ( mMyObjectsList.get(mPosition).getArea() != null && !mMyObjectsList.get(mPosition).getArea().equals("")
+                && !mMyObjectsList.get(mPosition).getArea().equals("0"))
+            areaFloor = mMyObjectsList.get(mPosition).getArea() + "м^2. ";
+        if ( mMyObjectsList.get(mPosition).getFloor() != null && !mMyObjectsList.get(mPosition).getFloor().equals("")
+                && !mMyObjectsList.get(mPosition).getFloor().equals("0") )
             areaFloor = areaFloor + mMyObjectsList.get(mPosition).getFloor() + "этаж";
         if ( !areaFloor.equals("") )
             mAreaSize.setText(areaFloor);
@@ -133,9 +135,11 @@ public class PagerViwer extends BaseActivity {
             mLine2.setVisibility(View.GONE);
 
         String metroDistanse = "";
-        if ( mMyObjectsList.get(mPosition).getGuide() != null )
+        if ( mMyObjectsList.get(mPosition).getGuide() != null && !mMyObjectsList.get(mPosition).getGuide().equals("")
+                && !mMyObjectsList.get(mPosition).getGuide().equals("0") )
             metroDistanse = "метро " + mMyObjectsList.get(mPosition).getGuide() + " ";
-        if ( mMyObjectsList.get(mPosition).getDistanceMetro() != null )
+        if ( mMyObjectsList.get(mPosition).getDistanceMetro() != null && !mMyObjectsList.get(mPosition).getDistanceMetro().equals("")
+                && !mMyObjectsList.get(mPosition).getDistanceMetro().equals("0") )
             metroDistanse = metroDistanse + mMyObjectsList.get(mPosition).getDistanceMetro() + " м.";
         if ( !metroDistanse.equals("") )
             mMetroName.setText(metroDistanse);

@@ -17,11 +17,12 @@
             android:id="@+id/imageInfoNew"
             android:layout_width="match_parent"
             android:background="@color/backGray"
-            android:layout_height="@dimen/imageHight"/>
+            android:layout_height="@dimen/imageHight"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/imageInfoHight"
+            android:layout_height="@dimen/searchTextHeight"
             android:layout_alignBottom="@+id/imageInfoNew"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
@@ -82,7 +83,8 @@
                 android:padding="5dp"
                 android:layout_below="@+id/linearLayout2"
                 android:layout_toLeftOf="@+id/imageView2"
-                android:layout_toStartOf="@+id/imageView2"/>
+                android:layout_toStartOf="@+id/imageView2"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/frameLayout4"

@@ -1,274 +1,333 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:fillViewport="true"
-                android:background="@color/backWhite">
+                android:background="@color/backWhite"
+                android:fillViewport="true">
 
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/backSearch"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp">
-
-                <TextView
-                    android:text="На вашем счету :"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView15"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:gravity="center"
-                    android:textSize="@dimen/textSize"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:text="0.00 грн"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView16"
-                    android:layout_below="@+id/textView15"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="15dp"
-                    android:textSize="@dimen/textSize"
-                    android:textStyle="normal|bold"
-                    android:textColor="@color/textColor"/>
-            </RelativeLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/backSearch">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:id="@+id/textView29"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@color/background"
-                    android:layout_height="4dp"/>
-            </FrameLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/backSearch"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp">
-
-                <TextView
-                    android:text="Активные услуги :"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView18"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/textSize"/>
-
-                <TextView
-                    android:text="Аренда + Продажа 1 месяц"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView20"
-                    android:layout_below="@+id/textView18"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/textSize"/>
-
-                <TextView
-                    android:text="Действует до:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView22"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:id="@+id/textView23"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/textSize"
-                    android:paddingTop="10dp"/>
-
-                <TextView
-                    android:text="Действует с:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView22"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/textSize"
-                    android:layout_below="@+id/textView20"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:paddingTop="10dp"/>
-
-                <TextView
-                    android:text="24.12 19:13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/textView23"
-                    android:layout_toRightOf="@+id/textView23"
-                    android:layout_toEndOf="@+id/textView23"
-                    android:id="@+id/textView24"
-                    android:layout_marginLeft="15dp"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/textSize"
-                    android:layout_alignBaseline="@+id/textView23"/>
-
-                <TextView
-                    android:text="24.11 19:13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/textView24"
-                    android:layout_alignLeft="@+id/textView24"
-                    android:layout_alignStart="@+id/textView24"
-                    android:id="@+id/textView25"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/textSize"
-                    android:layout_alignBaseline="@+id/textView22"/>
-            </RelativeLayout>
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="vertical"
+                android:id="@+id/linear2Edit"
                 android:layout_width="match_parent"
-                android:background="@android:color/white"
-                android:layout_marginTop="25dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:orientation="vertical"
+                android:weightSum="1">
 
-                <TextView
-                    android:text="Информация об аккаунте"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView27"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="@dimen/textSize"
-                    android:textColor="@color/textColor"/>
+                    android:background="@color/backSearch"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
-                <EditText
-                    android:id="@+id/editNameET"
-                    android:layout_width="@dimen/infoSizeWidth"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="Имя"
-                    android:inputType="textAutoComplete"
-                    android:selectAllOnFocus="false"
-                    android:textSize="@dimen/textSize"
-                    android:visibility="visible"
-                    android:background="@color/backSearch"
-                    android:paddingBottom="15dp"
-                    android:paddingTop="15dp"
-                    android:layout_marginTop="3dp"/>
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentStart="true"
+                        android:gravity="center"
+                        android:text="На вашем счету :"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize"/>
 
-                <EditText
-                    android:id="@+id/editLoginET"
-                    android:layout_width="@dimen/infoSizeWidth"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="\@email"
-                    android:inputType="textEmailAddress"
-                    android:selectAllOnFocus="false"
-                    android:textSize="@dimen/textSize"
-                    android:visibility="visible"
-                    android:background="@color/backSearch"
-                    android:paddingBottom="15dp"
-                    android:paddingTop="15dp"
-                    android:layout_marginTop="3dp"/>
+                    <TextView
+                        android:id="@+id/amount_tw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/textView15"
+                        android:layout_marginTop="15dp"
+                        android:text="0.00 грн"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal|bold"/>
+                </RelativeLayout>
 
-                <EditText
-                    android:id="@+id/editPhone"
-                    android:layout_width="@dimen/infoSizeWidth"
+                <FrameLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="Телефон"
-                    android:inputType="phone"
-                    android:selectAllOnFocus="false"
-                    android:textSize="@dimen/textSize"
-                    android:visibility="visible"
-                    android:background="@color/backSearch"
-                    android:paddingBottom="15dp"
-                    android:paddingTop="15dp"
-                    android:layout_marginTop="3dp"/>
-                <EditText
-                    android:id="@+id/editPassET"
-                    android:layout_width="@dimen/infoSizeWidth"
+                    android:background="@color/backSearch">
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@color/background"/>
+                </FrameLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="Пароль"
-                    android:inputType="textPassword"
-                    android:selectAllOnFocus="false"
-                    android:textSize="@dimen/textSize"
-                    android:visibility="visible"
                     android:background="@color/backSearch"
-                    android:paddingBottom="15dp"
-                    android:paddingTop="15dp"
-                    android:layout_marginTop="3dp"/>
-                <EditText
-                    android:id="@+id/editCity"
-                    android:layout_width="@dimen/infoSizeWidth"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Активные услуги :"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize"/>
+
+                   <android.support.v7.widget.RecyclerView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/rvActivServ"
+                       android:layout_below="@+id/textView18">
+                   </android.support.v7.widget.RecyclerView>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="45dp"
+                    android:background="@android:color/white"
                     android:gravity="center"
-                    android:hint="Город"
-                    android:inputType="textAutoComplete"
-                    android:selectAllOnFocus="false"
-                    android:textSize="@dimen/textSize"
-                    android:visibility="visible"
-                    android:background="@color/backSearch"
-                    android:paddingBottom="15dp"
-                    android:paddingTop="15dp"
-                    android:layout_marginTop="3dp"/>
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Информация об аккаунте"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textSize"/>
+
+                    <TextView
+                        android:id="@+id/textPhone"
+                        android:layout_width="@dimen/infoSizeWidth"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/backSearch"
+                        android:gravity="center"
+                        android:hint="Телефон"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:selectAllOnFocus="false"
+                        android:textSize="@dimen/textSize"
+                        android:visibility="visible"/>
+
+                    <EditText
+                        android:id="@+id/editNameET"
+                        android:layout_width="@dimen/infoSizeWidth"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/backSearch"
+                        android:gravity="center"
+                        android:hint="Имя"
+                        android:inputType="textAutoComplete"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:selectAllOnFocus="false"
+                        android:textSize="@dimen/textSize"
+                        android:visibility="visible"/>
+
+                    <EditText
+                        android:id="@+id/editPassET"
+                        android:layout_width="@dimen/infoSizeWidth"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/backSearch"
+                        android:gravity="center"
+                        android:hint="Логин"
+                        android:inputType="textPersonName"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:selectAllOnFocus="false"
+                        android:textSize="@dimen/textSize"
+                        android:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/cityTv"
+                        android:layout_width="@dimen/infoSizeWidth"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/backSearch"
+                        android:gravity="center"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:selectAllOnFocus="false"
+                        android:textSize="@dimen/textSize"
+                        android:visibility="visible"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/saveUserInfoBut"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/greenButton"
+                    android:text="Сохранить данные"
+                    android:textSize="@dimen/textSize"/>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/linear3Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center"
+                    android:text="Электронная почта"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"
+                    android:textStyle="normal|bold"/>
+
+                <TextView
+                    android:id="@+id/textView35"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Электронная почта является одним из вариантов
+ для входа на сайт, а также необходима для
+использования функции MSR."
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"/>
+
+                <EditText
+                    android:id="@+id/editEmailET"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/backSearch"
+                    android:gravity="center"
+                    android:hint="\@email"
+                    android:inputType="textEmailAddress"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:selectAllOnFocus="false"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"/>
+
+                <Button
+                    android:id="@+id/editMailBut"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:layout_marginTop="10dp"
+                    android:alpha="0.6"
+                    android:background="@color/greenButton"
+                    android:text="Изменить email"
+                    android:textSize="@dimen/textSize"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/textView36"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="Изменение пароля"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"/>
+
+                <EditText
+                    android:id="@+id/new_pass_et"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Новый пароль"
+                    android:inputType="textPassword"
+                    android:textColor="@color/textColor"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:layout_marginTop="3dp"
+                    android:textSize="@dimen/textSize"
+                    android:background="@color/backSearch"/>
+
+                <EditText
+                    android:id="@+id/new_equal_pass_et"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Повторите пароль"
+                    android:inputType="textPassword"
+                    android:textColor="@color/textColor"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:layout_marginTop="3dp"
+                    android:textSize="@dimen/textSize"
+                    android:background="@color/backSearch"/>
+
+                <Button
+                    android:text="Изменить пароль"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"
+                    android:background="@color/greenButton"
+                    android:alpha="0.6"
+                    android:id="@+id/changePasBtn"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+
+            <Button
+                android:text="История платежей"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:textSize="@dimen/textSize"
+                android:textColor="@color/textColor"
+                android:layout_marginTop="50dp"
+                android:background="@color/backSearch"
+                android:id="@+id/button4"/>
+
         </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
-</ScrollView>
-
-    <RelativeLayout
+   <!-- <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <Button
-            android:text="Историия платежей"
-            android:layout_width="match_parent"
             android:id="@+id/button"
-            android:background="@color/backSearch"
-            android:textColor="@color/textColor"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:background="@color/backSearch"
+            android:text="Историия платежей"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/textSize"/>
-    </RelativeLayout>
-</RelativeLayout>
+    </RelativeLayout>-->

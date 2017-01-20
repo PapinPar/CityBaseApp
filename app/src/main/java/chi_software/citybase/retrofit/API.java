@@ -1,8 +1,10 @@
 package chi_software.citybase.retrofit;
 
 import chi_software.citybase.data.FieldResponse;
+import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.login.LoginResponse;
+import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -24,17 +26,23 @@ public interface API {
     @GET("login.ActivationAccount")
     Call<FieldResponse> activationAccount (@Query("uid") String uid, @Query("key") String key, @Query("code") String code);
 
+    @GET("login.getUser")
+    Call<UserResonse> getUser (@Query("uid") String uid, @Query("key") String key);
+
+
+    //login.getUser?uid=126&key=8ef5951de284b0046b9f79ca09b1de771e09e6b9
+
     // ************* EDIT USER ****************
-    @GET("login.EditUserLogin")
+    @GET("login.EDIT_USER_LOGIN")
     Call<FieldResponse> editUserLogin (@Query("uid") String uid, @Query("key") String key, @Query("name") String name, @Query("login") String login);
 
-    @GET("login.EditUserPassword")
+    @GET("login.EDIT_USER_PASSWORD")
     Call<FieldResponse> editUserPassword (@Query("uid") String uid, @Query("key") String key, @Query("password") String password, @Query("reenterpassword") String reenterpassword);
 
-    @GET("login.AddUserEmail")
+    @GET("login.ADD_USER_EMAIL")
     Call<FieldResponse> addUserEmail (@Query("uid") String uid, @Query("key") String key, @Query("email") String email);
 
-    @GET("login.DeleteUserEmail")
+    @GET("login.DELETE_USER_EMAIL")
     Call<FieldResponse> deleteUserEmail (@Query("uid")String uid,@Query("key")String key);
 
     // ************ SEARCH ****************
@@ -65,4 +73,11 @@ public interface API {
     // **************** SMS ********************
     @GET("sms.smsregistration")
     Call<FieldResponse> sendSms (@Query("uid") String id, @Query("key") String key);
+
+    // ***************** AMOUNT ***************
+    @GET("payments.getAmount")
+    Call<FieldResponse> getAmount (@Query("uid") String id, @Query("key") String key);
+
+    @GET("orders.getactivityorders")
+    Call<ServiceResponse> getActivServise (@Query("citysite") String city, @Query("uid") String uid, @Query("key") String key);
 }
