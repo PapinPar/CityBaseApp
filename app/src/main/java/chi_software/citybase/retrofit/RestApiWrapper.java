@@ -8,6 +8,7 @@ import java.io.IOException;
 import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.getBase.BaseGet;
+import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
@@ -134,5 +135,10 @@ public class RestApiWrapper {
     public Response<ServiceResponse> getActivService (String city, String uid, String key) throws IOException {
         Call<ServiceResponse> serviceResponseCall = api.getActivServise(city, uid, key);
         return serviceResponseCall.execute();
+    }
+
+    public Response<HistoryResponse> getHistoryAmount (String uid, String key) throws IOException {
+        Call<HistoryResponse> historyResponseCall = api.getHistoryAmount(uid, key);
+        return historyResponseCall.execute();
     }
 }

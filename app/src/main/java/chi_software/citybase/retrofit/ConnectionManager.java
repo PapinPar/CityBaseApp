@@ -21,6 +21,7 @@ import chi_software.citybase.data.BaseResponse;
 import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.getBase.BaseGet;
+import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
@@ -353,6 +354,26 @@ public class ConnectionManager implements Net {
                         notifyErrorSubscribers(GET_ACTIVE_SERVICE, "ERROR");
                 } catch ( IOException e ) {
                     notifyErrorSubscribers(GET_ACTIVE_SERVICE, "ERROR");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setGetHistoryAmount (@NonNull final String uid, @NonNull final String key) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<HistoryResponse> response = RestApiWrapper.getInstanse().getHistoryAmount(uid, key);
+                    HistoryResponse historyResponse = response.body();
+                    if ( response.isSuccessful() && historyResponse.getResponse() != null ) {
+                        notifySuccessSubscribers(GET_HISTORY_AMOUNT, historyResponse);
+                    } else {
+                        notifyErrorSubscribers(GET_HISTORY_AMOUNT, "ERROR");
+                    }
+                } catch ( IOException e ) {
+                    notifyErrorSubscribers(GET_HISTORY_AMOUNT, "ERROR");
                 }
             }
         });

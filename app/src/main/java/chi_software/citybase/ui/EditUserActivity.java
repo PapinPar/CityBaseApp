@@ -59,6 +59,7 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
     private List<ServiceData> serviceList;
     private ActiveServAdapter mAdapter;
     private RecyclerView rvService;
+    private Button mHistoryBut;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
@@ -81,12 +82,14 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
         mAmount = (TextView) findViewById(R.id.amount_tw);
         rvService = (RecyclerView) findViewById(R.id.rvActivServ);
         mCity = (TextView) findViewById(R.id.cityTv);
+        mHistoryBut = (Button) findViewById(R.id.historyBut);
         serviceList = new ArrayList<>();
 
         mMailBut.setOnClickListener(this);
         mSaveInfo.setOnClickListener(this);
         mCity.setOnClickListener(this);
         mChangePass.setOnClickListener(this);
+        mHistoryBut.setOnClickListener(this);
         mEditMail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged (CharSequence s, int start, int count, int after) {
@@ -139,6 +142,7 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
         app.getNet().getMyAmount(mUid, mKey);
         app.getNet().getActivService(userCity, mUid, mKey);
     }
+
 
     @Override
     public void onNetRequestDone (@Net.NetEvent int eventId, Object NetObjects) {
@@ -226,6 +230,9 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
                 break;
             case R.id.cityTv:
                 showDialog(0);
+                break;
+            case R.id.historyBut:
+
                 break;
         }
     }

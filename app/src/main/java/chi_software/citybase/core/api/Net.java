@@ -32,6 +32,7 @@ public interface Net extends Subject<NetSubscriber> {
     int GET_USER = 205;
     int GET_MY_AMOUNT = 206;
     int GET_ACTIVE_SERVICE = 207;
+    int GET_HISTORY_AMOUNT = 208;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
@@ -61,4 +62,5 @@ public interface Net extends Subject<NetSubscriber> {
     // ******************** AMOUNT ********************
     void getMyAmount (@NonNull String uid, @NonNull String key);
     void getActivService (@NonNull String city, @NonNull String uid, @NonNull String key);
+    void setGetHistoryAmount (@NonNull String uid, @NonNull String key);
 }

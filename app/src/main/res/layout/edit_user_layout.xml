@@ -306,7 +306,7 @@
                 android:textColor="@color/textColor"
                 android:layout_marginTop="50dp"
                 android:background="@color/backSearch"
-                android:id="@+id/button4"/>
+                android:id="@+id/historyBut"/>
 
         </LinearLayout>
     </ScrollView>

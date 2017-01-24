@@ -3,6 +3,7 @@ package chi_software.citybase.retrofit;
 import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.getBase.BaseGet;
+import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
@@ -80,4 +81,7 @@ public interface API {
 
     @GET("orders.getactivityorders")
     Call<ServiceResponse> getActivServise (@Query("citysite") String city, @Query("uid") String uid, @Query("key") String key);
+
+    @GET("payments.getHistoryAmount")
+    Call<HistoryResponse> getHistoryAmount (@Query("uid") String uid, @Query("key") String key);
 }
