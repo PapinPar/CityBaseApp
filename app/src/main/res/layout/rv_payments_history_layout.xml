@@ -17,7 +17,7 @@
             android:text="Оплата Тарифа ознакомительный"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView26"
+            android:id="@+id/tarif_name_tv"
             android:textSize="@dimen/textSize"
             android:textColor="@color/textColor"/>
 
@@ -33,6 +33,7 @@
             android:id="@+id/linearHistory2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
             android:layout_weight="1">
@@ -41,16 +42,15 @@
                 android:text="2016-15-12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView30"
+                android:id="@+id/date_history_tv"
                 android:layout_weight="1"/>
 
             <TextView
                 android:text="10:14:11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView28"
+                android:id="@+id/time_history_tv"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:layout_marginTop="5dp"/>
         </LinearLayout>
 
@@ -66,7 +66,7 @@
                 android:text="-1 грн"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView31"
+                android:id="@+id/amount_history_tv"
                 android:gravity="center"/>
         </LinearLayout>
 
@@ -76,21 +76,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:text="Статус"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView33"
-                android:gravity="right|center"/>
+                android:id="@+id/textView33"/>
 
             <TextView
                 android:text="Оплаченно"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView32"
-                android:gravity="right|center"
+                android:id="@+id/status_history_tv"
                 android:layout_marginTop="5dp"/>
         </LinearLayout>
 

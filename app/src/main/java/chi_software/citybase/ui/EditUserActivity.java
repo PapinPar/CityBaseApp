@@ -2,6 +2,7 @@ package chi_software.citybase.ui;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -232,7 +233,10 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
                 showDialog(0);
                 break;
             case R.id.historyBut:
-
+                Intent showHistory = new Intent(EditUserActivity.this, MyAmountHistory.class);
+                showHistory.putExtra(MyAmountHistory.UID, mUid);
+                showHistory.putExtra(MyAmountHistory.KEY, mKey);
+                startActivity(showHistory);
                 break;
         }
     }
