@@ -48,12 +48,14 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     private BaseResponse mBaseResponse;
     private SpotsDialog mDialog;
     private String mTable, mKey, mUid, mSearch, mCity;
+    private int mPage;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         mSearch = "";
+        mPage = 1;
         mModelDataList = new ArrayList<>();
         mKey = getIntent().getStringExtra(KEY);
         mUid = getIntent().getStringExtra(UID);
@@ -75,7 +77,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     private void apiCalls () {
-        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey);
+        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
         app.getNet().searchMenu(mCity, mTable, mUid, mKey);
         mDialog.show();
         mDialog.setCancelable(false);
@@ -133,7 +135,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         mModelDataList.clear();
         mAdapter.notifyDataSetChanged();
         Log.d("MainScreen", mTable);
-        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey);
+        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey,mPage);
         mDialog.show();
     }
 

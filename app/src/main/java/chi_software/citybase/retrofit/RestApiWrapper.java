@@ -77,8 +77,8 @@ public class RestApiWrapper {
 
 
     // ******************* SEARCH ***************
-    public Response<BaseGet> getBase (String search, String city, String table, String uid, String key) throws IOException {
-        Call<BaseGet> baseGetCall = api.getBase(search, city, table, uid, key);
+    public Response<BaseGet> getBase (String search, String city, String table, String uid, String key, Integer page) throws IOException {
+        Call<BaseGet> baseGetCall = api.getBase(search, city, table, uid, key, page);
         return baseGetCall.execute();
     }
 
