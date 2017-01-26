@@ -29,11 +29,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
     }
 
 
-    final PostAdapterCall mPostAdapterCall;
+    private final PostAdapterCall mPostAdapterCall;
     private final List<ModelData> mPostsList;
 
 
-    public static class DevViewHolder extends RecyclerView.ViewHolder {
+    class DevViewHolder extends RecyclerView.ViewHolder {
         private final TextView adminArea;
         private final TextView site;
         private final TextView type;
@@ -52,13 +52,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
             myParent = itemView.getContext();
             image = (ImageView) itemView.findViewById(R.id.imageInfoNew);
             info = (TextView) itemView.findViewById(R.id.detailInfoNew);
-            // backgroundColor = (ImageView) itemView.findViewById(backgroundColor);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick (View v) {
+                    mPostAdapterCall.getPhotoId(mPostsList.get(getAdapterPosition()).getId(), getAdapterPosition());
+                }
+            });
         }
     }
 
-    public PostAdapter (List<ModelData> developersInfoList, PostAdapterCall photoListener) {
+    public PostAdapter (List<ModelData> developersInfoList, PostAdapterCall mPostAdapterCall) {
         this.mPostsList = developersInfoList;
-        this.mPostAdapterCall = photoListener;
+        this.mPostAdapterCall = mPostAdapterCall;
     }
 
     @Override
@@ -106,20 +111,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
             holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             holder.image.setImageResource(R.drawable.icon_logo);
         }
-
         // Информация
         String info;
         if ( mPostsList.get(position).getInfo().length() > 40 ) {
             info = mPostsList.get(position).getInfo().substring(0, 40);
         } else
             info = mPostsList.get(position).getInfo();
-        // Слушатель
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View v) {
-                mPostAdapterCall.getPhotoId(mPostsList.get(position).getId(), position);
-            }
-        });
+
         // Информация
         info = info + "...";
         info = info.trim();
@@ -134,6 +132,5 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
     public int getItemCount () {
         return mPostsList.size();
     }
-
 
 }

@@ -70,14 +70,13 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         mSearchDialog = new SearchDialog();
         mDialog = new SpotsDialog(MainScreen.this);
         init();
+        loadCity();
         showDialog(0);
     }
 
     @Override
     protected void onRestart () {
         super.onRestart();
-        loadCity();
-        apiCalls();
     }
 
 
@@ -147,6 +146,20 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        switch ( resultCode ) {
+            case 5:
+                loadCity();
+                apiCalls();
+                Log.d("MainScreen", "lko");
+                break;
+            case 2:
+                Log.d("MainScreen", "lkoasdsads");
+                break;
+        }
+    }
+
+    @Override
     public void getLastPost (int position, int size) {
         mLastPosition = size;
         mDialog.show();
@@ -207,17 +220,11 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 list = (ArrayList) mBaseResponse.getMap().get(id);
                 mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
                         //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(),
-                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(),
-                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(),
-                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), mTable));
+                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), mTable));
             } else
                 mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
                         //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(),
-                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(),
-                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(),
-                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, mTable));
+                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, mTable));
         }
         mDialog.dismiss();
         mAdapter.notifyDataSetChanged();
@@ -227,14 +234,15 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
 
     // shared preferences
-    private void saveCity(){
-        sPref = getSharedPreferences(EditUserActivity.CITY,MODE_PRIVATE);
+    private void saveCity () {
+        sPref = getSharedPreferences(EditUserActivity.CITY, MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString(EditUserActivity.CITY, mCity);
         ed.apply();
     }
+
     private void loadCity () {
-        sPref = getSharedPreferences(EditUserActivity.CITY,MODE_PRIVATE);
+        sPref = getSharedPreferences(EditUserActivity.CITY, MODE_PRIVATE);
         mCity = sPref.getString(EditUserActivity.CITY, "_Kharkov");
     }
     // shared preferences
@@ -275,7 +283,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 Intent profile = new Intent(MainScreen.this, EditUserActivity.class);
                 profile.putExtra(EditUserActivity.UID, mUid);
                 profile.putExtra(EditUserActivity.KEY, mKey);
-                startActivity(profile);
+                startActivityForResult(profile, 1);
                 break;
             case R.id.tarifs:
                 break;

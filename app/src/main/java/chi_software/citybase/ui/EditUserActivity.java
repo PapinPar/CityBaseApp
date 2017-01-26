@@ -292,6 +292,7 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
         if ( drawer.isDrawerOpen(GravityCompat.START) ) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            setResult(5);
             super.onBackPressed();
         }
     }
@@ -323,4 +324,5 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
         }
         return null;
     }
+
 }
