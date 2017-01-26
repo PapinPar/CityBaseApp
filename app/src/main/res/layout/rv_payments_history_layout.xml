@@ -17,8 +17,10 @@
             android:text="Оплата Тарифа ознакомительный"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:id="@+id/tarif_name_tv"
             android:textSize="@dimen/textSize"
+            android:textStyle="italic"
             android:textColor="@color/textColor"/>
 
     </LinearLayout>
