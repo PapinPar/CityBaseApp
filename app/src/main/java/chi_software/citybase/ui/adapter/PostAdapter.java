@@ -23,13 +23,14 @@ import chi_software.citybase.data.ModelData;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder> {
 
-    public interface photoListener {
+    public interface PostAdapterCall {
         void getPhotoId (String id, int position);
+        void getLastPost (int position, int mListSize);
     }
 
 
-    final photoListener photoListner;
-    private final List<ModelData> mDevelopersInfoList;
+    final PostAdapterCall mPostAdapterCall;
+    private final List<ModelData> mPostsList;
 
 
     public static class DevViewHolder extends RecyclerView.ViewHolder {
@@ -55,53 +56,52 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
         }
     }
 
-    public PostAdapter (List<ModelData> developersInfoList, photoListener photoListener) {
-        this.mDevelopersInfoList = developersInfoList;
-        this.photoListner = photoListener;
+    public PostAdapter (List<ModelData> developersInfoList, PostAdapterCall photoListener) {
+        this.mPostsList = developersInfoList;
+        this.mPostAdapterCall = photoListener;
     }
 
     @Override
     public DevViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
-
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.preview_object_layout, parent, false);
         DevViewHolder devViewHolder = new DevViewHolder(v);
         return devViewHolder;
     }
 
     @Override
-    public void onBindViewHolder (DevViewHolder holder, final int i) {
+    public void onBindViewHolder (DevViewHolder holder, final int position) {
         Log.d("MyAdapter", "holder.getAdapterPosition():" + holder.getAdapterPosition());
-        Log.d("MyAdapter", "i:" + i);
+        Log.d("MyAdapter", "i:" + position);
         String currency;
-        if ( mDevelopersInfoList.get(i).getTable().equals("rent_living") || mDevelopersInfoList.get(i).getTable().equals("rent_not_living") )
+        if ( mPostsList.get(position).getTable().equals("rent_living") || mPostsList.get(position).getTable().equals("rent_not_living") )
             currency = "грн";
         else
             currency = "$";
         // Местоположение
-        if ( mDevelopersInfoList.get(i).getAdminArea().length() > 1 ) {
-            holder.adminArea.setText("Район: " + mDevelopersInfoList.get(i).getAdminArea());
-            Log.d("MyAdapter", mDevelopersInfoList.get(i).getAdminArea());
+        if ( mPostsList.get(position).getAdminArea().length() > 1 ) {
+            holder.adminArea.setText("Район: " + mPostsList.get(position).getAdminArea());
+            Log.d("MyAdapter", mPostsList.get(position).getAdminArea());
         } else
             holder.adminArea.setVisibility(View.INVISIBLE);
         // Сайт
-        if ( mDevelopersInfoList.get(i).getData().length() > 0 ) {
-            holder.site.setText(mDevelopersInfoList.get(i).getData());
+        if ( mPostsList.get(position).getData().length() > 0 ) {
+            holder.site.setText(mPostsList.get(position).getData());
         } else
             holder.site.setVisibility(View.INVISIBLE);
         // Цена
-        if ( mDevelopersInfoList.get(i).getPrice() != null )
-            holder.price.setText(mDevelopersInfoList.get(i).getPrice() + " " + currency);
+        if ( mPostsList.get(position).getPrice() != null )
+            holder.price.setText(mPostsList.get(position).getPrice() + " " + currency);
         else
             holder.price.setText("?" + currency);
         // Сроки
-        if ( mDevelopersInfoList.get(i).getType() != null && mDevelopersInfoList.get(i).getType().length() > 0 )
-            holder.type.setText(mDevelopersInfoList.get(i).getType());
+        if ( mPostsList.get(position).getType() != null && mPostsList.get(position).getType().length() > 0 )
+            holder.type.setText(mPostsList.get(position).getType());
         else
             holder.type.setVisibility(View.INVISIBLE);
         // Картинка
-        if ( mDevelopersInfoList.get(i).getUrl() != null ) {
+        if ( mPostsList.get(position).getUrl() != null ) {
             holder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            Picasso.with(holder.myParent).load(mDevelopersInfoList.get(i).getUrl()).error(R.drawable.icon_logo).into(holder.image);
+            Picasso.with(holder.myParent).load(mPostsList.get(position).getUrl()).error(R.drawable.icon_logo).into(holder.image);
         } else {
             holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             holder.image.setImageResource(R.drawable.icon_logo);
@@ -109,38 +109,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
 
         // Информация
         String info;
-        if ( mDevelopersInfoList.get(i).getInfo().length() > 40 ) {
-            info = mDevelopersInfoList.get(i).getInfo().substring(0, 40);
+        if ( mPostsList.get(position).getInfo().length() > 40 ) {
+            info = mPostsList.get(position).getInfo().substring(0, 40);
         } else
-            info = mDevelopersInfoList.get(i).getInfo();
+            info = mPostsList.get(position).getInfo();
         // Слушатель
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                photoListner.getPhotoId(mDevelopersInfoList.get(i).getId(), i);
+                mPostAdapterCall.getPhotoId(mPostsList.get(position).getId(), position);
             }
         });
         // Информация
         info = info + "...";
         info = info.trim();
         holder.info.setText(info);
-        // Окрашивание
-        // if ( developersInfoList.get(i).color != null ) {
-        //     if ( developersInfoList.get(i).color.equals("1") )
-        //         holder.backgroundColor.setImageResource(R.color.backGreen);
-        //     if ( developersInfoList.get(i).color.equals("2") )
-        //         holder.backgroundColor.setImageResource(R.color.backYellow);
-        //     if ( developersInfoList.get(i).color.equals("3") )
-        //         holder.backgroundColor.setImageResource(R.color.backRed);
-        //     if ( developersInfoList.get(i).color.equals("0") )
-        //         holder.backgroundColor.setImageResource(R.color.backWhite);
-        // } else
-        //     holder.backgroundColor.setImageResource(R.color.backWhite);
+
+        if ( position == (mPostsList.size()) - 3 ) {
+            mPostAdapterCall.getLastPost(position + 2, mPostsList.size());
+        }
     }
 
     @Override
     public int getItemCount () {
-        return mDevelopersInfoList.size();
+        return mPostsList.size();
     }
+
 
 }

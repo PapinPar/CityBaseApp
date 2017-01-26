@@ -260,12 +260,12 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void getBase (final String search, final String city, final String table, final String uid, final String key) {
+    public void getBase (final String search, final String city, final String table, final String uid, final String key, final Integer page) {
         mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
-                    Response<BaseGet> response = RestApiWrapper.getInstanse().getBase(search, city, table, uid, key);
+                    Response<BaseGet> response = RestApiWrapper.getInstanse().getBase(search, city, table, uid, key,page);
                     BaseGet baseGet = response.body();
                     Map s = getModel(baseGet);
                     BaseResponse photoResponse = new BaseResponse(baseGet, s);

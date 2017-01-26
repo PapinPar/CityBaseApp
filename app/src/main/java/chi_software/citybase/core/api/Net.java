@@ -48,7 +48,7 @@ public interface Net extends Subject<NetSubscriber> {
 
     //************** SEARCH ************
     void searchMenu (@NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
-    void getBase (@NonNull String search, @NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
+    void getBase (@NonNull String search, @NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key,@NonNull Integer page);
     void tryBase (@NonNull String city, @NonNull String table, @NonNull String ruscity, @NonNull String type, @NonNull String place, @NonNull String basetype, @NonNull String basetype2);
     // *********** SMS *************
     void sendSms (@NonNull String uid, @NonNull String key);

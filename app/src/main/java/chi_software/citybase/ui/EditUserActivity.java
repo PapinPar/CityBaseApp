@@ -3,6 +3,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -61,6 +62,7 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
     private ActiveServAdapter mAdapter;
     private RecyclerView rvService;
     private Button mHistoryBut;
+    private SharedPreferences sPref;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mKey = getIntent().getStringExtra(KEY);
         mUid = getIntent().getStringExtra(UID);
-        userCity = getIntent().getStringExtra(CITY);
+        loadCity();
         mPhone = (TextView) findViewById(R.id.textPhone);
         mLogin = (EditText) findViewById(R.id.editPassET);
         mName = (EditText) findViewById(R.id.editNameET);
@@ -241,6 +243,21 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
         }
     }
 
+
+    // shared preferences
+    private void saveCity () {
+        sPref = getSharedPreferences(EditUserActivity.CITY, MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString(EditUserActivity.CITY, userCity);
+        ed.apply();
+    }
+
+    private void loadCity () {
+        sPref = getSharedPreferences(EditUserActivity.CITY, MODE_PRIVATE);
+        userCity = sPref.getString(EditUserActivity.CITY, "_Kharkov");
+    }
+    // shared preferences
+
     private void navigationInitial () {
         toolbar = (Toolbar) findViewById(R.id.toolbar_edit);
         setSupportActionBar(toolbar);
@@ -297,6 +314,7 @@ public class EditUserActivity extends BaseActivity implements NavigationView.OnN
                         if ( item == 2 )
                             userCity = "_Odessa";
                         Toast.makeText(getApplicationContext(), "Выбранный город: " + mCityChoose[item], Toast.LENGTH_SHORT).show();
+                        saveCity();
                         apiCalss();
                     }
                 });

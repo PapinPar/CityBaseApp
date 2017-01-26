@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import chi_software.citybase.R;
 import chi_software.citybase.core.BaseActivity;
@@ -35,7 +38,7 @@ import chi_software.citybase.ui.pager.PagerViwer;
 import dmax.dialog.SpotsDialog;
 
 
-public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchDialog.GetSpinnerListner, PostAdapter.photoListener {
+public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchDialog.GetSpinnerListner, PostAdapter.PostAdapterCall {
 
     public static final String KEY = "key";
     public static final String UID = "uid";
@@ -48,38 +51,64 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     private BaseResponse mBaseResponse;
     private SpotsDialog mDialog;
     private String mTable, mKey, mUid, mSearch, mCity;
+    private int mPage, mLastPosition;
+    private RecyclerView mRecyclerView;
+    private List<MyObject> mMyObject;
+    private Map<String, List<String>> mKeysModel;
+    private SharedPreferences sPref;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-        mSearch = "";
-        mModelDataList = new ArrayList<>();
-        mKey = getIntent().getStringExtra(KEY);
-        mUid = getIntent().getStringExtra(UID);
-        mTable = "rent_living";
         navigationInitial();
-        mSearchDialog = new SearchDialog();
         mFindBut = (Button) findViewById(R.id.findButton);
         mFindBut.setOnClickListener(this);
         mFindBut.setClickable(false);
         mFindBut.setAlpha((float) 0.4);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.MyRecycle);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mAdapter = new PostAdapter(mModelDataList, this);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(layoutManager);
-        mTable = "rent_living";
+        mRecyclerView = (RecyclerView) findViewById(R.id.MyRecycle);
+        mSearchDialog = new SearchDialog();
         mDialog = new SpotsDialog(MainScreen.this);
+        init();
         showDialog(0);
     }
 
+    @Override
+    protected void onRestart () {
+        super.onRestart();
+        loadCity();
+        apiCalls();
+    }
+
+
+    private void init () {
+        mKey = getIntent().getStringExtra(KEY);
+        mUid = getIntent().getStringExtra(UID);
+        mSearch = "";
+        mPage = 1;
+        mLastPosition = 0;
+        mModelDataList = new ArrayList<>();
+        mMyObject = new ArrayList<>();
+        mKeysModel = new ArrayMap<>();
+        mTable = "rent_living";
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mAdapter = new PostAdapter(mModelDataList, this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(layoutManager);
+    }
+
     private void apiCalls () {
-        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey);
+        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
         app.getNet().searchMenu(mCity, mTable, mUid, mKey);
         mDialog.show();
         mDialog.setCancelable(false);
+
         mModelDataList.clear();
+        mPage = 1;
+        mLastPosition = 0;
+        mKeysModel.clear();
+        mMyObject.clear();
         mAdapter.notifyDataSetChanged();
     }
 
@@ -97,11 +126,13 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     public void getPhotoId (String id, int position) {
         String url = "http://api.citybase.in.ua/api/img/";
         ArrayList list = new ArrayList();
-        if ( mBaseResponse.getMap().containsKey(id) )
-            list = (ArrayList) mBaseResponse.getMap().get(id);
+        if ( mKeysModel.containsKey(id) ) {
+            list = (ArrayList) mKeysModel.get(id);
+        }
         ArrayList<String> urlList = new ArrayList<>();
-        for ( int i = 0 ; i < list.size() ; i++ )
+        for ( int i = 0 ; i < list.size() ; i++ ) {
             urlList.add(url + list.get(i));
+        }
 
         Intent s = new Intent(MainScreen.this, PagerViwer.class);
         s.putExtra(PagerViwer.UID, mUid);
@@ -110,9 +141,17 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         s.putExtra(PagerViwer.POSITION, position);
         s.putExtra(PagerViwer.SIZE, urlList.size());
         s.putStringArrayListExtra(PagerViwer.URL, (ArrayList<String>) urlList);
-        List<MyObject> baseGets = mBaseResponse.getBaseGet().getGetResponse().getModel();
-        s.putExtra(PagerViwer.MODEL, (Serializable) baseGets);
+        //       List<MyObject> baseGets = mBaseResponse.getBaseGet().getGetResponse().getModel();
+        s.putExtra(PagerViwer.MODEL, (Serializable) mMyObject);
         startActivity(s);
+    }
+
+    @Override
+    public void getLastPost (int position, int size) {
+        mLastPosition = size;
+        mDialog.show();
+        mPage++;
+        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
     }
 
     @Override
@@ -129,11 +168,13 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
     @Override
     public void getSpinner (String json) {
+        mPage = 1;
+        mLastPosition = 0;
         mSearch = json;
         mModelDataList.clear();
         mAdapter.notifyDataSetChanged();
         Log.d("MainScreen", mTable);
-        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey);
+        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
         mDialog.show();
     }
 
@@ -145,8 +186,11 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
     private void filldata (Object netObjects) {
         Log.d("MainScreenFill", mTable);
-        mModelDataList.clear();
+        if ( mPage == 1 )
+            mModelDataList.clear();
         mBaseResponse = (BaseResponse) netObjects;
+        mMyObject.addAll(mBaseResponse.getBaseGet().getGetResponse().getModel());
+        mKeysModel.putAll(mBaseResponse.getMap());
         String url = "http://api.citybase.in.ua/api/img/";
         ArrayList list = new ArrayList();
         String info = "";
@@ -163,16 +207,38 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 list = (ArrayList) mBaseResponse.getMap().get(id);
                 mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
                         //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), mTable));
+                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(),
+                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(),
+                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(),
+                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), mTable));
             } else
                 mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
                         //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, mTable));
+                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(),
+                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(),
+                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(),
+                        mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, mTable));
         }
-
         mDialog.dismiss();
         mAdapter.notifyDataSetChanged();
+        if ( mPage != 1 )
+            mRecyclerView.smoothScrollToPosition(mLastPosition - 1);
     }
+
+
+    // shared preferences
+    private void saveCity(){
+        sPref = getSharedPreferences(EditUserActivity.CITY,MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString(EditUserActivity.CITY, mCity);
+        ed.apply();
+    }
+    private void loadCity () {
+        sPref = getSharedPreferences(EditUserActivity.CITY,MODE_PRIVATE);
+        mCity = sPref.getString(EditUserActivity.CITY, "_Kharkov");
+    }
+    // shared preferences
+
 
     private void navigationInitial () {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -209,7 +275,6 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 Intent profile = new Intent(MainScreen.this, EditUserActivity.class);
                 profile.putExtra(EditUserActivity.UID, mUid);
                 profile.putExtra(EditUserActivity.KEY, mKey);
-                profile.putExtra(EditUserActivity.CITY, mCity);
                 startActivity(profile);
                 break;
             case R.id.tarifs:
@@ -249,6 +314,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                         if ( item == 2 )
                             mCity = "_Odessa";
                         Toast.makeText(getApplicationContext(), "Выбранный город: " + mCityChoose[item], Toast.LENGTH_SHORT).show();
+                        saveCity();
                         apiCalls();
                     }
                 });
@@ -257,4 +323,5 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         }
         return null;
     }
+
 }
