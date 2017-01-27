@@ -68,7 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
 
     @Override
     public DevViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.preview_object_layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_preview_object_layout, parent, false);
         DevViewHolder devViewHolder = new DevViewHolder(v);
         return devViewHolder;
     }

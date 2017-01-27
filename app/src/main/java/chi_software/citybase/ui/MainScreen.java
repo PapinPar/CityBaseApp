@@ -240,7 +240,6 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         ed.putString(EditUserActivity.CITY, mCity);
         ed.apply();
     }
-
     private void loadCity () {
         sPref = getSharedPreferences(EditUserActivity.CITY, MODE_PRIVATE);
         mCity = sPref.getString(EditUserActivity.CITY, "_Kharkov");
@@ -286,6 +285,10 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 startActivityForResult(profile, 1);
                 break;
             case R.id.tarifs:
+                Intent tariffs = new Intent(MainScreen.this, TariffsListActivity.class);
+                tariffs.putExtra(TariffsListActivity.KEY, mKey);
+                tariffs.putExtra(TariffsListActivity.UID, mUid);
+                startActivity(tariffs);
                 break;
 
         }

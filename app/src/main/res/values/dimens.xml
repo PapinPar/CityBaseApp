@@ -26,4 +26,10 @@
 
     <dimen name="iconSize">30dp</dimen>
 
+    <dimen name="tariffHight">200dp</dimen>
+    <dimen name="tariffImage">100dp</dimen>
+
+
+
+
 </resources>

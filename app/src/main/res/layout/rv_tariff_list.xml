@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/backGray"
+                android:layout_marginBottom="5dp">
+
+    <LinearLayout
+        android:id="@+id/linear_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tariff_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize"/>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/linear_1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@color/black"/>
+
+        <TextView
+            android:id="@+id/date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_gravity="right"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear_2"
+        android:layout_below="@+id/linear_1">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/linear_1"
+            android:layout_alignStart="@+id/linear_1"
+            android:layout_below="@+id/linear_1"
+            app:srcCompat="@drawable/city_base_tariff"
+            android:layout_weight="0.42"
+            android:layout_width="@dimen/tariffImage"
+            android:layout_marginLeft="14dp"/>
+
+        <TextView
+            android:id="@+id/tariff_info_tv"
+            android:layout_width="wrap_content"
+            android:layout_above="@+id/tariff_btn"
+            android:layout_alignEnd="@+id/linear_1"
+            android:layout_alignRight="@+id/linear_1"
+            android:layout_below="@+id/linear_1"
+            android:layout_toRightOf="@+id/linear_2"
+            android:gravity="center"
+            android:text="
+Акция! До конца января, подписка на базу аренды на 2 недели* совершенно бесплатно!
+Доступная база:
+Сдам без посредников
+Уникальная услуга MSR
+*Подписку возможно активировать 1 раз, все последующие активации будут аннулированы.
+"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize"
+            android:layout_weight="35.47"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_height="@dimen/tariffHight"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/tariff_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linear_2"
+        android:background="@color/buttonTextGreen"
+        android:text="Button"
+        android:textColor="@color/buttonTextGreen2"/>
+
+</RelativeLayout>

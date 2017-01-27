@@ -12,7 +12,7 @@ import chi_software.citybase.core.observer.Subject;
 public interface Net extends Subject<NetSubscriber> {
     @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION,
             SEND_SMS, ACTIVATE_ACOUNT,TRIAL_BASE, EDIT_USER_LOGIN, EDIT_USER_PASSWORD,
-            ADD_USER_EMAIL, DELETE_USER_EMAIL, GET_USER, GET_MY_AMOUNT,GET_ACTIVE_SERVICE })
+            ADD_USER_EMAIL, DELETE_USER_EMAIL, GET_USER, GET_MY_AMOUNT,GET_ACTIVE_SERVICE,GET_TARIFFS })
     @interface NetEvent {}
 
 
@@ -33,6 +33,7 @@ public interface Net extends Subject<NetSubscriber> {
     int GET_MY_AMOUNT = 206;
     int GET_ACTIVE_SERVICE = 207;
     int GET_HISTORY_AMOUNT = 208;
+    int GET_TARIFFS = 209;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
@@ -63,4 +64,5 @@ public interface Net extends Subject<NetSubscriber> {
     void getMyAmount (@NonNull String uid, @NonNull String key);
     void getActivService (@NonNull String city, @NonNull String uid, @NonNull String key);
     void setGetHistoryAmount (@NonNull String uid, @NonNull String key);
+    void getTariffs (@NonNull String city, @NonNull String uid, @NonNull String key);
 }

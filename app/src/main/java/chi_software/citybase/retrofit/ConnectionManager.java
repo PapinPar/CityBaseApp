@@ -25,6 +25,7 @@ import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
+import chi_software.citybase.data.tarif.Tariff;
 import retrofit2.Response;
 
 
@@ -265,7 +266,7 @@ public class ConnectionManager implements Net {
             @Override
             public void run () {
                 try {
-                    Response<BaseGet> response = RestApiWrapper.getInstanse().getBase(search, city, table, uid, key,page);
+                    Response<BaseGet> response = RestApiWrapper.getInstanse().getBase(search, city, table, uid, key, page);
                     BaseGet baseGet = response.body();
                     Map s = getModel(baseGet);
                     BaseResponse photoResponse = new BaseResponse(baseGet, s);
@@ -374,6 +375,26 @@ public class ConnectionManager implements Net {
                     }
                 } catch ( IOException e ) {
                     notifyErrorSubscribers(GET_HISTORY_AMOUNT, "ERROR");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getTariffs (@NonNull final String city, @NonNull final String uid, @NonNull final String key) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<Tariff> response = RestApiWrapper.getInstanse().getTariff(city, uid, key);
+                    Tariff tariffResponse = response.body();
+                    if ( response.isSuccessful() && tariffResponse.getResponse() != null ) {
+                        notifySuccessSubscribers(GET_TARIFFS, tariffResponse);
+                    } else {
+                        notifyErrorSubscribers(GET_TARIFFS, "ERROR");
+                    }
+                } catch ( IOException e ) {
+                    notifyErrorSubscribers(GET_TARIFFS, "ERROR");
                 }
             }
         });

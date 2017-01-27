@@ -7,6 +7,7 @@ import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
+import chi_software.citybase.data.tarif.Tariff;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -84,4 +85,7 @@ public interface API {
 
     @GET("payments.getHistoryAmount")
     Call<HistoryResponse> getHistoryAmount (@Query("uid") String uid, @Query("key") String key);
+
+    @GET("orders.gettarifs")
+    Call<Tariff> getTarifs (@Query("city") String city, @Query("uid") String uid, @Query("key") String key);
 }
