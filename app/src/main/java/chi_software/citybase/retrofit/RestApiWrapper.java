@@ -10,7 +10,7 @@ import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
-import chi_software.citybase.data.login.UserResonse;
+import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
 import chi_software.citybase.data.payment.PaymentResponse;
 import chi_software.citybase.data.tarif.Tariff;
@@ -65,8 +65,8 @@ class RestApiWrapper {
         return callActivate.execute();
     }
 
-    Response<UserResonse> getUser (String uid, String key,String city) throws IOException {
-        Call<UserResonse> userResonseCall = api.getUser(uid, key,city);
+    Response<UserResponse> getUser (String uid, String key, String city) throws IOException {
+        Call<UserResponse> userResonseCall = api.getUser(uid, key,city);
         return userResonseCall.execute();
     }
 

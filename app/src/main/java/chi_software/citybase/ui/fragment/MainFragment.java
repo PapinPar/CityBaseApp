@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,7 +26,9 @@ import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.BaseResponse;
 import chi_software.citybase.data.ModelData;
 import chi_software.citybase.data.getBase.MyObject;
+import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
+import chi_software.citybase.ui.TariffsListActivity;
 import chi_software.citybase.ui.adapter.PostAdapter;
 import chi_software.citybase.ui.dialog.SearchDialog;
 import chi_software.citybase.ui.pager.PagerViwer;
@@ -47,6 +50,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private RecyclerView mRecyclerView;
     private List<MyObject> mMyObject;
     private Map<String, List<String>> mKeysModel;
+    private List<String> userInfo;
     private SharedPreferences sPref;
 
     @Nullable
@@ -87,10 +91,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void apiCalls () {
-        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
         app.getNet().searchMenu(mCity, mTable, mUid, mKey);
         app.getNet().getUser(mUid, mKey, mCity);
-        mDialog.show();
         mDialog.setCancelable(false);
 
         mModelDataList.clear();
@@ -137,9 +139,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void getLastPost (int position, int size) {
-        mLastPosition = size;
-        mPage++;
         if ( tmpPosition != position ) {
+            mLastPosition = size;
+            mPage++;
             app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
             mDialog.show();
             tmpPosition = position;
@@ -155,6 +157,29 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case Net.MENU_SEARC:
                 fillsearch((MenuSearch) NetObjects);
+                break;
+            case Net.GET_USER:
+                UserResponse userResponse = (UserResponse) NetObjects;
+                userInfo = userResponse.getResponse().getOrders();
+                getLevel();
+                break;
+        }
+    }
+
+    private void getLevel () {
+        int count = 0;
+        for ( String s : userInfo ) {
+            if ( mTable.contains(s) ) {
+                count++;
+            }
+        }
+        if ( count > 0 ) {
+            app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
+            mDialog.show();
+        } else {
+            Toast.makeText(getActivity(), "У вас нет доустпа к этой базе", Toast.LENGTH_SHORT).show();
+            Intent tariffs = new Intent(getActivity(), TariffsListActivity.class);
+            startActivity(tariffs);
         }
     }
 

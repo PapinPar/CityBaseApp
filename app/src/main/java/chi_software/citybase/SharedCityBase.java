@@ -15,6 +15,7 @@ public class SharedCityBase {
     private static final String PREFS_SETTING_UID = "UID";
     private static final String PREFS_SETTING_KEY = "KEY";
     private static final String PREFS_SETTING_TABLE = "TABLE";
+    private static final String PREFS_SETTING_ACCESS_LEVEL= "ACCESS_LEVEL";
 
     private static SharedPreferences getSharedPreferences (Context context) {
         return context.getSharedPreferences(SHARED_PREFERENCES_CITY_BASE, Context.MODE_PRIVATE);
@@ -28,7 +29,6 @@ public class SharedCityBase {
     public static void SaveKey (Context context, String s) {
         saveString(context, s, PREFS_SETTING_KEY);
     }
-
     public static String GetKey (Context context) {
         return getString(context, PREFS_SETTING_KEY, "");
     }
@@ -38,7 +38,6 @@ public class SharedCityBase {
     public static void SaveUID (Context context, String s) {
         saveString(context, s, PREFS_SETTING_UID);
     }
-
     public static String GetUID (Context context) {
         return getString(context, PREFS_SETTING_UID, "");
     }
@@ -47,7 +46,6 @@ public class SharedCityBase {
     public static void SaveCity (Context context, String s) {
         saveString(context, s, PREFS_SETTING_CITY);
     }
-
     public static String GetCity (Context context) {
         return getString(context, PREFS_SETTING_CITY, "_Kharkov");
 
@@ -57,10 +55,17 @@ public class SharedCityBase {
     public static void SaveTable (Context context, String s) {
         saveString(context, s, PREFS_SETTING_TABLE);
     }
-
     public static String GetTable (Context context) {
         return getString(context, PREFS_SETTING_TABLE, "rent_living");
 
+    }
+
+    // ACCESS LEVEL
+    public static void SaveLevel (Context context,String s){
+        saveString(context,s,PREFS_SETTING_ACCESS_LEVEL);
+    }
+    public static String GetLevel (Context context) {
+        return getString(context, PREFS_SETTING_ACCESS_LEVEL);
     }
 
     private static void saveString (Context context, String s, String key) {

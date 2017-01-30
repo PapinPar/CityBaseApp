@@ -5,7 +5,7 @@ import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
-import chi_software.citybase.data.login.UserResonse;
+import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
 import chi_software.citybase.data.payment.PaymentResponse;
 import chi_software.citybase.data.tarif.Tariff;
@@ -31,7 +31,7 @@ public interface API {
     Call<FieldResponse> activationAccount (@Query("uid") String uid, @Query("key") String key, @Query("code") String code);
 
     @GET("login.getUser")
-    Call<UserResonse> getUser (@Query("uid") String uid, @Query("key") String key,@Query("citysite")String city);
+    Call<UserResponse> getUser (@Query("uid") String uid, @Query("key") String key, @Query("citysite")String city);
 
 
     // ************* EDIT USER ****************

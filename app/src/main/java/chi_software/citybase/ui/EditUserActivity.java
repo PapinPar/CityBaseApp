@@ -32,7 +32,7 @@ import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.activ_service.ActivServicess;
 import chi_software.citybase.data.activ_service.ServiceData;
 import chi_software.citybase.data.activ_service.ServiceResponse;
-import chi_software.citybase.data.login.UserResonse;
+import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.ui.adapter.ActiveServAdapter;
 import dmax.dialog.SpotsDialog;
 
@@ -157,8 +157,8 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
         super.onNetRequestDone(eventId, NetObjects);
         switch ( eventId ) {
             case Net.GET_USER:
-                UserResonse userResonse = (UserResonse) NetObjects;
-                filldata(userResonse);
+                UserResponse userResponse = (UserResponse) NetObjects;
+                filldata(userResponse);
                 break;
             case Net.EDIT_USER_LOGIN:
                 Toast.makeText(this, "Данные успешно изменены", Toast.LENGTH_SHORT).show();
@@ -186,15 +186,15 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void filldata (UserResonse userResonse) {
-        mPhone.setText(userResonse.getResponse().getPhone());
-        mName.setText(userResonse.getResponse().getName());
-        mLogin.setText(userResonse.getResponse().getLogin());
-        if ( userResonse.getResponse().getEmail() != null )
-            mOldMailS = userResonse.getResponse().getEmail();
-        if ( userResonse.getResponse().getEmail() == null || userResonse.getResponse().getEmail().toString().equals("") )
+    private void filldata (UserResponse userResponse) {
+        mPhone.setText(userResponse.getResponse().getPhone());
+        mName.setText(userResponse.getResponse().getName());
+        mLogin.setText(userResponse.getResponse().getLogin());
+        if ( userResponse.getResponse().getEmail() != null )
+            mOldMailS = userResponse.getResponse().getEmail();
+        if ( userResponse.getResponse().getEmail() == null || userResponse.getResponse().getEmail().toString().equals("") )
             mOldMailS = "NULL";
-        mEditMail.setText(userResonse.getResponse().getEmail());
+        mEditMail.setText(userResponse.getResponse().getEmail());
         if ( userCity.equals("_Kyiv") )
             mCity.setText("Киев");
         if ( userCity.equals("_Kharkov") )

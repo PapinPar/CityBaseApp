@@ -23,7 +23,7 @@ import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
-import chi_software.citybase.data.login.UserResonse;
+import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
 import chi_software.citybase.data.payment.PaymentResponse;
 import chi_software.citybase.data.tarif.Tariff;
@@ -153,10 +153,10 @@ public class ConnectionManager implements Net {
             @Override
             public void run () {
                 try {
-                    Response<UserResonse> response = RestApiWrapper.getInstanse().getUser(uid, key,city);
-                    UserResonse userResonse = response.body();
-                    if ( userResonse.getResponse() != null ) {
-                        notifySuccessSubscribers(GET_USER, userResonse);
+                    Response<UserResponse> response = RestApiWrapper.getInstanse().getUser(uid, key,city);
+                    UserResponse userResponse = response.body();
+                    if ( userResponse.getResponse() != null ) {
+                        notifySuccessSubscribers(GET_USER, userResponse);
                     } else
                         notifyErrorSubscribers(GET_USER, "ERROR");
                 } catch ( IOException e ) {
