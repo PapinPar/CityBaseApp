@@ -30,7 +30,7 @@ public class CityApplication extends Application implements App {
         return mNet;
     }
 
-    public Executor getmExecutor () {
+    public Executor getExecutor () {
         return mExecutor;
     }
 

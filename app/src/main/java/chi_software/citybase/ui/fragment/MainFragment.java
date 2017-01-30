@@ -1,24 +1,17 @@
-package chi_software.citybase.ui;
+package chi_software.citybase.ui.fragment;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
+import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 import chi_software.citybase.R;
-import chi_software.citybase.core.BaseActivity;
+import chi_software.citybase.SharedCityBase;
+import chi_software.citybase.core.BaseFragment;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.BaseResponse;
 import chi_software.citybase.data.ModelData;
@@ -38,10 +32,8 @@ import chi_software.citybase.ui.pager.PagerViwer;
 import dmax.dialog.SpotsDialog;
 
 
-public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchDialog.GetSpinnerListner, PostAdapter.PostAdapterCall {
+public class MainFragment extends BaseFragment implements View.OnClickListener, SearchDialog.GetSpinnerListner, PostAdapter.PostAdapterCall {
 
-    public static final String KEY = "key";
-    public static final String UID = "uid";
 
     private Button mFindBut;
     private PostAdapter mAdapter;
@@ -50,48 +42,45 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     private MenuSearch mMyMenu;
     private BaseResponse mBaseResponse;
     private SpotsDialog mDialog;
-    private String mTable, mKey, mUid, mSearch, mCity;
-    private int mPage, mLastPosition;
+    private String mTable, mKey, mUid, mSearch, mCity, tmpCity;
+    private int mPage, mLastPosition, tmpPosition;
     private RecyclerView mRecyclerView;
     private List<MyObject> mMyObject;
     private Map<String, List<String>> mKeysModel;
     private SharedPreferences sPref;
 
+    @Nullable
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
-        navigationInitial();
-        mFindBut = (Button) findViewById(R.id.findButton);
-        mFindBut.setOnClickListener(this);
-        mFindBut.setClickable(false);
-        mFindBut.setAlpha((float) 0.4);
-        mRecyclerView = (RecyclerView) findViewById(R.id.MyRecycle);
-        mSearchDialog = new SearchDialog();
-        mDialog = new SpotsDialog(MainScreen.this);
-        init();
-        loadCity();
-        showDialog(0);
+    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.content_main_screen, container, false);
     }
 
     @Override
-    protected void onRestart () {
-        super.onRestart();
+    public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mFindBut = (Button) view.findViewById(R.id.findButton);
+        mFindBut.setOnClickListener(this);
+        mFindBut.setClickable(false);
+        mFindBut.setAlpha((float) 0.4);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.MyRecycle);
+        mSearchDialog = new SearchDialog();
+        mDialog = new SpotsDialog(getActivity());
+        init();
+        loadShared();
+        apiCalls();
     }
 
 
     private void init () {
-        mKey = getIntent().getStringExtra(KEY);
-        mUid = getIntent().getStringExtra(UID);
         mSearch = "";
         mPage = 1;
         mLastPosition = 0;
+        tmpPosition = 0;
         mModelDataList = new ArrayList<>();
         mMyObject = new ArrayList<>();
         mKeysModel = new ArrayMap<>();
-        mTable = "rent_living";
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new PostAdapter(mModelDataList, this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -100,6 +89,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     private void apiCalls () {
         app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
         app.getNet().searchMenu(mCity, mTable, mUid, mKey);
+        app.getNet().getUser(mUid, mKey, mCity);
         mDialog.show();
         mDialog.setCancelable(false);
 
@@ -116,7 +106,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         switch ( v.getId() ) {
             case R.id.findButton:
                 mSearchDialog.getListner(this, mMyMenu);
-                mSearchDialog.show(getFragmentManager(), "Поиск");
+                mSearchDialog.show(getActivity(), this, mMyMenu);
                 break;
         }
     }
@@ -133,7 +123,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
             urlList.add(url + list.get(i));
         }
 
-        Intent s = new Intent(MainScreen.this, PagerViwer.class);
+        Intent s = new Intent(getActivity(), PagerViwer.class);
         s.putExtra(PagerViwer.UID, mUid);
         s.putExtra(PagerViwer.KEY, mKey);
         s.putExtra(PagerViwer.TABLE, mTable);
@@ -146,25 +136,14 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
     @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-        switch ( resultCode ) {
-            case 5:
-                loadCity();
-                apiCalls();
-                Log.d("MainScreen", "lko");
-                break;
-            case 2:
-                Log.d("MainScreen", "lkoasdsads");
-                break;
-        }
-    }
-
-    @Override
     public void getLastPost (int position, int size) {
         mLastPosition = size;
-        mDialog.show();
         mPage++;
-        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
+        if ( tmpPosition != position ) {
+            app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
+            mDialog.show();
+            tmpPosition = position;
+        }
     }
 
     @Override
@@ -234,105 +213,19 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
 
     // shared preferences
-    private void saveCity () {
-        sPref = getSharedPreferences(EditUserActivity.CITY, MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putString(EditUserActivity.CITY, mCity);
-        ed.apply();
-    }
-    private void loadCity () {
-        sPref = getSharedPreferences(EditUserActivity.CITY, MODE_PRIVATE);
-        mCity = sPref.getString(EditUserActivity.CITY, "_Kharkov");
-    }
-    // shared preferences
-
-
-    private void navigationInitial () {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+    private void saveShared () {
+        SharedCityBase.SaveCity(getActivity(), mCity);
+        SharedCityBase.SaveTable(getActivity(), mTable);
+        SharedCityBase.SaveKey(getActivity(), mKey);
+        SharedCityBase.SaveUID(getActivity(), mUid);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected (MenuItem item) {
-        switch ( item.getItemId() ) {
-            case R.id.arenda:
-                mTable = "rent_living";
-                apiCalls();
-                break;
-            case R.id.sell:
-                mTable = "sale_living";
-                apiCalls();
-                break;
-            case R.id.arendaComer:
-                mTable = "rent_not_living";
-                apiCalls();
-                break;
-            case R.id.sellComer:
-                mTable = "sale_not_living";
-                apiCalls();
-                break;
-            case R.id.myProfile:
-                Intent profile = new Intent(MainScreen.this, EditUserActivity.class);
-                profile.putExtra(EditUserActivity.UID, mUid);
-                profile.putExtra(EditUserActivity.KEY, mKey);
-                startActivityForResult(profile, 1);
-                break;
-            case R.id.tarifs:
-                Intent tariffs = new Intent(MainScreen.this, TariffsListActivity.class);
-                tariffs.putExtra(TariffsListActivity.KEY, mKey);
-                tariffs.putExtra(TariffsListActivity.UID, mUid);
-                startActivity(tariffs);
-                break;
-
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed () {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if ( drawer.isDrawerOpen(GravityCompat.START) ) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    protected Dialog onCreateDialog (final int id) {
-        switch ( id ) {
-            case 0:
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainScreen.this);
-                final String[] mCityChoose = { "Киев", "Харьков", "Одесса" };
-                builder = new AlertDialog.Builder(this);
-                builder.setTitle("Выберите Город");
-                builder.setItems(mCityChoose, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick (DialogInterface dialog, int item) {
-                        if ( item == 0 )
-                            mCity = "_Kyiv";
-                        if ( item == 1 )
-                            mCity = "_Kharkov";
-                        if ( item == 2 )
-                            mCity = "_Odessa";
-                        Toast.makeText(getApplicationContext(), "Выбранный город: " + mCityChoose[item], Toast.LENGTH_SHORT).show();
-                        saveCity();
-                        apiCalls();
-                    }
-                });
-                builder.setCancelable(false);
-                return builder.create();
-        }
-        return null;
+    private void loadShared () {
+        mKey = SharedCityBase.GetKey(getActivity());
+        mUid = SharedCityBase.GetUID(getActivity());
+        mCity = SharedCityBase.GetCity(getActivity());
+        mTable = SharedCityBase.GetTable(getActivity());
+        tmpCity = mCity;
     }
 
 }

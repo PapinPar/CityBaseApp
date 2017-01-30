@@ -2,6 +2,8 @@ package chi_software.citybase.data.login;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 
 /**
  * Created by Papin on 19.12.2016.
@@ -43,6 +45,17 @@ public class UserInfo {
     @SerializedName("parameters")
     @Expose
     private String parameters;
+    @SerializedName("orders")
+    @Expose
+    private List<String> orders = null;
+
+    public List<String> getOrders () {
+        return orders;
+    }
+
+    public void setOrders (List<String> orders) {
+        this.orders = orders;
+    }
 
     public String getId () {
         return id;

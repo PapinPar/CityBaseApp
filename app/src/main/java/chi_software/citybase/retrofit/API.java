@@ -7,10 +7,12 @@ import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
+import chi_software.citybase.data.payment.PaymentResponse;
 import chi_software.citybase.data.tarif.Tariff;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+
 
 /**
  * Created by Papin on 09.11.2016.
@@ -29,10 +31,8 @@ public interface API {
     Call<FieldResponse> activationAccount (@Query("uid") String uid, @Query("key") String key, @Query("code") String code);
 
     @GET("login.getUser")
-    Call<UserResonse> getUser (@Query("uid") String uid, @Query("key") String key);
+    Call<UserResonse> getUser (@Query("uid") String uid, @Query("key") String key,@Query("citysite")String city);
 
-
-    //login.getUser?uid=126&key=8ef5951de284b0046b9f79ca09b1de771e09e6b9
 
     // ************* EDIT USER ****************
     @GET("login.EDIT_USER_LOGIN")
@@ -45,31 +45,25 @@ public interface API {
     Call<FieldResponse> addUserEmail (@Query("uid") String uid, @Query("key") String key, @Query("email") String email);
 
     @GET("login.DELETE_USER_EMAIL")
-    Call<FieldResponse> deleteUserEmail (@Query("uid")String uid,@Query("key")String key);
+    Call<FieldResponse> deleteUserEmail (@Query("uid") String uid, @Query("key") String key);
 
     // ************ SEARCH ****************
     @GET("Base.get")
-    Call<BaseGet> getBase (@Query("search") String search, @Query("city") String city,
-                           @Query("table") String table, @Query("uid") String uid, @Query("key") String key,@Query("page") Integer page);
+    Call<BaseGet> getBase (@Query("search") String search, @Query("city") String city, @Query("table") String table, @Query("uid") String uid, @Query("key") String key, @Query("page") Integer page);
 
     @GET("Base.searchmenu")
     Call<MenuSearch> getMenuSearch (@Query("city") String city, @Query("table") String table, @Query("uid") String iod, @Query("key") String key);
 
     @GET("Base.getobjforindex")
-    Call<BaseGet> getTrialBase(@Query("city") String city, @Query("table") String table, @Query("ruscity") String ruscity,
-                               @Query("type") String type, @Query("place") String place, @Query("basetype") String basetype, @Query("basetype2") String basetype2);
+    Call<BaseGet> getTrialBase (@Query("city") String city, @Query("table") String table, @Query("ruscity") String ruscity, @Query("type") String type, @Query("place") String place, @Query("basetype") String basetype, @Query("basetype2") String basetype2);
 
 
     // ************* EDIT FIELD ****************
     @GET("Base.editfield")
-    Call<FieldResponse> setColor (@Query("uid") String uid, @Query("key") String key,
-                                  @Query("city") String city, @Query("table") String table,
-                                  @Query("objid") String objId, @Query("field") String field, @Query("value") Integer color);
+    Call<FieldResponse> setColor (@Query("uid") String uid, @Query("key") String key, @Query("city") String city, @Query("table") String table, @Query("objid") String objId, @Query("field") String field, @Query("value") Integer color);
 
     @GET("Base.editfield")
-    Call<FieldResponse> setComment (@Query("uid") String uid, @Query("key") String key,
-                                    @Query("city") String city, @Query("table") String table,
-                                    @Query("objid") String objId, @Query("field") String field, @Query("value") String color);
+    Call<FieldResponse> setComment (@Query("uid") String uid, @Query("key") String key, @Query("city") String city, @Query("table") String table, @Query("objid") String objId, @Query("field") String field, @Query("value") String color);
 
 
     // **************** SMS ********************
@@ -88,4 +82,14 @@ public interface API {
 
     @GET("orders.gettarifs")
     Call<Tariff> getTarifs (@Query("city") String city, @Query("uid") String uid, @Query("key") String key);
+
+    @GET("orders.createNewOrder")
+    Call<FieldResponse> createNewOrder (@Query("tarif_id") String tarifId, @Query("coment") String coment, @Query("uid") String uid, @Query("key") String key);
+
+    @GET("orders.activateOrder")
+    Call<FieldResponse> activateOrder (@Query("order_id") String orderId, @Query("uid") String uid, @Query("key") String key);
+
+    @GET("payments.createPayment")
+    Call<PaymentResponse> createPayment (@Query("uid") String uid, @Query("key") String key, @Query("amount") float amount,
+                                         @Query("operation") String operation, @Query("pay_way") String pay_way, @Query("order_id") String orderId);
 }

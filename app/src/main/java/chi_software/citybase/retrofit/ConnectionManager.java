@@ -25,6 +25,7 @@ import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
+import chi_software.citybase.data.payment.PaymentResponse;
 import chi_software.citybase.data.tarif.Tariff;
 import retrofit2.Response;
 
@@ -147,12 +148,12 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void getUser (@NonNull final String uid, @NonNull final String key) {
+    public void getUser (@NonNull final String uid, @NonNull final String key,final String city) {
         mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
-                    Response<UserResonse> response = RestApiWrapper.getInstanse().getUser(uid, key);
+                    Response<UserResonse> response = RestApiWrapper.getInstanse().getUser(uid, key,city);
                     UserResonse userResonse = response.body();
                     if ( userResonse.getResponse() != null ) {
                         notifySuccessSubscribers(GET_USER, userResonse);
@@ -395,6 +396,66 @@ public class ConnectionManager implements Net {
                     }
                 } catch ( IOException e ) {
                     notifyErrorSubscribers(GET_TARIFFS, "ERROR");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void createOrder (@NonNull final String tariffID, @NonNull final String coment, @NonNull final String uid, @NonNull final String key) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().createOrder(tariffID, coment, uid, key);
+                    FieldResponse orderResponse = response.body();
+                    if ( response.isSuccessful() && orderResponse.getServerResponse() != null ) {
+                        notifySuccessSubscribers(CREATE_ORDER, orderResponse);
+                    } else {
+                        notifyErrorSubscribers(CREATE_ORDER, "ERROR");
+                    }
+                } catch ( IOException e ) {
+                    notifyErrorSubscribers(CREATE_ORDER, "ERROR");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void activateOrder (@NonNull final String orderId, @NonNull final String uid, @NonNull final String key) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().activateOrder(orderId, uid, key);
+                    FieldResponse fieldResponse = response.body();
+                    if ( response.isSuccessful() && fieldResponse.getServerResponse() != null ) {
+                        notifySuccessSubscribers(ACTIVATE_ORDER,fieldResponse);
+                    }else{
+                        notifyErrorSubscribers(ACTIVATE_ORDER, "ERROR");
+                    }
+                }catch ( IOException e ){
+                    notifyErrorSubscribers(ACTIVATE_ORDER,"ERROR");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void createPayment (@NonNull final String uid, @NonNull final String key, @NonNull final Float amount, @NonNull final String operation, @NonNull final String pay_way, @NonNull final String orderId) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<PaymentResponse> response = RestApiWrapper.getInstanse().createPayment(uid,key,amount,operation,pay_way,orderId);
+                    PaymentResponse fieldResponse = response.body();
+                    if ( response.isSuccessful() && fieldResponse.getResponse()!=null ){
+                        notifySuccessSubscribers(CREATE_PAYMENT,fieldResponse.getResponse().getLink());
+                    }else{
+                        notifyErrorSubscribers(CREATE_PAYMENT, "ERROR");
+                    }
+                }catch ( IOException e){
+                    notifyErrorSubscribers(CREATE_PAYMENT,"ERROR");
                 }
             }
         });

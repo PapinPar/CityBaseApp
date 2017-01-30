@@ -1,21 +1,16 @@
-package chi_software.citybase.ui;
+package chi_software.citybase.ui.fragment;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,31 +21,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chi_software.citybase.R;
-import chi_software.citybase.core.BaseActivity;
+import chi_software.citybase.SharedCityBase;
+import chi_software.citybase.core.BaseFragment;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.activ_service.ActivServicess;
 import chi_software.citybase.data.activ_service.ServiceData;
 import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.login.UserResonse;
+import chi_software.citybase.ui.MyAmountHistory;
 import chi_software.citybase.ui.adapter.ActiveServAdapter;
 import dmax.dialog.SpotsDialog;
 
 
 /**
- * Created by Papin on 30.11.2016.
+ * Created by Papin on 27.01.2017.
  */
 
-public class EditUserActivity extends BaseActivity implements View.OnClickListener {
-
-    public static final String KEY = "key";
-    public static final String UID = "uid";
-    public static final String CITY = "city";
-
-    private Toolbar toolbar;
-    private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
-    private NavigationView navigationView;
+public class EditUserFragment extends BaseFragment implements View.OnClickListener {
 
     private TextView mPhone, mAmount, mCity;
     private EditText mLogin, mName, mEditMail, mNewPass, mEquelPass;
@@ -62,31 +50,34 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
     private ActiveServAdapter mAdapter;
     private RecyclerView rvService;
     private Button mHistoryBut;
-    private SharedPreferences sPref;
     private SpotsDialog mDialog;
 
+    @Nullable
     @Override
-    protected void onCreate (@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_user);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        mKey = getIntent().getStringExtra(KEY);
-        mUid = getIntent().getStringExtra(UID);
-        mDialog = new SpotsDialog(EditUserActivity.this);
-        loadCity();
-        mPhone = (TextView) findViewById(R.id.textPhone);
-        mLogin = (EditText) findViewById(R.id.editPassET);
-        mName = (EditText) findViewById(R.id.editNameET);
-        mSaveInfo = (Button) findViewById(R.id.saveUserInfoBut);
-        mEditMail = (EditText) findViewById(R.id.editEmailET);
-        mMailBut = (Button) findViewById(R.id.editMailBut);
-        mNewPass = (EditText) findViewById(R.id.new_pass_et);
-        mEquelPass = (EditText) findViewById(R.id.new_equal_pass_et);
-        mChangePass = (Button) findViewById(R.id.changePasBtn);
-        mAmount = (TextView) findViewById(R.id.amount_tw);
-        rvService = (RecyclerView) findViewById(R.id.rvActivServ);
-        mCity = (TextView) findViewById(R.id.cityTv);
-        mHistoryBut = (Button) findViewById(R.id.historyBut);
+    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_edit_user, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        mDialog = new SpotsDialog(getActivity());
+        mPhone = (TextView) view.findViewById(R.id.textPhone);
+        mLogin = (EditText) view.findViewById(R.id.editPassET);
+        mName = (EditText) view.findViewById(R.id.editNameET);
+        mSaveInfo = (Button) view.findViewById(R.id.saveUserInfoBut);
+        mEditMail = (EditText) view.findViewById(R.id.editEmailET);
+        mMailBut = (Button) view.findViewById(R.id.editMailBut);
+        mNewPass = (EditText) view.findViewById(R.id.new_pass_et);
+        mEquelPass = (EditText) view.findViewById(R.id.new_equal_pass_et);
+        mChangePass = (Button) view.findViewById(R.id.changePasBtn);
+        mAmount = (TextView) view.findViewById(R.id.amount_tw);
+        rvService = (RecyclerView) view.findViewById(R.id.rvActivServ);
+        mCity = (TextView) view.findViewById(R.id.cityTv);
+        mHistoryBut = (Button) view.findViewById(R.id.historyBut);
         serviceList = new ArrayList<>();
 
         mMailBut.setOnClickListener(this);
@@ -133,19 +124,18 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
             }
         });
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new ActiveServAdapter(serviceList);
         rvService.setAdapter(mAdapter);
         rvService.setLayoutManager(layoutManager);
-
-        apiCalss();
+        loadShared();
+        apiCalls();
     }
 
-    private void apiCalss () {
+    private void apiCalls () {
         if ( !isNetworkConnected() )
-            Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
         else {
-            mDialog.show();
             app.getNet().getUser(mUid, mKey,"");
             app.getNet().getMyAmount(mUid, mKey);
         }
@@ -161,8 +151,8 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
                 filldata(userResonse);
                 break;
             case Net.EDIT_USER_LOGIN:
-                Toast.makeText(this, "Данные успешно изменены", Toast.LENGTH_SHORT).show();
-                finish();
+                Toast.makeText(getActivity(), "Данные успешно изменены", Toast.LENGTH_SHORT).show();
+                //finish();
                 break;
             case Net.DELETE_USER_EMAIL:
                 editMailS = mEditMail.getText().toString();
@@ -171,7 +161,7 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
                 break;
             case Net.ADD_USER_EMAIL:
                 mDialog.dismiss();
-                Toast.makeText(this, "Вам будет отправленно письмо на " + editMailS, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Вам будет отправленно письмо на " + editMailS, Toast.LENGTH_SHORT).show();
                 break;
             case Net.GET_MY_AMOUNT:
                 FieldResponse myAmount = (FieldResponse) NetObjects;
@@ -222,7 +212,7 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.editMailBut:
                 if ( !isNetworkConnected() )
-                    Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
                 else {
                     if ( mMailBut.getAlpha() == 1 ) {
                         if ( !mOldMailS.equals("NULL") ) {
@@ -236,7 +226,7 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.changePasBtn:
                 if ( !isNetworkConnected() )
-                    Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
                 else {
                     if ( mChangePass.getAlpha() == 1 ) {
                         mNewPassS = mNewPass.getText().toString();
@@ -244,75 +234,56 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
                         if ( mNewPassS.equals(mEqPassS) ) {
                             app.getNet().editUserPassword(mUid, mKey, mNewPassS, mEqPassS);
                         } else
-                            Toast.makeText(this, "Пароли не воспадают", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Пароли не воспадают", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
             case R.id.cityTv:
-                showDialog(0);
+                onCreateDialog();
                 break;
             case R.id.historyBut:
-                Intent showHistory = new Intent(EditUserActivity.this, MyAmountHistory.class);
-                showHistory.putExtra(MyAmountHistory.UID, mUid);
-                showHistory.putExtra(MyAmountHistory.KEY, mKey);
-                startActivity(showHistory);
+                 Intent showHistory = new Intent(getContext(), MyAmountHistory.class);
+                 showHistory.putExtra(MyAmountHistory.UID, mUid);
+                 showHistory.putExtra(MyAmountHistory.KEY, mKey);
+                 startActivity(showHistory);
                 break;
         }
     }
 
 
-    // shared preferences
-    private void saveCity () {
-        sPref = getSharedPreferences(EditUserActivity.CITY, MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putString(EditUserActivity.CITY, userCity);
-        ed.apply();
+    private void saveShared () {
+        SharedCityBase.SaveCity(getActivity(), userCity);
+        SharedCityBase.SaveKey(getActivity(), mKey);
+        SharedCityBase.SaveUID(getActivity(), mUid);
     }
 
-    private void loadCity () {
-        sPref = getSharedPreferences(EditUserActivity.CITY, MODE_PRIVATE);
-        userCity = sPref.getString(EditUserActivity.CITY, "_Kharkov");
-    }
-    // shared preferences
-
-
-    @Override
-    public void onBackPressed () {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_edit);
-        if ( drawer.isDrawerOpen(GravityCompat.START) ) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            setResult(5);
-            super.onBackPressed();
-        }
+    private void loadShared () {
+        userCity = SharedCityBase.GetCity(getActivity());
+        mCity.setText(userCity);
+        mKey = SharedCityBase.GetKey(getActivity());
+        mUid = SharedCityBase.GetUID(getActivity());
     }
 
-    @Override
-    protected Dialog onCreateDialog (final int id) {
-        switch ( id ) {
-            case 0:
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditUserActivity.this);
-                final String[] mCityChoose = { "Киев", "Харьков", "Одесса" };
-                builder = new AlertDialog.Builder(this);
-                builder.setTitle("Выберите Город");
-                builder.setItems(mCityChoose, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick (DialogInterface dialog, int item) {
-                        if ( item == 0 )
-                            userCity = "_Kyiv";
-                        if ( item == 1 )
-                            userCity = "_Kharkov";
-                        if ( item == 2 )
-                            userCity = "_Odessa";
-                        Toast.makeText(getApplicationContext(), "Выбранный город: " + mCityChoose[item], Toast.LENGTH_SHORT).show();
-                        saveCity();
-                        apiCalss();
-                    }
-                });
-                builder.setCancelable(false);
-                return builder.create();
-        }
-        return null;
+    protected void onCreateDialog () {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final String[] mCityChoose = { "Киев", "Харьков", "Одесса" };
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Выберите Город");
+        builder.setItems(mCityChoose, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int item) {
+                if ( item == 0 )
+                    userCity = "_Kyiv";
+                if ( item == 1 )
+                    userCity = "_Kharkov";
+                if ( item == 2 )
+                    userCity = "_Odessa";
+                saveShared();
+                apiCalls();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
     }
 
 }

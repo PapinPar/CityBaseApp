@@ -3,6 +3,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -12,13 +13,14 @@ import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.history_amount.HistoryModel;
 import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.ui.adapter.HistoryAdapter;
+import dmax.dialog.SpotsDialog;
 
 
 /**
  * Created by user on 24.01.2017.
  */
 
-public class MyAmountHistory extends BaseActivity  {
+public class MyAmountHistory extends BaseActivity {
 
     public static final String KEY = "key";
     public static final String UID = "uid";
@@ -28,6 +30,7 @@ public class MyAmountHistory extends BaseActivity  {
     private HistoryAdapter mHistoryAdapter;
     private ArrayList<HistoryModel> mHistoryList;
     private RecyclerView mHistoryRv;
+    private SpotsDialog mDialog;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class MyAmountHistory extends BaseActivity  {
         mUid = getIntent().getStringExtra(UID);
         mKey = getIntent().getStringExtra(KEY);
         mHistoryRv = (RecyclerView) findViewById(R.id.history_rv);
-
+        mDialog = new SpotsDialog(MyAmountHistory.this);
         mHistoryList = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);
         mHistoryAdapter = new HistoryAdapter(mHistoryList);
@@ -44,15 +47,21 @@ public class MyAmountHistory extends BaseActivity  {
         mHistoryRv.setNestedScrollingEnabled(false);
         mHistoryRv.setAdapter(mHistoryAdapter);
 
-        app.getNet().setGetHistoryAmount(mUid,mKey);
+        if ( !isNetworkConnected() )
+            Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
+        else {
+            mDialog.show();
+            app.getNet().setGetHistoryAmount(mUid, mKey);
+        }
     }
 
 
     @Override
     public void onNetRequestDone (@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestDone(eventId, NetObjects);
-        switch ( eventId ){
+        switch ( eventId ) {
             case Net.GET_HISTORY_AMOUNT:
+                mDialog.dismiss();
                 fillHistoryList((HistoryResponse) NetObjects);
                 break;
         }

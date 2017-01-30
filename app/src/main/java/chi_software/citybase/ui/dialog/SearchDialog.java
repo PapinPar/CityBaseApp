@@ -1,5 +1,6 @@
 package chi_software.citybase.ui.dialog;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,6 +51,14 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
     private MenuSearch menuSearch;
     private GetSpinnerListner getSpinnerListner;
+
+    public void show (Activity activity,GetSpinnerListner getSpinnerListner, MenuSearch menuSearch) {
+        SearchDialog dialog = new SearchDialog();
+        dialog.show(activity.getFragmentManager(), "Поиск");
+        dialog.getListner(getSpinnerListner,menuSearch);
+    }
+
+
 
 
     public interface GetSpinnerListner {

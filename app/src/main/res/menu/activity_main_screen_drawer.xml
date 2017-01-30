@@ -2,8 +2,9 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Базы Объектов"
-        android:icon="@drawable/ic_main_nav">
+    <item
+        android:icon="@drawable/ic_main_nav"
+        android:title="Базы Объектов">
         <menu>
             <item
                 android:id="@+id/arenda"
@@ -20,18 +21,18 @@
         </menu>
     </item>
 
-    <group android:checkableBehavior="single">
+    <group >
         <item
-            android:icon="@drawable/ic_cabinet_nav"
             android:id="@+id/myProfile"
+            android:icon="@drawable/ic_cabinet_nav"
             android:title="Личный кабинет"/>
         <item
-            android:icon="@drawable/ic_tarif_nav"
             android:id="@+id/tarifs"
+            android:icon="@drawable/ic_tarif_nav"
             android:title="Тарифы"/>
         <item
-            android:icon="@drawable/ic_about_nav"
             android:id="@+id/study"
+            android:icon="@drawable/ic_about_nav"
             android:title="Обучение"/>
     </group>
 

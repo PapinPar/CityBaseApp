@@ -12,6 +12,7 @@ import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.data.login.UserResonse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
+import chi_software.citybase.data.payment.PaymentResponse;
 import chi_software.citybase.data.tarif.Tariff;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -64,8 +65,8 @@ class RestApiWrapper {
         return callActivate.execute();
     }
 
-    Response<UserResonse> getUser (String uid, String key) throws IOException {
-        Call<UserResonse> userResonseCall = api.getUser(uid, key);
+    Response<UserResonse> getUser (String uid, String key,String city) throws IOException {
+        Call<UserResonse> userResonseCall = api.getUser(uid, key,city);
         return userResonseCall.execute();
     }
 
@@ -147,5 +148,20 @@ class RestApiWrapper {
     public Response<Tariff> getTariff (String city, String uid, String key) throws IOException {
         Call<Tariff> tariffCall = api.getTarifs(city, uid, key);
         return tariffCall.execute();
+    }
+
+    public Response<FieldResponse> createOrder (String tariffID, String coment, String uid, String key) throws IOException {
+        Call<FieldResponse> orderResponseCall = api.createNewOrder(tariffID, coment, uid, key);
+        return orderResponseCall.execute();
+    }
+
+    public Response<FieldResponse> activateOrder (String orderId, String uid, String key) throws IOException {
+        Call<FieldResponse> responseCall = api.activateOrder(orderId, uid, key);
+        return responseCall.execute();
+    }
+
+    public Response<PaymentResponse> createPayment (String uid, String key, Float amount, String operation, String pay_way, String orderId) throws IOException {
+        Call<PaymentResponse> responseCall = api.createPayment(uid, key, amount, operation, pay_way, orderId);
+        return responseCall.execute();
     }
 }

@@ -18,9 +18,17 @@ public class TariffsAdapter extends RecyclerView.Adapter<TariffsAdapter.TariffRe
     private ArrayList<TariffModel> mTariffList;
     private static final String mAmount = "К оплате ";
     private int mHours;
+    private TariffClick mTarrifClcikI;
 
-    public TariffsAdapter (ArrayList<TariffModel> mTariffList) {
+
+    public interface TariffClick {
+        void activateOrder (String id);
+        void buyTariff (String id,float amount);
+    }
+
+    public TariffsAdapter (ArrayList<TariffModel> mTariffList, TariffClick mTarrifClcikI) {
         this.mTariffList = mTariffList;
+        this.mTarrifClcikI = mTarrifClcikI;
     }
 
     @Override
@@ -39,7 +47,7 @@ public class TariffsAdapter extends RecyclerView.Adapter<TariffsAdapter.TariffRe
         plain = s[0].replace("\n\n", "\n");
         plain = plain + " MSR";
         holder.mTariffName.setText(mTariffList.get(position).getRusName());
-        holder.mButt.setText(mAmount + mTariffList.get(position).getUserCost()+" грн");
+        holder.mButt.setText(mAmount + mTariffList.get(position).getUserCost() + " грн");
         holder.mDate.setText(mTariffList.get(position).getCost() + " грн" + "/" + mHours + " дней");
         holder.mInfo.setText(plain);
     }
@@ -49,7 +57,7 @@ public class TariffsAdapter extends RecyclerView.Adapter<TariffsAdapter.TariffRe
         return mTariffList.size();
     }
 
-    public class TariffRecyclerAdapter extends RecyclerView.ViewHolder {
+    public class TariffRecyclerAdapter extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView mTariffName;
         private final TextView mDate;
@@ -62,6 +70,18 @@ public class TariffsAdapter extends RecyclerView.Adapter<TariffsAdapter.TariffRe
             mDate = (TextView) itemView.findViewById(R.id.date_tv);
             mButt = (Button) itemView.findViewById(R.id.tariff_btn);
             mInfo = (TextView) itemView.findViewById(R.id.tariff_info_tv);
+
+            mButt.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick (View v) {
+            int mAmount = mTariffList.get(getAdapterPosition()).getUserCost();
+            if ( mAmount<=0) {
+                mTarrifClcikI.activateOrder(mTariffList.get(getAdapterPosition()).getId());
+            } else {
+                mTarrifClcikI.buyTariff(mTariffList.get(getAdapterPosition()).getId(),mTariffList.get(getAdapterPosition()).getUserCost());
+            }
         }
     }
 }
