@@ -28,12 +28,8 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
 
     private MaterialEditText mPhoneLoginEditText, mPassLoginEditText;
     private SpotsDialog mDialog;
-<<<<<<< HEAD
-    private String mCity;
-=======
     private String mCity, mUser, mPass;
     private boolean mState = false;
->>>>>>> user_state_2
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
@@ -46,8 +42,6 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.registNewTW).setOnClickListener(this);
         mDialog = new SpotsDialog(StartScreen.this);
 
-<<<<<<< HEAD
-=======
         loadUser();
 
     }
@@ -60,7 +54,6 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
             mState = true;
             app.getNet().login(mUser, mPass);
         }
->>>>>>> user_state_2
     }
 
     @Override
