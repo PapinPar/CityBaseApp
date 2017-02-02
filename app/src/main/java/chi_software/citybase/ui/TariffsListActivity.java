@@ -5,13 +5,16 @@ import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import chi_software.citybase.R;
 import chi_software.citybase.SharedCityBase;
-import chi_software.citybase.core.BaseActivity;
+import chi_software.citybase.core.BaseFragment;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.tarif.Tariff;
@@ -24,7 +27,7 @@ import dmax.dialog.SpotsDialog;
  * Created by user on 26.01.2017.
  */
 
-public class TariffsListActivity extends BaseActivity implements TariffsAdapter.TariffClick {
+public class TariffsListActivity extends BaseFragment implements TariffsAdapter.TariffClick {
 
     private String mKey, mUid, mCity;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -35,28 +38,31 @@ public class TariffsListActivity extends BaseActivity implements TariffsAdapter.
     private float mAmount;
     private SpotsDialog mDialog;
 
+    @Nullable
+    @Override
+    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.payments_history_layout, container, false);
+    }
 
     @Override
-    protected void onCreate (@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.payments_history_layout);
-
-        mTariffRv = (RecyclerView) findViewById(R.id.history_rv);
+    public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mTariffRv = (RecyclerView) view.findViewById(R.id.history_rv);
         mTariffList = new ArrayList<>();
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(getContext());
         mTariffAdapter = new TariffsAdapter(mTariffList, this);
         mTariffRv.setLayoutManager(mLayoutManager);
         mTariffRv.setAdapter(mTariffAdapter);
-        mDialog = new SpotsDialog(TariffsListActivity.this);
+        mDialog = new SpotsDialog(getContext());
         mDialog.show();
         init();
         app.getNet().getTariffs(mCity, mUid, mKey);
     }
 
     private void init () {
-        mCity = SharedCityBase.GetCity(this);
-        mUid = SharedCityBase.GetUID(this);
-        mKey = SharedCityBase.GetKey(this);
+        mCity = SharedCityBase.GetCity(getContext());
+        mUid = SharedCityBase.GetUID(getContext());
+        mKey = SharedCityBase.GetKey(getContext());
     }
 
     private void fillTariffs (Tariff netObjects) {
@@ -82,8 +88,7 @@ public class TariffsListActivity extends BaseActivity implements TariffsAdapter.
                 break;
             case Net.ACTIVATE_ORDER:
                 mDialog.dismiss();
-                Toast.makeText(this, "Тариф успешно активирован", Toast.LENGTH_SHORT).show();
-                finish();
+                Toast.makeText(getContext(), "Тариф успешно активирован", Toast.LENGTH_SHORT).show();
                 break;
             case Net.CREATE_PAYMENT:
                 mDialog.dismiss();
@@ -96,7 +101,7 @@ public class TariffsListActivity extends BaseActivity implements TariffsAdapter.
     private void openChromeTab (String link) {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(this, Uri.parse(link));
+        customTabsIntent.launchUrl(getActivity(), Uri.parse(link));
     }
 
     private void buyOrder (FieldResponse orderId) {
@@ -113,11 +118,11 @@ public class TariffsListActivity extends BaseActivity implements TariffsAdapter.
         switch ( eventId ) {
             case Net.GET_TARIFFS:
                 mDialog.dismiss();
-                Toast.makeText(this, "Произошла ошибка.\nПроверьтье интернет соединине и попробуйте снова", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Произошла ошибка.\nПроверьтье интернет соединине и попробуйте снова", Toast.LENGTH_SHORT).show();
                 break;
             case Net.CREATE_ORDER:
                 mDialog.dismiss();
-                Toast.makeText(this, "Произошла ошибка.\nПроверьтье интернет соединине и попробуйте снова", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Произошла ошибка.\nПроверьтье интернет соединине и попробуйте снова", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

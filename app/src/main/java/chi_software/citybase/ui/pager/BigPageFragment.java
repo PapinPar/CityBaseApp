@@ -1,12 +1,13 @@
 package chi_software.citybase.ui.pager;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
+import com.alexvasilkov.gestures.Settings;
+import com.alexvasilkov.gestures.views.GestureImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -14,19 +15,14 @@ import java.util.ArrayList;
 import chi_software.citybase.R;
 
 
-/**
- * Created by Papin on 15.11.2016.
- */
-
-public class PageFragment extends Fragment {
+public class BigPageFragment extends Fragment {
 
     private final static String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     private static ArrayList<String> mUrl;
     private int mPageNumber;
-    private ShowBigImageListener bigImageListener;
 
-    static PageFragment newInstance (int page, ArrayList<String> url) {
-        PageFragment pageFragment = new PageFragment();
+    static BigPageFragment newInstance (int page, ArrayList<String> url) {
+        BigPageFragment pageFragment = new BigPageFragment();
         mUrl = url;
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
@@ -40,29 +36,25 @@ public class PageFragment extends Fragment {
         mPageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
     }
 
-    public void setListener (ShowBigImageListener bigImageListener) {
-        this.bigImageListener = bigImageListener;
-    }
-
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.pager_image_fragment, null);
+        View view = inflater.inflate(R.layout.big_pager_image_fragment, null);
 
-        ImageView tvPage = (ImageView) view.findViewById(R.id.iwPage);
+        GestureImageView tvPage = (GestureImageView) view.findViewById(R.id.iwPageBig);
+        tvPage.getController().getSettings()
+                .setMaxZoom(2f)
+                .setPanEnabled(true)
+                .setZoomEnabled(true)
+                .setDoubleTapEnabled(true)
+                .setRotationEnabled(false)
+                .setRestrictRotation(false)
+                .setOverscrollDistance(0f, 0f)
+                .setOverzoomFactor(2f)
+                .setFillViewport(false)
+                .setFitMethod(Settings.Fit.INSIDE)
+                .setGravity(Gravity.CENTER);
         Picasso.with(getContext()).load(mUrl.get(mPageNumber)).into(tvPage);
-        tvPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View v) {
-                if ( bigImageListener != null ) {
-                    bigImageListener.showImage();
-                }
-            }
-        });
         return view;
-    }
-
-    public interface ShowBigImageListener {
-        void showImage ();
     }
 
 }

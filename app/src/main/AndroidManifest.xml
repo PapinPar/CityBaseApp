@@ -29,7 +29,7 @@
             android:name=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".ui.pager.PagerViwer"
+            android:name=".ui.pager.DetailPostActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
@@ -39,14 +39,11 @@
             android:name=".ui.SmsActivity"
             android:theme="@style/windowBack">
         </activity>
-        <activity android:name=".ui.EditUserActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
-        </activity>
         <activity android:name=".ui.MyAmountHistory"
                   android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".ui.TariffsListActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".ui.pager.BigViwerActivity"
+                  android:theme="@style/Theme.Transparent">
         </activity>
 
     </application>

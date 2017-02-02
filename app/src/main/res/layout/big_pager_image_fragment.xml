@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:ignore="contentDescription"
     android:orientation="vertical">
-    <ImageView
-        android:id="@+id/iwPage"
+    <com.alexvasilkov.gestures.views.GestureImageView
+        android:id="@+id/iwPageBig"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
         android:gravity="center">
-    </ImageView>
+    </com.alexvasilkov.gestures.views.GestureImageView>
 </RelativeLayout>

@@ -17,16 +17,20 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/backGray"
-            android:paddingRight="5dp">
+            android:background="@color/backGray">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/imageHight">
+            </View>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/myPager"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/imageHight"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 >
             </android.support.v4.view.ViewPager>
         </RelativeLayout>
@@ -34,9 +38,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:background="@color/backGray"
             android:orientation="vertical"
-            android:layout_marginBottom="10dp"
             android:paddingRight="5dp">
 
             <TextView
@@ -79,23 +83,23 @@
                 android:id="@+id/publichedTW"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/updTW"
                 android:padding="5dp"
                 android:text="77/77/7777"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textSize"
-                android:layout_below="@+id/updTW"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+                android:textSize="@dimen/textSize"/>
 
             <ImageView
                 android:id="@+id/imageWebLink"
-                app:srcCompat="@drawable/global"
-                android:layout_centerVertical="true"
+                android:layout_width="@dimen/iconSize"
+                android:layout_height="@dimen/iconSize"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="37dp"
-                android:layout_width="@dimen/iconSize"
-                android:layout_height="@dimen/iconSize"/>
+                app:srcCompat="@drawable/global"/>
 
         </RelativeLayout>
 
@@ -103,28 +107,28 @@
             android:id="@+id/priceTW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:padding="20dp"
             android:text="2000 грн"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:textSize="@dimen/textSize"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp">
 
 
             <LinearLayout
+                android:id="@+id/linear1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left|center"
-                android:orientation="horizontal"
-                android:id="@+id/linear1">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imageView13"
@@ -140,62 +144,62 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:text="1 room"
-                    android:textSize="@dimen/textSize"
-                    android:textColor="@color/textColor"/>
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/line2"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linear1"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:gravity="left|center">
+                android:layout_below="@+id/linear1"
+                android:gravity="left|center"
+                android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/imageView15"
                     android:layout_width="@dimen/iconSize"
                     android:layout_height="@dimen/iconSize"
                     app:srcCompat="@drawable/sizes"
-                    android:id="@+id/imageView15"
                     />
 
                 <TextView
-                    android:text="34 kvadrata"
+                    android:id="@+id/areaSizeTW"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/areaSizeTW"
                     android:layout_marginLeft="20dp"
-                    android:textSize="@dimen/textSize"
-                    android:textColor="@color/textColor"/>
+                    android:text="34 kvadrata"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"/>
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:id="@+id/line3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/line2"
                 android:gravity="left|center"
-                android:id="@+id/line3">
+                android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/imageView16"
                     android:layout_width="@dimen/iconSize"
                     android:layout_height="@dimen/iconSize"
                     app:srcCompat="@drawable/metro"
-                    android:id="@+id/imageView16"
                     />
 
                 <TextView
-                    android:text="23 abfusta"
+                    android:id="@+id/metroNameTW"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/metroNameTW"
                     android:layout_marginLeft="20dp"
-                    android:textSize="@dimen/textSize"
-                    android:textColor="@color/textColor"/>
+                    android:text="23 abfusta"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"/>
             </LinearLayout>
 
         </RelativeLayout>
@@ -204,70 +208,70 @@
             android:id="@+id/textView17"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:gravity="center"
             android:text="Описание"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="@dimen/textSize"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:textSize="@dimen/textSize"/>
 
         <TextView
             android:id="@+id/infoAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="BAAM"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:textSize="@dimen/textSize"/>
 
         <TextView
             android:id="@+id/textView19"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:paddingLeft="20dp"
             android:text="Адресс :"
             android:textColor="@color/black"
-            android:textSize="@dimen/textSize"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:textSize="@dimen/textSize"/>
 
         <TextView
             android:id="@+id/addressTW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:paddingLeft="20dp"
             android:text="TextView"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:textSize="@dimen/textSize"/>
 
         <TextView
             android:id="@+id/textView21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:gravity="center"
             android:text="Контактный телефон"
             android:textColor="@color/black"
-            android:textSize="@dimen/textSize"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:textSize="@dimen/textSize"/>
 
         <TextView
             android:id="@+id/phoneNumberTW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:gravity="center"
             android:text="+38063555555"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:textSize="@dimen/textSize"/>
 
     </LinearLayout>
 

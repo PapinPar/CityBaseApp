@@ -57,13 +57,12 @@
                 android:layout_height="wrap_content"
                 android:background="@color/backSearch">
 
-                <TextView
-                    android:id="@+id/textView29"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="4dp"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:background="@color/background"/>
+                    android:background="@color/black"/>
             </FrameLayout>
 
             <RelativeLayout

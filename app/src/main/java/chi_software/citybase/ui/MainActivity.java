@@ -1,5 +1,4 @@
 package chi_software.citybase.ui;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +18,7 @@ import chi_software.citybase.ui.fragment.MainFragment;
  * Created by user on 30.01.2017.
  */
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MainFragment.OpenTariffs {
 
 
     @Override
@@ -47,6 +46,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected (MenuItem item) {
         MainFragment mainFragment = new MainFragment();
+        mainFragment.setOpenTarrif(this);
         switch ( item.getItemId() ) {
             case R.id.arenda:
                 SharedCityBase.SaveTable(this, "rent_living");
@@ -69,8 +69,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mailFragment, "mail_history_fragment").commit();
                 break;
             case R.id.tarifs:
-                Intent tariffs = new Intent(this, TariffsListActivity.class);
-                startActivity(tariffs);
+                TariffsListActivity tariffsListActivity = new TariffsListActivity();
+                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListActivity, "mail_history_fragment").commit();
                 break;
 
         }
@@ -90,5 +90,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    @Override
+    public void openTariff () {
+        TariffsListActivity tariffsListActivity = new TariffsListActivity();
+        getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListActivity, "mail_history_fragment").commit();
+    }
 }
 

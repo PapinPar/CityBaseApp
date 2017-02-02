@@ -28,10 +28,9 @@ import chi_software.citybase.data.ModelData;
 import chi_software.citybase.data.getBase.MyObject;
 import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
-import chi_software.citybase.ui.TariffsListActivity;
 import chi_software.citybase.ui.adapter.PostAdapter;
 import chi_software.citybase.ui.dialog.SearchDialog;
-import chi_software.citybase.ui.pager.PagerViwer;
+import chi_software.citybase.ui.pager.DetailPostActivity;
 import dmax.dialog.SpotsDialog;
 
 
@@ -52,6 +51,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private Map<String, List<String>> mKeysModel;
     private List<String> userInfo;
     private SharedPreferences sPref;
+    private OpenTariffs openTariffs;
 
     @Nullable
     @Override
@@ -125,15 +125,15 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             urlList.add(url + list.get(i));
         }
 
-        Intent s = new Intent(getActivity(), PagerViwer.class);
-        s.putExtra(PagerViwer.UID, mUid);
-        s.putExtra(PagerViwer.KEY, mKey);
-        s.putExtra(PagerViwer.TABLE, mTable);
-        s.putExtra(PagerViwer.POSITION, position);
-        s.putExtra(PagerViwer.SIZE, urlList.size());
-        s.putStringArrayListExtra(PagerViwer.URL, (ArrayList<String>) urlList);
+        Intent s = new Intent(getActivity(), DetailPostActivity.class);
+        s.putExtra(DetailPostActivity.UID, mUid);
+        s.putExtra(DetailPostActivity.KEY, mKey);
+        s.putExtra(DetailPostActivity.TABLE, mTable);
+        s.putExtra(DetailPostActivity.POSITION, position);
+        s.putExtra(DetailPostActivity.SIZE, urlList.size());
+        s.putStringArrayListExtra(DetailPostActivity.URL, (ArrayList<String>) urlList);
         //       List<MyObject> baseGets = mBaseResponse.getBaseGet().getGetResponse().getModel();
-        s.putExtra(PagerViwer.MODEL, (Serializable) mMyObject);
+        s.putExtra(DetailPostActivity.MODEL, (Serializable) mMyObject);
         startActivity(s);
     }
 
@@ -178,8 +178,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             mDialog.show();
         } else {
             Toast.makeText(getActivity(), "У вас нет доустпа к этой базе", Toast.LENGTH_SHORT).show();
-            Intent tariffs = new Intent(getActivity(), TariffsListActivity.class);
-            startActivity(tariffs);
+            openTariffs.openTariff();
         }
     }
 
@@ -253,4 +252,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         tmpCity = mCity;
     }
 
+    public void setOpenTarrif(OpenTariffs openTariffs) {
+        this.openTariffs = openTariffs;
+    }
+    public interface OpenTariffs {
+        void openTariff();
+    }
 }
