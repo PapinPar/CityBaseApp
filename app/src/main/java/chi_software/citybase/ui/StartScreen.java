@@ -28,7 +28,8 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
 
     private MaterialEditText mPhoneLoginEditText, mPassLoginEditText;
     private SpotsDialog mDialog;
-    private String mCity,mUid,mKey;
+    private String mCity, mUser, mPass;
+    private boolean mState = false;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
@@ -46,7 +47,13 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
     }
 
     private void loadUser () {
-        mUid = SharedCityBase.GetUID(this);
+        mPass = SharedCityBase.GetPassword(this);
+        mUser = SharedCityBase.GetLogin(this);
+        if ( mPass.length() > 1 && mUser.length() > 1 ) {
+            mDialog.show();
+            mState = true;
+            app.getNet().login(mUser, mPass);
+        }
     }
 
     @Override
@@ -61,9 +68,12 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                 mDialog.dismiss();
                 LoginResponse loginResponse = (LoginResponse) NetObjects;
                 if ( loginResponse.getMyResponse().getActive().equals("1") ) {
+                    SharedCityBase.SetLogin(StartScreen.this,mUser);
+                    SharedCityBase.SetPassword(StartScreen.this,mPass);
+
                     Intent startMainScreen = new Intent(StartScreen.this, MainActivity.class);
-                    SharedCityBase.SaveUID(this,loginResponse.getMyResponse().getId());
-                    SharedCityBase.SaveKey(this,loginResponse.getMyResponse().getKey());
+                    SharedCityBase.SaveUID(this, loginResponse.getMyResponse().getId());
+                    SharedCityBase.SaveKey(this, loginResponse.getMyResponse().getKey());
                     SharedCityBase.SaveCity(this, mCity);
                     startActivity(startMainScreen);
                     finish();
@@ -79,10 +89,12 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         switch ( eventId ) {
             case Net.SIGN_IN:
                 mDialog.dismiss();
-                if ( !isNetworkConnected() )
-                    Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
-                if ( isNetworkConnected() )
-                    Toast.makeText(this, "Введен не правильный логин или пароль", Toast.LENGTH_SHORT).show();
+                if ( !mState ) {
+                    if ( !isNetworkConnected() )
+                        Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
+                    if ( isNetworkConnected() )
+                        Toast.makeText(this, "Введен не правильный логин или пароль", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -110,13 +122,16 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
     }
 
     private void signIn () {
-        String email = mPhoneLoginEditText.getText().toString();
-        String password = mPassLoginEditText.getText().toString();
         //app.getNet().login(sEmai, sPass);
         //app.getNet().login("0664382589", "test123456");
         //app.getNet().login("0638367925", "papin1");
-        app.getNet().login("0506803241", "123456");
+        //mUser = mPhoneLoginEditText.getText().toString();
+        //mPass = mPassLoginEditText.getText().toString();
+        mUser = "0506803241";
+        mPass = "123456";
+        app.getNet().login(mUser, mPass);
     }
+
     protected void onCreateDialog () {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final String[] mCityChoose = { "Киев", "Харьков", "Одесса" };
