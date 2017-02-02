@@ -81,7 +81,7 @@ public class ConnectionManager implements Net {
             mHandler.post(new Runnable() {
                 @Override
                 public void run () {
-                    observer.onNetRequestFail(eventId, object);
+                        observer.onNetRequestFail(eventId, object);
                 }
             });
         }
@@ -148,12 +148,12 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void getUser (@NonNull final String uid, @NonNull final String key,final String city) {
+    public void getUser (@NonNull final String uid, @NonNull final String key, final String city) {
         mExecutor.execute(new Runnable() {
             @Override
             public void run () {
                 try {
-                    Response<UserResponse> response = RestApiWrapper.getInstanse().getUser(uid, key,city);
+                    Response<UserResponse> response = RestApiWrapper.getInstanse().getUser(uid, key, city);
                     UserResponse userResponse = response.body();
                     if ( userResponse.getResponse() != null ) {
                         notifySuccessSubscribers(GET_USER, userResponse);
@@ -323,6 +323,46 @@ public class ConnectionManager implements Net {
         });
     }
 
+    @Override
+    public void smsReset (@NonNull final String phone) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().smsReset(phone);
+                    FieldResponse fieldResponse = response.body();
+                    if ( response.isSuccessful() && fieldResponse.getServerResponse() != null ) {
+                        notifySuccessSubscribers(SMS_RESET, fieldResponse);
+                    } else {
+                        notifyErrorSubscribers(SMS_RESET, "Пользователь с данным номером не найден");
+                    }
+                } catch ( IOException e ) {
+                    notifyErrorSubscribers(SMS_RESET, "Проверьте интернет соединение");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void newResetPass (@NonNull final String code, @NonNull final String uid, @NonNull final String pass) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run () {
+                try {
+                    Response<FieldResponse> response = RestApiWrapper.getInstanse().newResetPass(code, uid, pass);
+                    FieldResponse fieldResponse = response.body();
+                    if ( response.isSuccessful() && fieldResponse.getServerResponse() != null ) {
+                        notifySuccessSubscribers(NEW_RESET_PASS, fieldResponse);
+                    } else {
+                        notifyErrorSubscribers(NEW_RESET_PASS, "Проверьте правильность введеных данных");
+                    }
+                } catch ( IOException e ) {
+                    notifyErrorSubscribers(NEW_RESET_PASS, "Проверьте правильность введеных данных");
+                }
+            }
+        });
+    }
+
     // ******************** AMOUNT ********************
     @Override
     public void getMyAmount (@NonNull final String uid, @NonNull final String key) {
@@ -430,12 +470,12 @@ public class ConnectionManager implements Net {
                     Response<FieldResponse> response = RestApiWrapper.getInstanse().activateOrder(orderId, uid, key);
                     FieldResponse fieldResponse = response.body();
                     if ( response.isSuccessful() && fieldResponse.getServerResponse() != null ) {
-                        notifySuccessSubscribers(ACTIVATE_ORDER,fieldResponse);
-                    }else{
+                        notifySuccessSubscribers(ACTIVATE_ORDER, fieldResponse);
+                    } else {
                         notifyErrorSubscribers(ACTIVATE_ORDER, "ERROR");
                     }
-                }catch ( IOException e ){
-                    notifyErrorSubscribers(ACTIVATE_ORDER,"ERROR");
+                } catch ( IOException e ) {
+                    notifyErrorSubscribers(ACTIVATE_ORDER, "ERROR");
                 }
             }
         });
@@ -447,15 +487,15 @@ public class ConnectionManager implements Net {
             @Override
             public void run () {
                 try {
-                    Response<PaymentResponse> response = RestApiWrapper.getInstanse().createPayment(uid,key,amount,operation,pay_way,orderId);
+                    Response<PaymentResponse> response = RestApiWrapper.getInstanse().createPayment(uid, key, amount, operation, pay_way, orderId);
                     PaymentResponse fieldResponse = response.body();
-                    if ( response.isSuccessful() && fieldResponse.getResponse()!=null ){
-                        notifySuccessSubscribers(CREATE_PAYMENT,fieldResponse.getResponse().getLink());
-                    }else{
+                    if ( response.isSuccessful() && fieldResponse.getResponse() != null ) {
+                        notifySuccessSubscribers(CREATE_PAYMENT, fieldResponse.getResponse().getLink());
+                    } else {
                         notifyErrorSubscribers(CREATE_PAYMENT, "ERROR");
                     }
-                }catch ( IOException e){
-                    notifyErrorSubscribers(CREATE_PAYMENT,"ERROR");
+                } catch ( IOException e ) {
+                    notifyErrorSubscribers(CREATE_PAYMENT, "ERROR");
                 }
             }
         });

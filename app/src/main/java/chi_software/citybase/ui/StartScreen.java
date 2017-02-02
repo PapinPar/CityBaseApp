@@ -17,6 +17,7 @@ import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.login.LoginResponse;
+import chi_software.citybase.ui.forgotPass.ForgotPassActivity;
 import dmax.dialog.SpotsDialog;
 
 
@@ -40,6 +41,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.butOkNew).setOnClickListener(this);
         findViewById(R.id.butTryBaseNew).setOnClickListener(this);
         findViewById(R.id.registNewTW).setOnClickListener(this);
+        findViewById(R.id.forgotTV).setOnClickListener(this);
         mDialog = new SpotsDialog(StartScreen.this);
 
         loadUser();
@@ -111,24 +113,30 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                     Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.registNewTW:
-                Intent register = new Intent(StartScreen.this, RegistrationActivity.class);
-                startActivity(register);
+                startNewActivity(RegistrationActivity.class);
                 break;
             case R.id.butTryBaseNew:
                 app.getNet().tryBase("_Kharkov", "rent_living", "Харьков", "1 к", "Салтовка", "rent", "living");
                 break;
-
+            case R.id.forgotTV:
+                startNewActivity(ForgotPassActivity.class);
+                break;
         }
+    }
+
+    private void startNewActivity (Class registrationActivityClass) {
+        Intent register = new Intent(StartScreen.this, registrationActivityClass);
+        startActivity(register);
     }
 
     private void signIn () {
         //app.getNet().login(sEmai, sPass);
         //app.getNet().login("0664382589", "test123456");
         //app.getNet().login("0638367925", "papin1");
-        //mUser = mPhoneLoginEditText.getText().toString();
-        //mPass = mPassLoginEditText.getText().toString();
-        mUser = "0506803241";
-        mPass = "123456";
+        mUser = mPhoneLoginEditText.getText().toString();
+        mPass = mPassLoginEditText.getText().toString();
+        //mUser = "0506803241";
+        //mPass = "123456";
         app.getNet().login(mUser, mPass);
     }
 

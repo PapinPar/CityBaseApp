@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <uses-sdk tools:overrideLibrary="android.support.customtabs"/>
 
     <application
@@ -39,11 +40,21 @@
             android:name=".ui.SmsActivity"
             android:theme="@style/windowBack">
         </activity>
-        <activity android:name=".ui.MyAmountHistory"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".ui.MyAmountHistory"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".ui.pager.BigViwerActivity"
-                  android:theme="@style/Theme.Transparent">
+        <activity
+            android:name=".ui.pager.BigViwerActivity"
+            android:theme="@style/Theme.Transparent">
+        </activity>
+        <activity
+            android:name=".ui.forgotPass.ForgotPassActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ui.forgotPass.NewPassActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
     </application>

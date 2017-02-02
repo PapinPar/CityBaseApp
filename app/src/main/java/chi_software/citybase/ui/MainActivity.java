@@ -14,20 +14,16 @@ import chi_software.citybase.ui.fragment.EditUserFragment;
 import chi_software.citybase.ui.fragment.MainFragment;
 
 
-/**
- * Created by user on 30.01.2017.
- */
-
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MainFragment.OpenTariffs {
-
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         navigationInitial();
-        MainFragment s = new MainFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.include_main, s, "mail_history_fragment").commit();
+        MainFragment mainFragment = new MainFragment();
+        mainFragment.setOpenTarrif(this);
+        getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "mail_history_fragment").commit();
 
     }
 
@@ -39,7 +35,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        if ( navigationView != null ) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

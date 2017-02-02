@@ -66,7 +66,7 @@ class RestApiWrapper {
     }
 
     Response<UserResponse> getUser (String uid, String key, String city) throws IOException {
-        Call<UserResponse> userResonseCall = api.getUser(uid, key,city);
+        Call<UserResponse> userResonseCall = api.getUser(uid, key, city);
         return userResonseCall.execute();
     }
 
@@ -77,6 +77,15 @@ class RestApiWrapper {
         return callSendSMS.execute();
     }
 
+    Response<FieldResponse> smsReset (String phone) throws IOException {
+        Call<FieldResponse> responseCall = api.smsReset(phone);
+        return responseCall.execute();
+    }
+
+    Response<FieldResponse> newResetPass (String code, String uid, String pass) throws IOException {
+        Call<FieldResponse> responseCall = api.resetPass(code, uid, pass);
+        return responseCall.execute();
+    }
 
     // ******************* SEARCH ***************
     Response<BaseGet> getBase (String search, String city, String table, String uid, String key, Integer page) throws IOException {
@@ -164,4 +173,5 @@ class RestApiWrapper {
         Call<PaymentResponse> responseCall = api.createPayment(uid, key, amount, operation, pay_way, orderId);
         return responseCall.execute();
     }
+
 }

@@ -70,6 +70,13 @@ public interface API {
     @GET("sms.smsregistration")
     Call<FieldResponse> sendSms (@Query("uid") String id, @Query("key") String key);
 
+    @GET("sms.smsreset")
+    Call<FieldResponse> smsReset (@Query("phone") String phone);
+
+    @GET("login.smsresetcode")
+    Call<FieldResponse> resetPass (@Query("code") String code, @Query("iduser") String uid, @Query("password") String pass);
+    //?code, iduser, password
+
     // ***************** AMOUNT ***************
     @GET("payments.getAmount")
     Call<FieldResponse> getAmount (@Query("uid") String id, @Query("key") String key);

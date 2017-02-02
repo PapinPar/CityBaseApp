@@ -10,7 +10,9 @@ import chi_software.citybase.core.observer.Subject;
  * Created by Papin on 08.11.2016.
  */
 public interface Net extends Subject<NetSubscriber> {
-    @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION, SEND_SMS, ACTIVATE_ACOUNT, TRIAL_BASE, EDIT_USER_LOGIN, EDIT_USER_PASSWORD, ADD_USER_EMAIL, DELETE_USER_EMAIL, GET_USER, GET_MY_AMOUNT, GET_ACTIVE_SERVICE, GET_TARIFFS, CREATE_ORDER, ACTIVATE_ORDER, CREATE_PAYMENT })
+    @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION, SEND_SMS, ACTIVATE_ACOUNT, TRIAL_BASE, EDIT_USER_LOGIN,
+            EDIT_USER_PASSWORD, ADD_USER_EMAIL, DELETE_USER_EMAIL, GET_USER, GET_MY_AMOUNT, GET_ACTIVE_SERVICE, GET_TARIFFS, CREATE_ORDER,
+            ACTIVATE_ORDER, CREATE_PAYMENT ,SMS_RESET,NEW_RESET_PASS})
     @interface NetEvent {}
 
 
@@ -35,6 +37,8 @@ public interface Net extends Subject<NetSubscriber> {
     int CREATE_ORDER = 301;
     int ACTIVATE_ORDER = 302;
     int CREATE_PAYMENT = 303;
+    int SMS_RESET = 304;
+    int NEW_RESET_PASS= 305;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
@@ -54,6 +58,8 @@ public interface Net extends Subject<NetSubscriber> {
     void tryBase (@NonNull String city, @NonNull String table, @NonNull String ruscity, @NonNull String type, @NonNull String place, @NonNull String basetype, @NonNull String basetype2);
     // *********** SMS *************
     void sendSms (@NonNull String uid, @NonNull String key);
+    void smsReset(@NonNull String phone);
+    void newResetPass (@NonNull String code, @NonNull String uid, @NonNull String pass);
 
     // ********* SET COLOR ***************
     void setColor (@NonNull String uid, @NonNull String key, @NonNull String city, @NonNull String table, @NonNull String objId, @NonNull String field, @NonNull Integer color);
