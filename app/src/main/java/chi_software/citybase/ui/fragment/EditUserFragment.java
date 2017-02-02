@@ -30,6 +30,7 @@ import chi_software.citybase.data.activ_service.ServiceData;
 import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.ui.MyAmountHistory;
+import chi_software.citybase.ui.StartScreen;
 import chi_software.citybase.ui.adapter.ActiveServAdapter;
 import dmax.dialog.SpotsDialog;
 
@@ -51,6 +52,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
     private RecyclerView rvService;
     private Button mHistoryBut;
     private SpotsDialog mDialog;
+    private Button mSignOutBut;
 
     @Nullable
     @Override
@@ -78,6 +80,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
         rvService = (RecyclerView) view.findViewById(R.id.rvActivServ);
         mCity = (TextView) view.findViewById(R.id.cityTv);
         mHistoryBut = (Button) view.findViewById(R.id.historyBut);
+        mSignOutBut = (Button) view.findViewById(R.id.sigOutBut);
         serviceList = new ArrayList<>();
 
         mMailBut.setOnClickListener(this);
@@ -85,6 +88,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
         mCity.setOnClickListener(this);
         mChangePass.setOnClickListener(this);
         mHistoryBut.setOnClickListener(this);
+        mSignOutBut.setOnClickListener(this);
         mEditMail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged (CharSequence s, int start, int count, int after) {
@@ -136,7 +140,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
         if ( !isNetworkConnected() )
             Toast.makeText(getActivity(), "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
         else {
-            app.getNet().getUser(mUid, mKey,"");
+            app.getNet().getUser(mUid, mKey, "");
             app.getNet().getMyAmount(mUid, mKey);
         }
     }
@@ -242,10 +246,17 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 onCreateDialog();
                 break;
             case R.id.historyBut:
-                 Intent showHistory = new Intent(getContext(), MyAmountHistory.class);
-                 showHistory.putExtra(MyAmountHistory.UID, mUid);
-                 showHistory.putExtra(MyAmountHistory.KEY, mKey);
-                 startActivity(showHistory);
+                Intent showHistory = new Intent(getContext(), MyAmountHistory.class);
+                showHistory.putExtra(MyAmountHistory.UID, mUid);
+                showHistory.putExtra(MyAmountHistory.KEY, mKey);
+                startActivity(showHistory);
+                break;
+            case R.id.sigOutBut:
+                SharedCityBase.SetPassword(getContext(), "");
+                SharedCityBase.SetLogin(getContext(), "");
+                Intent start = new Intent(getContext(), StartScreen.class);
+                startActivity(start);
+                getActivity().finish();
                 break;
         }
     }
@@ -278,6 +289,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                     userCity = "_Kharkov";
                 if ( item == 2 )
                     userCity = "_Odessa";
+                Toast.makeText(getContext(), "Местоположение изменено", Toast.LENGTH_SHORT).show();
                 saveShared();
                 apiCalls();
             }

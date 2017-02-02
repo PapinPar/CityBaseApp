@@ -68,8 +68,8 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                 mDialog.dismiss();
                 LoginResponse loginResponse = (LoginResponse) NetObjects;
                 if ( loginResponse.getMyResponse().getActive().equals("1") ) {
-                    SharedCityBase.SetLogin(StartScreen.this,mUser);
-                    SharedCityBase.SetPassword(StartScreen.this,mPass);
+                    SharedCityBase.SetLogin(StartScreen.this, mUser);
+                    SharedCityBase.SetPassword(StartScreen.this, mPass);
 
                     Intent startMainScreen = new Intent(StartScreen.this, MainActivity.class);
                     SharedCityBase.SaveUID(this, loginResponse.getMyResponse().getId());
