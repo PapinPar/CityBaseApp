@@ -28,7 +28,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
 
     private MaterialEditText mPhoneLoginEditText, mPassLoginEditText;
     private SpotsDialog mDialog;
-    private String mCity,mUid,mKey;
+    private String mCity, mUid, mKey;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
@@ -62,8 +62,8 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                 LoginResponse loginResponse = (LoginResponse) NetObjects;
                 if ( loginResponse.getMyResponse().getActive().equals("1") ) {
                     Intent startMainScreen = new Intent(StartScreen.this, MainActivity.class);
-                    SharedCityBase.SaveUID(this,loginResponse.getMyResponse().getId());
-                    SharedCityBase.SaveKey(this,loginResponse.getMyResponse().getKey());
+                    SharedCityBase.SaveUID(this, loginResponse.getMyResponse().getId());
+                    SharedCityBase.SaveKey(this, loginResponse.getMyResponse().getKey());
                     SharedCityBase.SaveCity(this, mCity);
                     startActivity(startMainScreen);
                     finish();
@@ -117,6 +117,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         //app.getNet().login("0638367925", "papin1");
         app.getNet().login("0506803241", "123456");
     }
+
     protected void onCreateDialog () {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final String[] mCityChoose = { "Киев", "Харьков", "Одесса" };
