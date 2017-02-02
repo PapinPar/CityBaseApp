@@ -28,7 +28,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
 
     private MaterialEditText mPhoneLoginEditText, mPassLoginEditText;
     private SpotsDialog mDialog;
-    private String mCity,mUid,mKey;
+    private String mCity;
 
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
@@ -41,12 +41,6 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.registNewTW).setOnClickListener(this);
         mDialog = new SpotsDialog(StartScreen.this);
 
-        loadUser();
-
-    }
-
-    private void loadUser () {
-        mUid = SharedCityBase.GetUID(this);
     }
 
     @Override
