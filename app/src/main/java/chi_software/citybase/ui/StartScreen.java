@@ -76,7 +76,9 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                     Intent startMainScreen = new Intent(StartScreen.this, MainActivity.class);
                     SharedCityBase.SaveUID(this, loginResponse.getMyResponse().getId());
                     SharedCityBase.SaveKey(this, loginResponse.getMyResponse().getKey());
-                    SharedCityBase.SaveCity(this, mCity);
+                    if ( !mState ) {
+                        SharedCityBase.SaveCity(this, mCity);
+                    }
                     startActivity(startMainScreen);
                     finish();
                 } else

@@ -74,8 +74,8 @@
             app:met_textColor="@android:color/black"
             app:met_textColorHint="@color/hintColor"
             android:gravity="center"
-            android:hint="Номер телефона"
-            android:inputType="phone"
+            android:hint="Номер телефона / Логин"
+            android:inputType="textAutoComplete"
             android:selectAllOnFocus="false"
             android:visibility="visible"/>
 
