@@ -13,7 +13,9 @@ import chi_software.citybase.R;
 import chi_software.citybase.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.ui.fragment.EditUserFragment;
+import chi_software.citybase.ui.fragment.InfoFragment;
 import chi_software.citybase.ui.fragment.MainFragment;
+import chi_software.citybase.ui.fragment.TariffsListFragment;
 
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MainFragment.OpenTariffs {
@@ -71,8 +73,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mailFragment, "mail_history_fragment").commit();
                 break;
             case R.id.tarifs:
-                TariffsListActivity tariffsListActivity = new TariffsListActivity();
-                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListActivity, "mail_history_fragment").commit();
+                TariffsListFragment tariffsListFragment = new TariffsListFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "mail_history_fragment").commit();
+                break;
+            case R.id.study:
+                InfoFragment infoFragment = new InfoFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, infoFragment, "info_fragment").commit();
                 break;
 
         }
@@ -109,8 +115,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void openTariff () {
-        TariffsListActivity tariffsListActivity = new TariffsListActivity();
-        getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListActivity, "mail_history_fragment").commit();
+        TariffsListFragment tariffsListFragment = new TariffsListFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "mail_history_fragment").commit();
     }
 }
 

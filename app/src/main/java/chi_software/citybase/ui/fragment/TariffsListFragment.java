@@ -1,4 +1,4 @@
-package chi_software.citybase.ui;
+package chi_software.citybase.ui.fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,7 +27,7 @@ import dmax.dialog.SpotsDialog;
  * Created by user on 26.01.2017.
  */
 
-public class TariffsListActivity extends BaseFragment implements TariffsAdapter.TariffClick {
+public class TariffsListFragment extends BaseFragment implements TariffsAdapter.TariffClick {
 
     private String mKey, mUid, mCity;
     private RecyclerView.LayoutManager mLayoutManager;

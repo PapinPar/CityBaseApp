@@ -1,11 +1,8 @@
 package chi_software.citybase.ui.pager;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -91,13 +88,11 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         mPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                if ( mMyObjectsList.get(mPosition).getPhone() != null )
-                    if ( ActivityCompat.checkSelfPermission(DetailPostActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ) {
-                        return;
-                    }
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + mPhoneNumber.getText().toString()));
-                startActivity(intent);
+                if ( mMyObjectsList.get(mPosition).getPhone() != null ) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + mPhoneNumber.getText().toString()));
+                    startActivity(intent);
+                }
             }
         });
 
