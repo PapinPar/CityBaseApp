@@ -66,7 +66,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
         super.onViewCreated(view, savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        mDialog = new SpotsDialog(getActivity());
+        mDialog = new SpotsDialog(getActivity(),"Загрузка");
         mPhone = (TextView) view.findViewById(R.id.textPhone);
         mLogin = (EditText) view.findViewById(R.id.editPassET);
         mName = (EditText) view.findViewById(R.id.editNameET);

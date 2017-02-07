@@ -1,5 +1,6 @@
 package chi_software.citybase.ui;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +33,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
     private String mCity, mUser, mPass;
     private boolean mState = false;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.butTryBaseNew).setOnClickListener(this);
         findViewById(R.id.registNewTW).setOnClickListener(this);
         findViewById(R.id.forgotTV).setOnClickListener(this);
-        mDialog = new SpotsDialog(StartScreen.this);
+        mDialog = new SpotsDialog(StartScreen.this,"Загрузка");
 
         loadUser();
 
@@ -58,6 +60,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    @SuppressLint("SwitchIntDef")
     @Override
     public void onNetRequestDone (@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestDone(eventId, NetObjects);
@@ -87,6 +90,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    @SuppressLint("SwitchIntDef")
     @Override
     public void onNetRequestFail (@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestFail(eventId, NetObjects);
@@ -143,7 +147,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
     }
 
     protected void onCreateDialog () {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder;
         final String[] mCityChoose = { "Киев", "Харьков", "Одесса" };
         builder = new AlertDialog.Builder(this);
         builder.setTitle("Выберите Город");

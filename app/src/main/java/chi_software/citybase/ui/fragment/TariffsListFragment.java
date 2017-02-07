@@ -53,7 +53,7 @@ public class TariffsListFragment extends BaseFragment implements TariffsAdapter.
         mTariffAdapter = new TariffsAdapter(mTariffList, this);
         mTariffRv.setLayoutManager(mLayoutManager);
         mTariffRv.setAdapter(mTariffAdapter);
-        mDialog = new SpotsDialog(getContext());
+        mDialog = new SpotsDialog(getContext(),"Загрузка");
         mDialog.show();
         init();
         app.getNet().getTariffs(mCity, mUid, mKey);

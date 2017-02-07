@@ -37,7 +37,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate (@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_layout);
-        mDialogLoading = new SpotsDialog(RegistrationActivity.this);
+        mDialogLoading = new SpotsDialog(RegistrationActivity.this,"Загрузка");
         metPass = (MaterialEditText) findViewById(R.id.registPassET);
         metPhone = (MaterialEditText) findViewById(R.id.registNumberET);
         metName = (MaterialEditText) findViewById(R.id.registNameET);

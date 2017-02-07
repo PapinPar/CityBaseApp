@@ -68,7 +68,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         mFindBut.setAlpha((float) 0.4);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.MyRecycle);
         mSearchDialog = new SearchDialog();
-        mDialog = new SpotsDialog(getActivity());
+        mDialog = new SpotsDialog(getActivity(),"Загрузка");
         init();
         loadShared();
         apiCalls();

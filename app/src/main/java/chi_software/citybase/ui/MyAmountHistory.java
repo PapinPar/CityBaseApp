@@ -39,7 +39,7 @@ public class MyAmountHistory extends BaseActivity {
         mUid = getIntent().getStringExtra(UID);
         mKey = getIntent().getStringExtra(KEY);
         mHistoryRv = (RecyclerView) findViewById(R.id.history_rv);
-        mDialog = new SpotsDialog(MyAmountHistory.this);
+        mDialog = new SpotsDialog(MyAmountHistory.this,"Загрузка");
         mHistoryList = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);
         mHistoryAdapter = new HistoryAdapter(mHistoryList);

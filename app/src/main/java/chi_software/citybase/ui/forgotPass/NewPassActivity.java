@@ -31,7 +31,7 @@ public class NewPassActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.newPassOK).setOnClickListener(this);
         mCodeED = (MaterialEditText) findViewById(R.id.newCodeET);
         mPassED = (MaterialEditText) findViewById(R.id.newPassET);
-        mDialog = new SpotsDialog(NewPassActivity.this);
+        mDialog = new SpotsDialog(NewPassActivity.this,"Загрузка");
     }
 
     @Override

@@ -28,7 +28,7 @@ public class ForgotPassActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.forgot_pass_layout);
         findViewById(R.id.butForgetOK).setOnClickListener(this);
         mPhone = (MaterialEditText) findViewById(R.id.forgetNumberET);
-        mDialog = new SpotsDialog(ForgotPassActivity.this);
+        mDialog = new SpotsDialog(ForgotPassActivity.this,"Загрузка");
 
     }
 
