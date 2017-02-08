@@ -34,7 +34,7 @@ import chi_software.citybase.ui.pager.DetailPostActivity;
 import dmax.dialog.SpotsDialog;
 
 
-public class MainFragment extends BaseFragment implements View.OnClickListener, SearchDialog.GetSpinnerListner, PostAdapter.PostAdapterCall {
+public class MainFragment extends BaseFragment implements View.OnClickListener, SearchDialog.GetSpinnerListener, PostAdapter.PostAdapterCall {
 
 
     private Button mFindBut;
@@ -53,6 +53,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private SharedPreferences sPref;
     private OpenTariffs openTariffs;
 
+    private List<String> mTypeSelected;
+    private List<String> mAreaSelected;
+    private List<String> mPunktSelected;
+
     @Nullable
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         mFindBut.setAlpha((float) 0.4);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.MyRecycle);
         mSearchDialog = new SearchDialog();
-        mDialog = new SpotsDialog(getActivity(),"Загрузка");
+        mDialog = new SpotsDialog(getActivity(), "Загрузка");
         init();
         loadShared();
         apiCalls();
@@ -83,6 +87,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         mModelDataList = new ArrayList<>();
         mMyObject = new ArrayList<>();
         mKeysModel = new ArrayMap<>();
+
+        mTypeSelected = new ArrayList<>();
+        mAreaSelected = new ArrayList<>();
+        mPunktSelected = new ArrayList<>();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new PostAdapter(mModelDataList, this);
@@ -107,8 +115,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     public void onClick (View v) {
         switch ( v.getId() ) {
             case R.id.findButton:
-                mSearchDialog.getListner(this, mMyMenu);
-                mSearchDialog.show(getActivity(), this, mMyMenu);
+                mSearchDialog.getListener(this, mMyMenu);
+                mSearchDialog.show(getActivity(), this, mMyMenu, mTypeSelected, mAreaSelected, mPunktSelected);
                 break;
         }
     }
@@ -183,7 +191,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void getSpinner (String json) {
+    public void getSpinner (String json, List<String> mTypeSelected, List<String> mAreaSelected, List<String> mPunktSelected) {
         mPage = 1;
         mLastPosition = 0;
         mSearch = json;
@@ -192,6 +200,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         Log.d("MainScreen", mTable);
         app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
         mDialog.show();
+
+        this.mTypeSelected = mTypeSelected;
+        this.mAreaSelected = mAreaSelected;
+        this.mPunktSelected = mPunktSelected;
     }
 
     private void fillsearch (MenuSearch netObjects) {
@@ -252,10 +264,11 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         tmpCity = mCity;
     }
 
-    public void setOpenTarrif(OpenTariffs openTariffs) {
+    public void setOpenTarrif (OpenTariffs openTariffs) {
         this.openTariffs = openTariffs;
     }
+
     public interface OpenTariffs {
-        void openTariff();
+        void openTariff ();
     }
 }

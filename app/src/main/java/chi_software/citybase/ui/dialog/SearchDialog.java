@@ -50,23 +50,24 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
     private CheckBox mRadioShort;
 
     private MenuSearch menuSearch;
-    private GetSpinnerListner getSpinnerListner;
+    private GetSpinnerListener getSpinnerListener;
 
-    public void show (Activity activity,GetSpinnerListner getSpinnerListner, MenuSearch menuSearch) {
-        SearchDialog dialog = new SearchDialog();
-        dialog.show(activity.getFragmentManager(), "Поиск");
-        dialog.getListner(getSpinnerListner,menuSearch);
+    public void show (Activity activity, GetSpinnerListener getSpinnerListener, MenuSearch menuSearch, List<String> mTypeSelected, List<String> mAreaSelected, List<String> mPunktSelected) {
+        this.mTypeSelected = mTypeSelected;
+        this.mAreaSelected = mAreaSelected;
+        this.mPunktSelected = mPunktSelected;
+        getListener(getSpinnerListener, menuSearch);
+        show(activity.getFragmentManager(), "Поиск");
     }
 
 
 
-
-    public interface GetSpinnerListner {
-        void getSpinner (String json);
+    public interface GetSpinnerListener {
+        void getSpinner (String json, List<String> mTypeSelected, List<String> mAreaSelected, List<String> mPunktSelected);
     }
 
-    public void getListner (GetSpinnerListner getSpinnerListner, MenuSearch menuSearch) {
-        this.getSpinnerListner = getSpinnerListner;
+    public void getListener (GetSpinnerListener getSpinnerListener, MenuSearch menuSearch) {
+        this.getSpinnerListener = getSpinnerListener;
         this.menuSearch = menuSearch;
     }
 
@@ -92,7 +93,7 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
         mRadioLong.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged (CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if ( isChecked )
                     mListTerm.add("Д");
                 else
                     mListTerm.remove("Д");
@@ -102,27 +103,18 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
         mRadioShort.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged (CompoundButton buttonView, boolean isChecked) {
-                if ( isChecked ){
-                    mListTerm.add("С");}
-                else{
+                if ( isChecked ) {
+                    mListTerm.add("С");
+                } else {
                     mRadioShort.setChecked(false);
-                    mListTerm.remove("С");}
+                    mListTerm.remove("С");
+                }
             }
         });
 
         ArrayList<String> listType = new ArrayList<>();
         ArrayList<String> listPunkt = new ArrayList<>();
         ArrayList<String> listArea = new ArrayList<>();
-        mTypeSelected = new ArrayList<>();
-        mAreaSelected = new ArrayList<>();
-        mPunktSelected = new ArrayList<>();
-        mTypeSelected.clear();
-        mAreaSelected.clear();
-        mPunktSelected.clear();
-
-        listType.add("Все");
-        listPunkt.add("Все");
-        listArea.add("Все");
 
         for ( int i = 0 ; i < menuSearch.getMenuResponse().getTypes().size() ; i++ ) {
             listType.add(menuSearch.getMenuResponse().getTypes().get(i));
@@ -142,6 +134,10 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
         mSpinerPunrkt.setItems(listPunkt);
         mSpinerPunrkt.setListener(this);
+
+        mSpinerType.setSelection(mTypeSelected);
+        mSpinerArea.setSelection(mAreaSelected);
+        mSpinerPunrkt.setSelection(mPunktSelected);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +171,7 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
                 Gson gson = builder.create();
                 Log.i("GSON", gson.toJson(searchJson));
                 String json = gson.toJson(searchJson);
-                getSpinnerListner.getSpinner(json);
+                getSpinnerListener.getSpinner(json, mTypeSelected, mPunktSelected, mAreaSelected);
                 dismiss();
             }
         });
@@ -184,34 +180,21 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
     @Override
     public void selectedIndices (List<Integer> indices) {
+        Log.d("SearchDialog", "indices:" + indices);
     }
 
     @Override
     public void selectedStrings (List<String> strings) {
-        if ( mSpinerType.getSelectedStrings().contains("Все") && mSpinerType.getSelectedStrings().size() > 1 ) {
-            mTypeSelected = mSpinerType.getSelectedStrings();
-            mTypeSelected.remove(0);
-            mSpinerType.setSelection(mTypeSelected);
-        }
-        if ( mSpinerArea.getSelectedStrings().contains("Все") && mSpinerArea.getSelectedStrings().size() > 1 ) {
-            mAreaSelected = mSpinerArea.getSelectedStrings();
-            mAreaSelected.remove(0);
-            mSpinerArea.setSelection(mAreaSelected);
-        }
-        if ( mSpinerPunrkt.getSelectedStrings().contains("Все") && mSpinerPunrkt.getSelectedStrings().size() > 1 ) {
-            mPunktSelected = mSpinerPunrkt.getSelectedStrings();
-            mPunktSelected.remove(0);
-            mSpinerPunrkt.setSelection(mPunktSelected);
-        }
+        Log.d("SearchDialog", "strings:" + strings);
+        mTypeSelected = mSpinerType.getSelectedStrings();
+        mSpinerType.setSelection(mTypeSelected);
 
-        if ( mSpinerType.getSelectedStrings().size() == 0 )
-            mSpinerType.setSelection(0);
+        mAreaSelected = mSpinerArea.getSelectedStrings();
+        mSpinerArea.setSelection(mAreaSelected);
 
-        if ( mSpinerArea.getSelectedStrings().size() == 0 )
-            mSpinerArea.setSelection(0);
+        mPunktSelected = mSpinerPunrkt.getSelectedStrings();
+        mSpinerPunrkt.setSelection(mPunktSelected);
 
-        if ( mSpinerPunrkt.getSelectedStrings().size() == 0 )
-            mSpinerPunrkt.setSelection(0);
     }
 
 }
