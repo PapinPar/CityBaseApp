@@ -174,6 +174,13 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         }
     }
 
+    @Override
+    public void onNetRequestFail (@Net.NetEvent int eventId, Object NetObjects) {
+        super.onNetRequestFail(eventId, NetObjects);
+        mDialog.dismiss();
+        Toast.makeText(getActivity(), "Произошел сбой.Проверьте своё интернет подключение.", Toast.LENGTH_SHORT).show();
+    }
+
     private void getLevel () {
         int count = 0;
         for ( String s : userInfo ) {

@@ -43,7 +43,7 @@ public interface Net extends Subject<NetSubscriber> {
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
     void registration (@NonNull String phone, @NonNull String pass, @NonNull String name, @NonNull Integer user_type);
-    void ActivateAcount (@NonNull String uid, @NonNull String key, @NonNull String code);
+    void ActivateAccount (@NonNull String uid, @NonNull String key, @NonNull String code);
     void getUser (@NonNull String uid, @NonNull String key, String city);
 
     // ************** EDIT USER **********

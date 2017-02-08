@@ -37,7 +37,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate (@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_layout);
-        mDialogLoading = new SpotsDialog(RegistrationActivity.this,"Загрузка");
+        mDialogLoading = new SpotsDialog(RegistrationActivity.this, "Загрузка");
         metPass = (MaterialEditText) findViewById(R.id.registPassET);
         metPhone = (MaterialEditText) findViewById(R.id.registNumberET);
         metName = (MaterialEditText) findViewById(R.id.registNameET);
@@ -74,7 +74,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                 if ( mUserType != 0 ) {
                     app.getNet().registration(mPhone, mPass, mName, mUserType);
                     mDialogLoading.show();
-                }else
+                } else
                     Toast.makeText(this, "Выберите один из типов использования", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -115,10 +115,11 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         switch ( eventId ) {
             case Net.REGISTRATION:
                 mDialogLoading.dismiss();
-                Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Произошел сбой.Проверьте своё интернет подключение.", Toast.LENGTH_SHORT).show();
                 break;
             case Net.ACTIVATE_ACOUNT:
-                Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
+                mDialogLoading.dismiss();
+                Toast.makeText(this, "Произошел сбой.Проверьте своё интернет подключение.", Toast.LENGTH_SHORT).show();
         }
     }
 }

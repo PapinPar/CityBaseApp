@@ -53,7 +53,7 @@ public class NewPassActivity extends BaseActivity implements View.OnClickListene
         switch ( eventId ) {
             case Net.NEW_RESET_PASS:
                 mDialog.dismiss();
-                Toast.makeText(this, "" + (String) NetObjects, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Произошел сбой.Проверьте своё интернет подключение.", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -38,7 +38,7 @@ public class SmsActivity extends BaseActivity {
 
                 mCode = smsET.getText().toString();
                 if ( mCode.length() > 1 ) {
-                    app.getNet().ActivateAcount(mId, mKey, mCode);
+                    app.getNet().ActivateAccount(mId, mKey, mCode);
                     finish();
                 }
                 else

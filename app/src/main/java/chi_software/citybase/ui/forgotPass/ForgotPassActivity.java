@@ -75,8 +75,7 @@ public class ForgotPassActivity extends BaseActivity implements View.OnClickList
         switch ( eventId ) {
             case Net.SMS_RESET:
                 mDialog.dismiss();
-                String fieldResponse = (String) NetObjects;
-                Toast.makeText(this, "" +  fieldResponse, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Произошел сбой.Проверьте своё интернет подключение.", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

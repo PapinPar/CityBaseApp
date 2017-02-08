@@ -75,5 +75,7 @@ public class MyAmountHistory extends BaseActivity {
     @Override
     public void onNetRequestFail (@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestFail(eventId, NetObjects);
+        mDialog.dismiss();
+        Toast.makeText(this, "Произошел сбой.Проверьте своё интернет подключение.", Toast.LENGTH_SHORT).show();
     }
 }
