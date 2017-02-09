@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,7 +35,7 @@ import chi_software.citybase.ui.pager.DetailPostActivity;
 import dmax.dialog.SpotsDialog;
 
 
-public class MainFragment extends BaseFragment implements View.OnClickListener, SearchDialog.GetSpinnerListener, PostAdapter.PostAdapterCall {
+public class MainFragment extends BaseFragment implements View.OnClickListener, SearchDialog.GetSpinnerListener, PostAdapter.PostAdapterCall, SwipeRefreshLayout.OnRefreshListener {
 
 
     private Button mFindBut;
@@ -52,25 +53,29 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private List<String> userInfo;
     private SharedPreferences sPref;
     private OpenTariffs openTariffs;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private List<String> mTypeSelected;
     private List<String> mAreaSelected;
     private List<String> mPunktSelected;
 
+
     @Nullable
     @Override
-    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.content_main_screen, container, false);
     }
 
     @Override
-    public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFindBut = (Button) view.findViewById(R.id.findButton);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.main_swap_refresh);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.MyRecycle);
         mFindBut.setOnClickListener(this);
         mFindBut.setClickable(false);
         mFindBut.setAlpha((float) 0.4);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.MyRecycle);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         mSearchDialog = new SearchDialog();
         mDialog = new SpotsDialog(getActivity(), "Загрузка");
         init();
@@ -79,7 +84,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
 
-    private void init () {
+    private void init() {
         mSearch = "";
         mPage = 1;
         mLastPosition = 0;
@@ -98,7 +103,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         mRecyclerView.setLayoutManager(layoutManager);
     }
 
-    private void apiCalls () {
+    private void apiCalls() {
         app.getNet().searchMenu(mCity, mTable, mUid, mKey);
         app.getNet().getUser(mUid, mKey, mCity);
         mDialog.setCancelable(false);
@@ -112,8 +117,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onClick (View v) {
-        switch ( v.getId() ) {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.findButton:
                 mSearchDialog.getListener(this, mMyMenu);
                 mSearchDialog.show(getActivity(), this, mMyMenu, mTypeSelected, mAreaSelected, mPunktSelected);
@@ -122,14 +127,14 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void getPhotoId (String id, int position) {
+    public void getPhotoId(String id, int position) {
         String url = "http://api.citybase.in.ua/api/img/";
         ArrayList list = new ArrayList();
-        if ( mKeysModel.containsKey(id) ) {
+        if (mKeysModel.containsKey(id)) {
             list = (ArrayList) mKeysModel.get(id);
         }
         ArrayList<String> urlList = new ArrayList<>();
-        for ( int i = 0 ; i < list.size() ; i++ ) {
+        for (int i = 0; i < list.size(); i++) {
             urlList.add(url + list.get(i));
         }
 
@@ -146,8 +151,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void getLastPost (int position, int size) {
-        if ( tmpPosition != position ) {
+    public void getLastPost(int position, int size) {
+        if (tmpPosition != position) {
             mLastPosition = size;
             mPage++;
             app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
@@ -157,9 +162,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onNetRequestDone (@Net.NetEvent int eventId, Object NetObjects) {
+    public void onNetRequestDone(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestDone(eventId, NetObjects);
-        switch ( eventId ) {
+        switch (eventId) {
             case Net.GET_BASE:
                 filldata(NetObjects);
                 break;
@@ -175,20 +180,20 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onNetRequestFail (@Net.NetEvent int eventId, Object NetObjects) {
+    public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestFail(eventId, NetObjects);
         mDialog.dismiss();
         Toast.makeText(getActivity(), "Произошел сбой.Проверьте своё интернет подключение.", Toast.LENGTH_SHORT).show();
     }
 
-    private void getLevel () {
+    private void getLevel() {
         int count = 0;
-        for ( String s : userInfo ) {
-            if ( mTable.contains(s) ) {
+        for (String s : userInfo) {
+            if (mTable.contains(s)) {
                 count++;
             }
         }
-        if ( count > 0 ) {
+        if (count > 0) {
             app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
             mDialog.show();
         } else {
@@ -198,7 +203,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void getSpinner (String json, List<String> mTypeSelected, List<String> mAreaSelected, List<String> mPunktSelected) {
+    public void getSpinner(String json, List<String> mTypeSelected, List<String> mAreaSelected, List<String> mPunktSelected) {
         mPage = 1;
         mLastPosition = 0;
         mSearch = json;
@@ -213,15 +218,15 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         this.mPunktSelected = mPunktSelected;
     }
 
-    private void fillsearch (MenuSearch netObjects) {
+    private void fillsearch(MenuSearch netObjects) {
         mMyMenu = netObjects;
         mFindBut.setClickable(true);
         mFindBut.setAlpha(1);
     }
 
-    private void filldata (Object netObjects) {
+    private void filldata(Object netObjects) {
         Log.d("MainScreenFill", mTable);
-        if ( mPage == 1 )
+        if (mPage == 1)
             mModelDataList.clear();
         mBaseResponse = (BaseResponse) netObjects;
         mMyObject.addAll(mBaseResponse.getBaseGet().getGetResponse().getModel());
@@ -229,16 +234,15 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         String url = "http://api.citybase.in.ua/api/img/";
         ArrayList list = new ArrayList();
         String info = "";
-        for ( int i = 0 ; i < mBaseResponse.getBaseGet().getGetResponse().getModel().size() ; i++ ) {
+        for (int i = 0; i < mBaseResponse.getBaseGet().getGetResponse().getModel().size(); i++) {
             String id = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId();
-            if ( mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1 ) {
+            if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1) {
                 info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
+            } else if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1) {
+                info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
             } else
-                if ( mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1 ) {
-                    info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
-                } else
-                    info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
-            if ( mBaseResponse.getMap().containsKey(id) ) {
+                info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
+            if (mBaseResponse.getMap().containsKey(id)) {
                 list = (ArrayList) mBaseResponse.getMap().get(id);
                 mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
                         //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
@@ -250,20 +254,20 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         }
         mDialog.dismiss();
         mAdapter.notifyDataSetChanged();
-        if ( mPage != 1 )
+        if (mPage != 1)
             mRecyclerView.smoothScrollToPosition(mLastPosition - 1);
     }
 
 
     // shared preferences
-    private void saveShared () {
+    private void saveShared() {
         SharedCityBase.SaveCity(getActivity(), mCity);
         SharedCityBase.SaveTable(getActivity(), mTable);
         SharedCityBase.SaveKey(getActivity(), mKey);
         SharedCityBase.SaveUID(getActivity(), mUid);
     }
 
-    private void loadShared () {
+    private void loadShared() {
         mKey = SharedCityBase.GetKey(getActivity());
         mUid = SharedCityBase.GetUID(getActivity());
         mCity = SharedCityBase.GetCity(getActivity());
@@ -271,11 +275,22 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         tmpCity = mCity;
     }
 
-    public void setOpenTarrif (OpenTariffs openTariffs) {
+    public void setOpenTarrif(OpenTariffs openTariffs) {
         this.openTariffs = openTariffs;
     }
 
+    @Override
+    public void onRefresh() {
+        if(isNetworkConnected()){
+            apiCalls();
+            mSwipeRefreshLayout.setRefreshing(false);
+        }else{
+            mSwipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getActivity(), "Проверьте своё интернет соединение", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public interface OpenTariffs {
-        void openTariff ();
+        void openTariff();
     }
 }
