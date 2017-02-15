@@ -138,6 +138,11 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         //app.getNet().login(sEmai, sPass);
         //app.getNet().login("0664382589", "test123456");
         //app.getNet().login("0638367925", "papin1");
+        //app.getNet().login("0957798881", "qwertyuiop");
+
+        //mPhoneLoginEditText.setText("0957798881");
+        //mPassLoginEditText.setText("qwertyuiop");
+
         mUser = mPhoneLoginEditText.getText().toString();
         mPass = mPassLoginEditText.getText().toString();
         //mUser = "0506803241";
