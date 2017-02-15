@@ -35,7 +35,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    protected void onCreate (@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_screen_layout);
         mPhoneLoginEditText = (MaterialEditText) findViewById(R.id.phoneLoginNew);
@@ -44,16 +44,16 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.butTryBaseNew).setOnClickListener(this);
         findViewById(R.id.registNewTW).setOnClickListener(this);
         findViewById(R.id.forgotTV).setOnClickListener(this);
-        mDialog = new SpotsDialog(StartScreen.this,"Загрузка");
+        mDialog = new SpotsDialog(StartScreen.this, "Загрузка");
 
         loadUser();
 
     }
 
-    private void loadUser () {
+    private void loadUser() {
         mPass = SharedCityBase.GetPassword(this);
         mUser = SharedCityBase.GetLogin(this);
-        if ( mPass.length() > 1 && mUser.length() > 1 ) {
+        if (mPass.length() > 1 && mUser.length() > 1) {
             mDialog.show();
             mState = true;
             app.getNet().login(mUser, mPass);
@@ -62,28 +62,27 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
 
     @SuppressLint("SwitchIntDef")
     @Override
-    public void onNetRequestDone (@Net.NetEvent int eventId, Object NetObjects) {
+    public void onNetRequestDone(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestDone(eventId, NetObjects);
-        switch ( eventId ) {
+        switch (eventId) {
             case Net.TRIAL_BASE:
                 BaseGet baseGet = (BaseGet) NetObjects;
                 Log.d("StartScreen", "baseGet.getGetResponse().getModel():" + baseGet.getGetResponse().getTrialObjects());
                 break;
             case Net.SIGN_IN:
-                mDialog.dismiss();
                 LoginResponse loginResponse = (LoginResponse) NetObjects;
-                if ( loginResponse.getMyResponse().getActive().equals("1") ) {
+                if (loginResponse.getMyResponse().getActive().equals("1")) {
                     SharedCityBase.SetLogin(StartScreen.this, mUser);
                     SharedCityBase.SetPassword(StartScreen.this, mPass);
-
-                    Intent startMainScreen = new Intent(StartScreen.this, MainActivity.class);
                     SharedCityBase.SaveUID(this, loginResponse.getMyResponse().getId());
                     SharedCityBase.SaveKey(this, loginResponse.getMyResponse().getKey());
-                    if ( !mState ) {
+                    mDialog.dismiss();
+                    if (!mState) {
                         SharedCityBase.SaveCity(this, mCity);
+                        onCreateDialog();
+                    }else {
+                        startMainActivity();
                     }
-                    startActivity(startMainScreen);
-                    finish();
                 } else
                     Toast.makeText(this, "Пожалуйста подвердите номер телефона", Toast.LENGTH_SHORT).show();
                 break;
@@ -92,15 +91,15 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
 
     @SuppressLint("SwitchIntDef")
     @Override
-    public void onNetRequestFail (@Net.NetEvent int eventId, Object NetObjects) {
+    public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestFail(eventId, NetObjects);
-        switch ( eventId ) {
+        switch (eventId) {
             case Net.SIGN_IN:
                 mDialog.dismiss();
-                if ( !mState ) {
-                    if ( !isNetworkConnected() )
-                        Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
-                    if ( isNetworkConnected() )
+                if (!mState) {
+                    if (!isNetworkConnected())
+                        Toast.makeText(this, "Проверьте интернет соединение", Toast.LENGTH_SHORT).show();
+                    if (isNetworkConnected())
                         Toast.makeText(this, "Введен не правильный логин или пароль", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -108,14 +107,14 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    public void onClick (View v) {
-        switch ( v.getId() ) {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.butOkNew:
-                if ( isNetworkConnected() ) {
+                if (isNetworkConnected()) {
                     mDialog.show();
-                    onCreateDialog();
+                    signIn();
                 }
-                if ( !isNetworkConnected() )
+                if (!isNetworkConnected())
                     Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.registNewTW:
@@ -130,40 +129,51 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private void startNewActivity (Class registrationActivityClass) {
+    private void startNewActivity(Class registrationActivityClass) {
         Intent register = new Intent(StartScreen.this, registrationActivityClass);
         startActivity(register);
     }
 
-    private void signIn () {
+    private void signIn() {
         //app.getNet().login(sEmai, sPass);
         //app.getNet().login("0664382589", "test123456");
         //app.getNet().login("0638367925", "papin1");
-        //mUser = mPhoneLoginEditText.getText().toString();
-        //mPass = mPassLoginEditText.getText().toString();
-        mUser = "0506803241";
-        mPass = "123456";
-        app.getNet().login(mUser, mPass);
+        mUser = mPhoneLoginEditText.getText().toString();
+        mPass = mPassLoginEditText.getText().toString();
+        //mUser = "0506803241";
+        //mPass = "123456";
+        if (mUser.length() > 0 && mPass.length() > 0) {
+            app.getNet().login(mUser, mPass);
+        } else {
+            mDialog.dismiss();
+            Toast.makeText(this, "Пожалуйста введите свои данные", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    protected void onCreateDialog () {
+    protected void onCreateDialog() {
         AlertDialog.Builder builder;
-        final String[] mCityChoose = { "Киев", "Харьков", "Одесса" };
+        final String[] mCityChoose = {"Киев", "Харьков", "Одесса"};
         builder = new AlertDialog.Builder(this);
         builder.setTitle("Выберите Город");
         builder.setItems(mCityChoose, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick (DialogInterface dialog, int item) {
-                if ( item == 0 )
+            public void onClick(DialogInterface dialog, int item) {
+                if (item == 0)
                     mCity = "_Kyiv";
-                if ( item == 1 )
+                if (item == 1)
                     mCity = "_Kharkov";
-                if ( item == 2 )
+                if (item == 2)
                     mCity = "_Odessa";
-                signIn();
+                startMainActivity();
             }
         });
         builder.setCancelable(false);
         builder.show();
+    }
+
+    private void startMainActivity() {
+        Intent startMainScreen = new Intent(StartScreen.this, MainActivity.class);
+        startActivity(startMainScreen);
+        finish();
     }
 }
