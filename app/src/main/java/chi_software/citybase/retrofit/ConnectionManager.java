@@ -105,7 +105,16 @@ public class ConnectionManager implements Net {
         @Override
         public void onResponse(Call<T> call, Response<T> response) {
             synchronized (locker) {
-                net.notifySuccessSubscribers(value, response.body());
+                if (value == 106) {
+                    FieldResponse resp = (FieldResponse) response.body();
+                    if (resp.getError() != null) {
+                        net.notifyErrorSubscribers(value, resp.getError());
+                    } else {
+                        net.notifySuccessSubscribers(value, resp);
+                    }
+                } else {
+                    net.notifySuccessSubscribers(value, response.body());
+                }
             }
         }
 

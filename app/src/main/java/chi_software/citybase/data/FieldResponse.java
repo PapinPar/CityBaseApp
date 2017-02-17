@@ -11,6 +11,12 @@ public class FieldResponse {
     @SerializedName("response")
     @Expose
     private String serverResponse;
+    @SerializedName("errno")
+    @Expose
+    private String errorNo;
+    @SerializedName("error")
+    @Expose
+    private String error;
 
     public String getServerResponse () {
         return serverResponse;
@@ -19,4 +25,19 @@ public class FieldResponse {
         this.serverResponse = colorResponse;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getErrorNo() {
+        return errorNo;
+    }
+
+    public void setErrorNo(String errorNo) {
+        this.errorNo = errorNo;
+    }
 }
