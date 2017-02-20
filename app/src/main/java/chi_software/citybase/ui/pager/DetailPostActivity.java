@@ -8,17 +8,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import chi_software.citybase.R;
+import chi_software.citybase.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
+import chi_software.citybase.core.api.Net;
+import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.getBase.MyObject;
 
 
@@ -41,9 +49,10 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     private List<MyObject> mMyObjectsList;
     private int mPosition;
     private int mSize;
-    private String mUid, mKey, mTable;
+    private String mUid, mKey, mTable,mCommentStr;
     private TextView mUpdData, mPublishedData, mPrice, mRoomsType, mAreaSize, mMetroName, mInfo, mAddress, mPhoneNumber;
     private LinearLayout mLine2, mLine3;
+    private EditText mComment;
 
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +94,19 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         mInfo = (TextView) findViewById(R.id.infoAbout);
         mAddress = (TextView) findViewById(R.id.addressTW);
         mPhoneNumber = (TextView) findViewById(R.id.phoneNumberTW);
+        mComment = (EditText) findViewById(R.id.comment_et);
+
+        mComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    sendComment();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
 
         mPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +118,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                 }
             }
         });
-
+        app.getNet().getObjectinfo("",SharedCityBase.GetCity(this),mTable,mUid,mKey, Integer.valueOf(mMyObjectsList.get(mPosition).getId()));
         setInfo();
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -111,6 +133,15 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
             public void onPageScrollStateChanged (int state) {
             }
         });
+    }
+
+    private void sendComment() {
+        mCommentStr = mComment.getText().toString();
+        if (mCommentStr.length() > 0) {
+            app.getNet().setComment(mUid, mKey, SharedCityBase.GetCity(this), mTable, mMyObjectsList.get(mPosition).getId(), "comment", mCommentStr);
+        }else{
+            Toast.makeText(this, "Введите коментарий для отправки.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setInfo () {
@@ -160,6 +191,10 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
             mPhoneNumber.setVisibility(View.GONE);
             findViewById(R.id.textView21).setVisibility(View.GONE);
         }
+
+        if(mMyObjectsList.get(mPosition).getComment()!=null){
+           mComment.setText(mMyObjectsList.get(mPosition).getComment().toString());
+        }
     }
 
 
@@ -176,6 +211,16 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         startActivity(s);
     }
 
+    @Override
+    public void onNetRequestDone(@Net.NetEvent int eventId, Object NetObjects) {
+        super.onNetRequestDone(eventId, NetObjects);
+        switch (eventId){
+            case Net.GET_OBJ_INFO:
+                BaseGet baseGet = (BaseGet) NetObjects;
+                Log.d("DetailPostActivity", "asd");
+                break;
+        }
+    }
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 

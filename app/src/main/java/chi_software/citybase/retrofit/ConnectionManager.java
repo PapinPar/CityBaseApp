@@ -213,6 +213,11 @@ public class ConnectionManager implements Net {
         api.getTrialBase(city, table, ruscity, type, place, basetype, basetype2).enqueue(new BaseCallback<BaseGet>(TRIAL_BASE, this));
     }
 
+    @Override
+    public void getObjectinfo(@NonNull String search, @NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key, @NonNull Integer id) {
+        api.getPostInfo(search, city, table, uid, key, id).enqueue(new BaseCallback<BaseGet>(GET_OBJ_INFO, this));
+    }
+
     // ********************** SMS *************
     @Override
     public void sendSms(@NonNull final String uid, @NonNull final String key) {

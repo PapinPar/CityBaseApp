@@ -12,7 +12,7 @@ import chi_software.citybase.core.observer.Subject;
 public interface Net extends Subject<NetSubscriber> {
     @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION, SEND_SMS, ACTIVATE_ACOUNT, TRIAL_BASE, EDIT_USER_LOGIN,
             EDIT_USER_PASSWORD, ADD_USER_EMAIL, DELETE_USER_EMAIL, GET_USER, GET_MY_AMOUNT, GET_ACTIVE_SERVICE, GET_TARIFFS, CREATE_ORDER,
-            ACTIVATE_ORDER, CREATE_PAYMENT ,SMS_RESET,NEW_RESET_PASS})
+            ACTIVATE_ORDER, CREATE_PAYMENT ,SMS_RESET,NEW_RESET_PASS,GET_OBJ_INFO})
     @interface NetEvent {}
 
 
@@ -39,6 +39,7 @@ public interface Net extends Subject<NetSubscriber> {
     int CREATE_PAYMENT = 303;
     int SMS_RESET = 304;
     int NEW_RESET_PASS= 305;
+    int GET_OBJ_INFO = 306;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
@@ -56,6 +57,7 @@ public interface Net extends Subject<NetSubscriber> {
     void searchMenu (@NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key);
     void getBase (@NonNull String search, @NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key, @NonNull Integer page);
     void tryBase (@NonNull String city, @NonNull String table, @NonNull String ruscity, @NonNull String type, @NonNull String place, @NonNull String basetype, @NonNull String basetype2);
+    void getObjectinfo (@NonNull String search, @NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key, @NonNull Integer id);
     // *********** SMS *************
     void sendSms (@NonNull String uid, @NonNull String key);
     void smsReset(@NonNull String phone);

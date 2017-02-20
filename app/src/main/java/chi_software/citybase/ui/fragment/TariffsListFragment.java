@@ -17,6 +17,7 @@ import chi_software.citybase.SharedCityBase;
 import chi_software.citybase.core.BaseFragment;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.FieldResponse;
+import chi_software.citybase.data.payment.PaymentResponse;
 import chi_software.citybase.data.tarif.Tariff;
 import chi_software.citybase.data.tarif.TariffModel;
 import chi_software.citybase.ui.adapter.TariffsAdapter;
@@ -92,8 +93,8 @@ public class TariffsListFragment extends BaseFragment implements TariffsAdapter.
                 break;
             case Net.CREATE_PAYMENT:
                 mDialog.dismiss();
-                String fieldResponse = (String) NetObjects;
-                openChromeTab(fieldResponse);
+                PaymentResponse fieldResponse = (PaymentResponse) NetObjects;
+                openChromeTab(fieldResponse.getResponse().getLink());
                 break;
         }
     }
