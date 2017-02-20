@@ -208,6 +208,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         mLastPosition = 0;
         mSearch = json;
         mModelDataList.clear();
+        mKeysModel.clear();
+        mMyObject.clear();
         mAdapter.notifyDataSetChanged();
         Log.d("MainScreen", mTable);
         app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
