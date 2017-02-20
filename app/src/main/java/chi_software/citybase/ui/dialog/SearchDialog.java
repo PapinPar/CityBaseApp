@@ -54,8 +54,8 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
 
     public void show (Activity activity, GetSpinnerListener getSpinnerListener, MenuSearch menuSearch, List<String> mTypeSelected, List<String> mAreaSelected, List<String> mPunktSelected) {
         this.mTypeSelected = mTypeSelected;
-        this.mAreaSelected = mAreaSelected;
         this.mPunktSelected = mPunktSelected;
+        this.mAreaSelected = mAreaSelected;
         getListener(getSpinnerListener, menuSearch);
         show(activity.getFragmentManager(), "Поиск");
     }
@@ -171,7 +171,7 @@ public class SearchDialog extends DialogFragment implements MultiSelectionSpinne
                 Gson gson = builder.create();
                 Log.i("GSON", gson.toJson(searchJson));
                 String json = gson.toJson(searchJson);
-                getSpinnerListener.getSpinner(json, mTypeSelected, mPunktSelected, mAreaSelected);
+                getSpinnerListener.getSpinner(json, mTypeSelected, mAreaSelected,mPunktSelected );
                 dismiss();
             }
         });
