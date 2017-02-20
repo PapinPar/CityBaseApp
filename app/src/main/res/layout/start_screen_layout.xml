@@ -64,6 +64,7 @@
         android:layout_above="@+id/butTryBaseNew"
         android:layout_below="@+id/releative2">
 
+        android:selectAllOnFocus="false"
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/phoneLoginNew"
             android:layout_height="wrap_content"
@@ -72,11 +73,11 @@
             app:met_floatingLabel="highlight"
             app:met_floatingLabelTextSize="@dimen/floatingTextSize"
             app:met_textColor="@android:color/black"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя+0123456789_"
             app:met_textColorHint="@color/hintColor"
             android:gravity="center"
             android:hint="Номер телефона / Логин"
             android:inputType="textAutoComplete"
-            android:selectAllOnFocus="false"
             android:visibility="visible"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -84,10 +85,12 @@
             android:layout_width="@dimen/infoSizeWidth"
             android:textSize="@dimen/textSize"
             android:layout_height="wrap_content"
+            android:maxLength="12"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelTextSize="@dimen/floatingTextSize"
             app:met_textColor="@android:color/black"
             app:met_textColorHint="@color/hintColor"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя1234567890!@#$%^*()_./|\,"
             android:gravity="center"
             android:hint="Пароль"
             android:inputType="textPassword"

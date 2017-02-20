@@ -63,8 +63,9 @@
                 app:met_textColor="@android:color/black"
                 app:met_textColorHint="@color/hintColor"
                 android:gravity="center"
+                android:maxLength="4"
                 android:hint="Код из СМС"
-                android:inputType="phone"
+                android:inputType="numberSigned"
                 android:selectAllOnFocus="true"
                 android:visibility="visible"/>
 

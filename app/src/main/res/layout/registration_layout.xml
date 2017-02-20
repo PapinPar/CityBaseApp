@@ -57,7 +57,7 @@
             android:gravity="center"
             android:hint="Имя"
             android:imeOptions="actionNext"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:maxLength="30"
             android:selectAllOnFocus="false"
             android:singleLine="true"

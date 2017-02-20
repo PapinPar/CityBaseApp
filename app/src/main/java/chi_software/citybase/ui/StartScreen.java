@@ -30,7 +30,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
 
     private MaterialEditText mPhoneLoginEditText, mPassLoginEditText;
     private SpotsDialog mDialog;
-    private String mCity, mUser, mPass;
+    private String mCity, mUser, mPass, mKey, mId;
     private boolean mState = false;
 
     @SuppressWarnings("ConstantConditions")
@@ -80,13 +80,27 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                     if (!mState) {
                         SharedCityBase.SaveCity(this, mCity);
                         onCreateDialog();
-                    }else {
+                    } else {
                         startMainActivity();
                     }
-                } else
+                } else {
+                    mId = loginResponse.getMyResponse().getId();
+                    mKey = loginResponse.getMyResponse().getKey();
                     Toast.makeText(this, "Пожалуйста подвердите номер телефона", Toast.LENGTH_SHORT).show();
+                    showSmsActivity();
+                }
+                break;
+            case Net.SEND_SMS:
+                Intent sms = new Intent(StartScreen.this, SmsActivity.class);
+                sms.putExtra(SmsActivity.KEY, mKey);
+                sms.putExtra(SmsActivity.MYID, mId);
+                startActivity(sms);
                 break;
         }
+    }
+
+    private void showSmsActivity() {
+        app.getNet().sendSms(mId, mKey);
     }
 
     @SuppressLint("SwitchIntDef")
