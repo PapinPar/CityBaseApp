@@ -57,6 +57,8 @@ public interface API {
     @GET("Base.getobjforindex")
     Call<BaseGet> getTrialBase (@Query("city") String city, @Query("table") String table, @Query("ruscity") String ruscity, @Query("type") String type, @Query("place") String place, @Query("basetype") String basetype, @Query("basetype2") String basetype2);
 
+    @GET("Base.GetObj")
+    Call<BaseGet> getPostInfo (@Query("search") String search, @Query("city") String city, @Query("table") String table, @Query("uid") String uid, @Query("key") String key, @Query("id") Integer id);
 
     // ************* EDIT FIELD ****************
     @GET("Base.editfield")
