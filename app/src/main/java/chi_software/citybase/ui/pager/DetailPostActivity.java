@@ -26,6 +26,7 @@ import chi_software.citybase.data.getBase.MyObject;
  * Created by Papin on 15.11.2016.
  */
 
+@SuppressWarnings("ConstantConditions")
 public class DetailPostActivity extends BaseActivity implements PageFragment.ShowBigImageListener {
 
     public static final String UID = "uid";
@@ -144,15 +145,21 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
             if ( mMyObjectsList.get(mPosition).getHouse() != null )
                 streetHouse = streetHouse + mMyObjectsList.get(mPosition).getHouse();
         }
-        if ( !streetHouse.equals("") )
+        if (streetHouse.length()>5) {
             mAddress.setText(streetHouse);
-        else
+            findViewById(R.id.textView19).setVisibility(View.VISIBLE);
+        } else {
             mAddress.setVisibility(View.GONE);
+            findViewById(R.id.textView19).setVisibility(View.GONE);
+        }
 
-        if ( mMyObjectsList.get(mPosition).getPhone() != null )
+        if (mMyObjectsList.get(mPosition).getPhone() != null) {
             mPhoneNumber.setText(mMyObjectsList.get(mPosition).getPhone());
-        else
+            findViewById(R.id.textView21).setVisibility(View.VISIBLE);
+        } else {
             mPhoneNumber.setVisibility(View.GONE);
+            findViewById(R.id.textView21).setVisibility(View.GONE);
+        }
     }
 
 

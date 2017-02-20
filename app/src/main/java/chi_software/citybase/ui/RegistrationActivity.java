@@ -141,10 +141,6 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                 sms.putExtra(SmsActivity.KEY, mKey);
                 sms.putExtra(SmsActivity.MYID, mId);
                 startActivity(sms);
-                break;
-            case Net.ACTIVATE_ACOUNT:
-                mDialogLoading.dismiss();
-                Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }

@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import chi_software.citybase.R;
 import chi_software.citybase.core.BaseActivity;
+import chi_software.citybase.core.api.Net;
+import chi_software.citybase.data.FieldResponse;
 
 
 /**
@@ -39,11 +41,25 @@ public class SmsActivity extends BaseActivity {
                 mCode = smsET.getText().toString();
                 if ( mCode.length() > 1 ) {
                     app.getNet().ActivateAccount(mId, mKey, mCode);
-                    finish();
                 }
                 else
                     Toast.makeText(SmsActivity.this, "Введите код из СМС", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onNetRequestDone(@Net.NetEvent int eventId, Object NetObjects) {
+        super.onNetRequestDone(eventId, NetObjects);
+        switch (eventId){
+            case Net.ACTIVATE_ACOUNT:
+                FieldResponse response = (FieldResponse)NetObjects;
+                if(response.getServerResponse().contains("Ok")){
+                    finish();
+                }
+                else{
+                    Toast.makeText(this, "Введен непарвльный код", Toast.LENGTH_SHORT).show();
+                }
+        }
     }
 }
