@@ -282,6 +282,11 @@ public class ConnectionManager implements Net {
         api.setComment(uid, key, city, table, objId, field, comment).enqueue(new BaseCallback<FieldResponse>(SET_COMMENT, this));
     }
 
+    @Override
+    public void setRieltor(@NonNull String uid, @NonNull String key, @NonNull String city, @NonNull String table, @NonNull String objId, @NonNull String field, @NonNull String number) {
+        api.addRieltor(uid, key, city, table, objId, field, number).enqueue(new BaseCallback<FieldResponse>(ADD_RIELTOR, this));
+    }
+
     // ************ HEPLERS METHODS ************
     private Map getModel(BaseGet baseGet) {
         Map<String, List<String>> keys = new ArrayMap<>();

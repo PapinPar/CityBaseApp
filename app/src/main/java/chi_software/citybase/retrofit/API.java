@@ -68,6 +68,8 @@ public interface API {
     @GET("Base.editfield")
     Call<FieldResponse> setComment (@Query("uid") String uid, @Query("key") String key, @Query("city") String city, @Query("table") String table, @Query("objid") String objId, @Query("field") String field, @Query("value") String color);
 
+    @GET("Base.editfield")
+    Call<FieldResponse> addRieltor (@Query("uid") String uid, @Query("key") String key, @Query("city") String city, @Query("table") String table, @Query("objid") String objId, @Query("field") String field, @Query("value") String color);
 
     // **************** SMS ********************
     @GET("sms.smsregistration")

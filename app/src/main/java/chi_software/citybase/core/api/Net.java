@@ -40,6 +40,7 @@ public interface Net extends Subject<NetSubscriber> {
     int SMS_RESET = 304;
     int NEW_RESET_PASS= 305;
     int GET_OBJ_INFO = 306;
+    int ADD_RIELTOR = 307;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
@@ -68,6 +69,9 @@ public interface Net extends Subject<NetSubscriber> {
 
     // ********* SET COMMENT ***************
     void setComment (@NonNull String uid, @NonNull String key, @NonNull String city, @NonNull String table, @NonNull String objId, @NonNull String field, @NonNull String comment);
+
+    //RIELTOR
+    void setRieltor (@NonNull String uid, @NonNull String key, @NonNull String city, @NonNull String table, @NonNull String objId, @NonNull String field, @NonNull String number);
 
     // ******************** AMOUNT ********************
     void getMyAmount (@NonNull String uid, @NonNull String key);

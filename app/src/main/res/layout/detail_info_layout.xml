@@ -286,6 +286,16 @@
             android:text="+38063555555"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize"/>
+        <TextView
+            android:id="@+id/realtor_tw"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:text="Попали на посредника?"
+            android:textSize="@dimen/textSize"
+            android:clickable="true"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
