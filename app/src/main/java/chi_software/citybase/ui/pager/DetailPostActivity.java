@@ -1,5 +1,6 @@
 package chi_software.citybase.ui.pager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -52,6 +54,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     private TextView mUpdData, mPublishedData, mPrice, mRoomsType, mAreaSize, mMetroName, mInfo, mAddress, mPhoneNumber;
     private LinearLayout mLine2, mLine3;
     private EditText mComment;
+    private TextView mRieltor;
 
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +97,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         mAddress = (TextView) findViewById(R.id.addressTW);
         mPhoneNumber = (TextView) findViewById(R.id.phoneNumberTW);
         mComment = (EditText) findViewById(R.id.comment_et);
+        mRieltor = (TextView) findViewById(R.id.realtor_tw);
 
         mComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -107,6 +111,23 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
             }
         });
 
+        mRieltor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(DetailPostActivity.this).create();
+                alertDialog.setTitle("Попали на посредника?");
+                alertDialog.setMessage("Если вы попали на посредника и хотите нам сообщить, то нажмите кнопку ДА и в будущем объявления с данным номером не будут вам отображаться.");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "ДА",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                app.getNet().setRieltor(mUid, mKey, SharedCityBase.GetCity(DetailPostActivity.this),
+                                        mTable, mMyObjectsList.get(mPosition).getId(), "addrieltor", mMyObjectsList.get(mPosition).getPhone());
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
         mPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
@@ -219,6 +240,9 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                 Comment baseGet = (Comment) NetObjects;
                if(baseGet.getResponse().getUserParameters()!=null)
                mComment.setText(baseGet.getResponse().getUserParameters().getComment());
+                break;
+            case Net.ADD_RIELTOR:
+                Toast.makeText(this, "Спасибо что помогаете нам улучшить сервис.", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -67,11 +67,16 @@ public class NewPassActivity extends BaseActivity implements View.OnClickListene
     public void onClick (View v) {
         mCodeS = mCodeED.getText().toString();
         mPassS = mPassED.getText().toString();
-        if ( isNetworkConnected() ) {
-            mDialog.show();
-            app.getNet().newResetPass(mCodeS, mUidS, mPassS);
-        } else {
-            Toast.makeText(this, "Проверьте подключение к интернету", Toast.LENGTH_SHORT).show();
+
+        if (mCodeS.length() == 4 && mPassS.length() > 0) {
+            if (isNetworkConnected()) {
+                mDialog.show();
+                app.getNet().newResetPass(mCodeS, mUidS, mPassS);
+            } else {
+                Toast.makeText(this, "Проверьте подключение к интернету", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(this, "Введите валидные данные", Toast.LENGTH_SHORT).show();
         }
     }
 }
