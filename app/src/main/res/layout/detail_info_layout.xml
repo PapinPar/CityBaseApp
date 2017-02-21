@@ -233,10 +233,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:hint="Коментарий"
+            android:hint="Комментарий"
             android:textColor="@color/black"
             android:padding="5dp"
             android:singleLine="true"
+            android:selectAllOnFocus="false"
             android:imeOptions="actionSend"
             android:background="@drawable/selector_edit_text"
             android:layout_marginRight="20dp"/>

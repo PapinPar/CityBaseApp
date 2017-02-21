@@ -12,11 +12,11 @@ public class BaseGet implements Serializable {
     @Expose
     private GetResponse getResponse;
 
-    public GetResponse getGetResponse () {
+    public GetResponse getGetResponse() {
         return getResponse;
     }
 
-    public void setGetResponse (GetResponse getResponse) {
+    public void setGetResponse(GetResponse getResponse) {
         this.getResponse = getResponse;
     }
 

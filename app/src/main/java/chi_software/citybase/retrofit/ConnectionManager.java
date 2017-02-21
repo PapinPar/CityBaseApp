@@ -19,6 +19,7 @@ import chi_software.citybase.core.api.NetSubscriber;
 import chi_software.citybase.data.BaseResponse;
 import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.activ_service.ServiceResponse;
+import chi_software.citybase.data.comment.Comment;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.history_amount.HistoryResponse;
 import chi_software.citybase.data.login.LoginResponse;
@@ -215,7 +216,7 @@ public class ConnectionManager implements Net {
 
     @Override
     public void getObjectinfo(@NonNull String search, @NonNull String city, @NonNull String table, @NonNull String uid, @NonNull String key, @NonNull Integer id) {
-        api.getPostInfo(search, city, table, uid, key, id).enqueue(new BaseCallback<BaseGet>(GET_OBJ_INFO, this));
+        api.getPostInfo(search, city, table, uid, key, id).enqueue(new BaseCallback<Comment>(GET_OBJ_INFO, this));
     }
 
     // ********************** SMS *************

@@ -33,7 +33,7 @@
         <item
             android:id="@+id/study"
             android:icon="@drawable/ic_about_nav"
-            android:title="Обучение"/>
+            android:title="Контакты"/>
     </group>
 
 </menu>

@@ -47,7 +47,11 @@ public class TariffsAdapter extends RecyclerView.Adapter<TariffsAdapter.TariffRe
         plain = s[0].replace("\n\n", "\n");
         plain = plain + " MSR";
         holder.mTariffName.setText(mTariffList.get(position).getRusName());
-        holder.mButt.setText(mAmount + mTariffList.get(position).getUserCost() + " грн");
+        if (mTariffList.get(position).getUserCost() > 0) {
+            holder.mButt.setText(mAmount + mTariffList.get(position).getUserCost() + " грн");
+        }else{
+            holder.mButt.setText("Активировать");
+        }
         holder.mDate.setText(mTariffList.get(position).getCost() + " грн" + "/" + mHours + " дней");
         holder.mInfo.setText(plain);
     }

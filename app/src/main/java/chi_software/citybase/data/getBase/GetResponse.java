@@ -12,12 +12,16 @@ public class GetResponse implements Serializable {
     @SerializedName("objects")
     @Expose
     private List<MyObject> MyObjects = new ArrayList<MyObject>();
+
     @SerializedName("lastpage")
     @Expose
     private String lastpage;
+
     @SerializedName("obj")
     @Expose
     private List<MyObject> TrialObjects = new ArrayList<>();
+
+
     //@SerializedName("countphone")
     //@Expose
     //private List<Countphone> countphone = new ArrayList<Countphone>();

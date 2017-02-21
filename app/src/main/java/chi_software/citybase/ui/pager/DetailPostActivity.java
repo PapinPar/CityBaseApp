@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,7 +25,7 @@ import chi_software.citybase.R;
 import chi_software.citybase.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
-import chi_software.citybase.data.getBase.BaseGet;
+import chi_software.citybase.data.comment.Comment;
 import chi_software.citybase.data.getBase.MyObject;
 
 
@@ -139,8 +138,9 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         mCommentStr = mComment.getText().toString();
         if (mCommentStr.length() > 0) {
             app.getNet().setComment(mUid, mKey, SharedCityBase.GetCity(this), mTable, mMyObjectsList.get(mPosition).getId(), "comment", mCommentStr);
+            Toast.makeText(this, "Комментарий сохранен.", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(this, "Введите коментарий для отправки.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Введите комментарий для отправки.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -216,8 +216,9 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         super.onNetRequestDone(eventId, NetObjects);
         switch (eventId){
             case Net.GET_OBJ_INFO:
-                BaseGet baseGet = (BaseGet) NetObjects;
-                Log.d("DetailPostActivity", "asd");
+                Comment baseGet = (Comment) NetObjects;
+               if(baseGet.getResponse().getUserParameters()!=null)
+               mComment.setText(baseGet.getResponse().getUserParameters().getComment());
                 break;
         }
     }
