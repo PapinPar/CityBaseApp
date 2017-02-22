@@ -8,7 +8,6 @@ import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private MenuSearch mMyMenu;
     private BaseResponse mBaseResponse;
     private SpotsDialog mDialog;
-    private String mTable, mKey, mUid, mSearch, mCity, tmpCity;
+    private String mTable, mKey, mUid, mSearch, mCity, tmpCity, mRusCity;
     private int mPage, mLastPosition, tmpPosition;
     private RecyclerView mRecyclerView;
     private List<MyObject> mMyObject;
@@ -148,7 +147,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.findButton:
                 mSearchDialog.getListener(this, mMyMenu);
-                mSearchDialog.show(getActivity(), this, mMyMenu, mTypeSelected, mAreaSelected, mPunktSelected);
+                mSearchDialog.show(getActivity(), this, mMyMenu, mTypeSelected, mAreaSelected, mPunktSelected,mTable);
                 break;
         }
     }
@@ -182,7 +181,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         if (tmpPosition != position) {
             mLastPosition = size;
             mPage++;
-            app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
+            app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage, mRusCity);
             mLoader.setVisibility(View.VISIBLE);
             tmpPosition = position;
         }
@@ -222,7 +221,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             }
         }
         if (count > 0) {
-            app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
+            app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage, mRusCity);
             mDialog.show();
         } else {
             Toast.makeText(getActivity(), "У вас нет доустпа к этой базе", Toast.LENGTH_SHORT).show();
@@ -239,8 +238,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         mKeysModel.clear();
         mMyObject.clear();
         mAdapter.notifyDataSetChanged();
-        Log.d("MainScreen", mTable);
-        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
+        app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage, mRusCity);
         mDialog.show();
 
         this.mTypeSelected = mTypeSelected;
@@ -255,7 +253,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void filldata(Object netObjects) {
-        Log.d("MainScreenFill", mTable);
         if (mPage == 1)
             mModelDataList.clear();
         mBaseResponse = (BaseResponse) netObjects;
@@ -288,20 +285,12 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             mRecyclerView.smoothScrollToPosition(mLastPosition - 1);
     }
 
-
-    // shared preferences
-    private void saveShared() {
-        SharedCityBase.SaveCity(getActivity(), mCity);
-        SharedCityBase.SaveTable(getActivity(), mTable);
-        SharedCityBase.SaveKey(getActivity(), mKey);
-        SharedCityBase.SaveUID(getActivity(), mUid);
-    }
-
     private void loadShared() {
         mKey = SharedCityBase.GetKey(getActivity());
         mUid = SharedCityBase.GetUID(getActivity());
         mCity = SharedCityBase.GetCity(getActivity());
         mTable = SharedCityBase.GetTable(getActivity());
+        mRusCity = SharedCityBase.GetCityRus(getActivity());
         tmpCity = mCity;
     }
 

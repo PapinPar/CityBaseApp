@@ -50,7 +50,7 @@ public interface API {
 
     // ************ SEARCH ****************
     @GET("Base.get")
-    Call<BaseGet> getBase (@Query("search") String search, @Query("city") String city, @Query("table") String table, @Query("uid") String uid, @Query("key") String key, @Query("page") Integer page);
+    Call<BaseGet> getBase (@Query("search") String search, @Query("city") String city, @Query("table") String table, @Query("uid") String uid, @Query("key") String key, @Query("page") Integer page,@Query("city_rus")String  city_rus);
 
     @GET("Base.searchmenu")
     Call<MenuSearch> getMenuSearch (@Query("city") String city, @Query("table") String table, @Query("uid") String iod, @Query("key") String key);

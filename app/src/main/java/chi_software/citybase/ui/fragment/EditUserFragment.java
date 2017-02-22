@@ -262,10 +262,11 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-    private void saveShared () {
+    private void saveShared(String cityRus) {
         SharedCityBase.SaveCity(getActivity(), userCity);
         SharedCityBase.SaveKey(getActivity(), mKey);
         SharedCityBase.SaveUID(getActivity(), mUid);
+        SharedCityBase.SaveCityRus(getActivity(),cityRus);
     }
 
     private void loadShared () {
@@ -290,7 +291,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 if ( item == 2 )
                     userCity = "_Odessa";
                 Toast.makeText(getContext(), "Местоположение изменено", Toast.LENGTH_SHORT).show();
-                saveShared();
+                saveShared(mCityChoose[item]);
                 apiCalls();
             }
         });

@@ -111,7 +111,7 @@ public class ConnectionManager implements Net {
                     if (resp.getError() != null) {
                         net.notifyErrorSubscribers(value, resp.getError());
                     } else {
-                        net.notifySuccessSubscribers(value, resp);
+                            net.notifySuccessSubscribers(value, resp);
                     }
                 } else {
                     net.notifySuccessSubscribers(value, response.body());
@@ -192,8 +192,8 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void getBase(final String search, final String city, final String table, final String uid, final String key, final Integer page) {
-        api.getBase(search, city, table, uid, key, page).enqueue(new Callback<BaseGet>() {
+    public void getBase(final String search, final String city, final String table, final String uid, final String key, final Integer page,String city_rus) {
+        api.getBase(search, city, table, uid, key, page,city_rus).enqueue(new Callback<BaseGet>() {
             @Override
             public void onResponse(Call<BaseGet> call, Response<BaseGet> response) {
                 BaseGet baseGet = response.body();

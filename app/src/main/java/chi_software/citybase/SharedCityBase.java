@@ -20,6 +20,7 @@ public class SharedCityBase {
     private static final String PREFS_PASSWORD = "PASSWORD";
     private static final String PREFS_LOGIN = "LOGIN";
     private static final String PREFS_IS_FIRST = "IS_FIRST";
+    private static final String PREFS_RUS_CITY = "RUS_CITY";
 
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(SHARED_PREFERENCES_CITY_BASE, Context.MODE_PRIVATE);
@@ -55,6 +56,16 @@ public class SharedCityBase {
 
     public static String GetCity(Context context) {
         return getString(context, PREFS_CITY, "_Kharkov");
+
+    }
+
+    // RUS_CITY
+    public static void SaveCityRus(Context context, String s) {
+        saveString(context, s, PREFS_RUS_CITY);
+    }
+
+    public static String GetCityRus(Context context) {
+        return getString(context, PREFS_RUS_CITY, "Харьков");
 
     }
 

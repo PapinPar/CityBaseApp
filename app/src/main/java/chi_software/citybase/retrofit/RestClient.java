@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 class RestClient {
     static Retrofit setUpClient (Executor mExecutor) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).connectTimeout(30, TimeUnit.SECONDS)
                 .build();
 

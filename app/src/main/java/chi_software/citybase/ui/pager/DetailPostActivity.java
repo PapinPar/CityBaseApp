@@ -50,13 +50,13 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     private List<MyObject> mMyObjectsList;
     private int mPosition;
     private int mSize;
-    private String mUid, mKey, mTable,mCommentStr;
+    private String mUid, mKey, mTable, mCommentStr;
     private TextView mUpdData, mPublishedData, mPrice, mRoomsType, mAreaSize, mMetroName, mInfo, mAddress, mPhoneNumber;
     private LinearLayout mLine2, mLine3;
     private EditText mComment;
     private TextView mRieltor;
 
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_info_layout);
         mUrlList = getIntent().getStringArrayListExtra(URL);
@@ -69,7 +69,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
 
         ViewPager pager = (ViewPager) findViewById(R.id.myPager);
         PagerAdapter pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-        if ( pager != null ) {
+        if (pager != null) {
             pager.setAdapter(pagerAdapter);
         }
         mLine2 = (LinearLayout) findViewById(R.id.line2);
@@ -78,7 +78,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         ImageView webLink = (ImageView) findViewById(R.id.imageWebLink);
         webLink.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v) {
+            public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -125,79 +125,98 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                                 dialog.dismiss();
                             }
                         });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Нет",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
                 alertDialog.show();
             }
         });
         mPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v) {
-                if ( mMyObjectsList.get(mPosition).getPhone() != null ) {
+            public void onClick(View v) {
+                if (mMyObjectsList.get(mPosition).getPhone() != null) {
                     Intent intent = new Intent(Intent.ACTION_DIAL);
                     intent.setData(Uri.parse("tel:" + mPhoneNumber.getText().toString()));
                     startActivity(intent);
                 }
             }
         });
-        app.getNet().getObjectinfo("",SharedCityBase.GetCity(this),mTable,mUid,mKey, Integer.valueOf(mMyObjectsList.get(mPosition).getId()));
+        app.getNet().getObjectinfo("", SharedCityBase.GetCity(this), mTable, mUid, mKey, Integer.valueOf(mMyObjectsList.get(mPosition).getId()));
         setInfo();
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageSelected (int position) {
+            public void onPageSelected(int position) {
             }
 
             @Override
-            public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
-            public void onPageScrollStateChanged (int state) {
+            public void onPageScrollStateChanged(int state) {
             }
         });
     }
 
     private void sendComment() {
         mCommentStr = mComment.getText().toString();
-        if (mCommentStr.length() > 0) {
-            app.getNet().setComment(mUid, mKey, SharedCityBase.GetCity(this), mTable, mMyObjectsList.get(mPosition).getId(), "comment", mCommentStr);
-            Toast.makeText(this, "Комментарий сохранен.", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "Введите комментарий для отправки.", Toast.LENGTH_SHORT).show();
-        }
+        app.getNet().setComment(mUid, mKey, SharedCityBase.GetCity(this), mTable, mMyObjectsList.get(mPosition).getId(), "comment", mCommentStr);
+        Toast.makeText(this, "Комментарий сохранен.", Toast.LENGTH_SHORT).show();
     }
 
-    private void setInfo () {
+    private void setInfo() {
         mUpdData.setText(mMyObjectsList.get(mPosition).getDateUp());
         mPublishedData.setText(mMyObjectsList.get(mPosition).getDatePub());
-        mPrice.setText(mMyObjectsList.get(mPosition).getPrice() + "грн");
+        String currency;
+        if (mTable.equals("rent_living") || mTable.equals("rent_not_living"))
+            currency = " грн";
+        else
+            currency = " $";
+        if (mMyObjectsList.get(mPosition).getPrice() != null) {
+            mPrice.setText(mMyObjectsList.get(mPosition).getPrice() + currency);
+        } else {
+            mPrice.setText("?" + currency);
+        }
         mRoomsType.setText(mMyObjectsList.get(mPosition).getType());
         String areaFloor = "";
-        if ( mMyObjectsList.get(mPosition).getArea() != null && !mMyObjectsList.get(mPosition).getArea().equals("") && !mMyObjectsList.get(mPosition).getArea().equals("0") )
-            areaFloor = mMyObjectsList.get(mPosition).getArea() + "м^2. ";
-        if ( mMyObjectsList.get(mPosition).getFloor() != null && !mMyObjectsList.get(mPosition).getFloor().equals("") && !mMyObjectsList.get(mPosition).getFloor().equals("0") )
-            areaFloor = areaFloor + mMyObjectsList.get(mPosition).getFloor() + " этаж";
-        if ( !areaFloor.equals("") )
+        if (mMyObjectsList.get(mPosition).getArea() != null && !mMyObjectsList.get(mPosition).getArea().equals("") && !mMyObjectsList.get(mPosition).getArea().equals("0")) {
+            areaFloor = mMyObjectsList.get(mPosition).getArea() + " м.кв.  ";
+        }
+        if (mMyObjectsList.get(mPosition).getFloor() != null && !mMyObjectsList.get(mPosition).getFloor().equals("") && !mMyObjectsList.get(mPosition).getFloor().equals("0")) {
+            areaFloor = areaFloor + mMyObjectsList.get(mPosition).getFloor();
+            if (mMyObjectsList.get(mPosition).getFloorNumb() != null) {
+                areaFloor = areaFloor + " этаж из " + mMyObjectsList.get(mPosition).getFloorNumb();
+            }
+        }
+
+        if (!areaFloor.equals("")) {
             mAreaSize.setText(areaFloor);
-        else
+        } else {
             mLine2.setVisibility(View.GONE);
+        }
+
 
         String metroDistanse = "";
-        if ( mMyObjectsList.get(mPosition).getGuide() != null && !mMyObjectsList.get(mPosition).getGuide().equals("") && !mMyObjectsList.get(mPosition).getGuide().equals("0") )
-            metroDistanse = "метро " + mMyObjectsList.get(mPosition).getGuide() + " ";
-        if ( mMyObjectsList.get(mPosition).getDistanceMetro() != null && !mMyObjectsList.get(mPosition).getDistanceMetro().equals("") && !mMyObjectsList.get(mPosition).getDistanceMetro().equals("0") )
+        if (mMyObjectsList.get(mPosition).getGuide() != null && !mMyObjectsList.get(mPosition).getGuide().equals("") && !mMyObjectsList.get(mPosition).getGuide().equals("0"))
+            metroDistanse = mMyObjectsList.get(mPosition).getGuide() + " ";
+        if (mMyObjectsList.get(mPosition).getDistanceMetro() != null && !mMyObjectsList.get(mPosition).getDistanceMetro().equals("") && !mMyObjectsList.get(mPosition).getDistanceMetro().equals("0"))
             metroDistanse = metroDistanse + mMyObjectsList.get(mPosition).getDistanceMetro() + " м.";
-        if ( !metroDistanse.equals("") )
+        if (!metroDistanse.equals(""))
             mMetroName.setText(metroDistanse);
         else
             mLine3.setVisibility(View.GONE);
 
         mInfo.setText(mMyObjectsList.get(mPosition).getText());
         String streetHouse = "";
-        if ( mMyObjectsList.get(mPosition).getStreet() != null ) {
+        if (mMyObjectsList.get(mPosition).getStreet() != null) {
             streetHouse = mMyObjectsList.get(mPosition).getStreet() + " ";
-            if ( mMyObjectsList.get(mPosition).getHouse() != null )
+            if (mMyObjectsList.get(mPosition).getHouse() != null)
                 streetHouse = streetHouse + mMyObjectsList.get(mPosition).getHouse();
         }
-        if (streetHouse.length()>5) {
+        if (streetHouse.length() > 5) {
             mAddress.setText(streetHouse);
             findViewById(R.id.textView19).setVisibility(View.VISIBLE);
         } else {
@@ -213,14 +232,14 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
             findViewById(R.id.textView21).setVisibility(View.GONE);
         }
 
-        if(mMyObjectsList.get(mPosition).getComment()!=null){
-           mComment.setText(mMyObjectsList.get(mPosition).getComment().toString());
+        if (mMyObjectsList.get(mPosition).getComment() != null) {
+            mComment.setText(mMyObjectsList.get(mPosition).getComment().toString());
         }
     }
 
 
     @Override
-    public void showImage () {
+    public void showImage() {
         Intent s = new Intent(DetailPostActivity.this, BigViwerActivity.class);
         s.putExtra(DetailPostActivity.UID, mUid);
         s.putExtra(DetailPostActivity.KEY, mKey);
@@ -235,11 +254,11 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     @Override
     public void onNetRequestDone(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestDone(eventId, NetObjects);
-        switch (eventId){
+        switch (eventId) {
             case Net.GET_OBJ_INFO:
                 Comment baseGet = (Comment) NetObjects;
-               if(baseGet.getResponse().getUserParameters()!=null)
-               mComment.setText(baseGet.getResponse().getUserParameters().getComment());
+                if (baseGet.getResponse().getUserParameters() != null)
+                    mComment.setText(baseGet.getResponse().getUserParameters().getComment());
                 break;
             case Net.ADD_RIELTOR:
                 Toast.makeText(this, "Спасибо что помогаете нам улучшить сервис.", Toast.LENGTH_SHORT).show();
@@ -249,19 +268,19 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        public MyFragmentPagerAdapter (FragmentManager fm) {
+        public MyFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public Fragment getItem (int position) {
+        public Fragment getItem(int position) {
             PageFragment fragment = PageFragment.newInstance(position, mUrlList);
             fragment.setListener(DetailPostActivity.this);
             return fragment;
         }
 
         @Override
-        public int getCount () {
+        public int getCount() {
             return mSize;
         }
     }
