@@ -37,7 +37,7 @@ public class TariffModel {
     private String defaultCost;
     @SerializedName("user_cost")
     @Expose
-    private Integer userCost;
+    private double userCost;
 
     public String getId () {
         return id;
@@ -119,11 +119,11 @@ public class TariffModel {
         this.defaultCost = defaultCost;
     }
 
-    public Integer getUserCost () {
+    public double getUserCost () {
         return userCost;
     }
 
-    public void setUserCost (Integer userCost) {
+    public void setUserCost (double userCost) {
         this.userCost = userCost;
     }
 

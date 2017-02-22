@@ -23,7 +23,7 @@ public class TariffsAdapter extends RecyclerView.Adapter<TariffsAdapter.TariffRe
 
     public interface TariffClick {
         void activateOrder (String id);
-        void buyTariff (String id,float amount);
+        void buyTariff (String id, double amount);
     }
 
     public TariffsAdapter (ArrayList<TariffModel> mTariffList, TariffClick mTarrifClcikI) {
@@ -80,7 +80,7 @@ public class TariffsAdapter extends RecyclerView.Adapter<TariffsAdapter.TariffRe
 
         @Override
         public void onClick (View v) {
-            int mAmount = mTariffList.get(getAdapterPosition()).getUserCost();
+            double mAmount = mTariffList.get(getAdapterPosition()).getUserCost();
             if ( mAmount<=0) {
                 mTarrifClcikI.activateOrder(mTariffList.get(getAdapterPosition()).getId());
             } else {

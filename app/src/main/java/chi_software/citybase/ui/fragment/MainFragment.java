@@ -15,8 +15,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.tuyenmonkey.mkloader.MKLoader;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +32,7 @@ import chi_software.citybase.core.BaseFragment;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.BaseResponse;
 import chi_software.citybase.data.ModelData;
+import chi_software.citybase.data.Search;
 import chi_software.citybase.data.getBase.MyObject;
 import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
@@ -58,6 +65,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private List<String> mTypeSelected;
     private List<String> mAreaSelected;
     private List<String> mPunktSelected;
+    private MKLoader mLoader;
 
 
     @Nullable
@@ -70,6 +78,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFindBut = (Button) view.findViewById(R.id.findButton);
+        mLoader = (MKLoader) view.findViewById(R.id.MKLoader);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.main_swap_refresh);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.MyRecycle);
         mFindBut.setOnClickListener(this);
@@ -85,7 +94,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
 
     private void init() {
-        mSearch = "";
+        mSearch = getDate();
         mPage = 1;
         mLastPosition = 0;
         tmpPosition = 0;
@@ -101,6 +110,24 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         mAdapter = new PostAdapter(mModelDataList, this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    private String getDate() {
+        String year = new SimpleDateFormat("yyyy").format(new Date());
+        int month = Integer.parseInt(new SimpleDateFormat("MM").format(new Date()));
+        int day = Integer.parseInt(new SimpleDateFormat("dd").format(new Date()));
+        if (day >= 8)
+            day = day - 7;
+        else {
+            month = month - 1;
+            day = 28;
+        }
+        String dateFrom = year + "-" + month + "-" + day;
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Search searchJson = new Search();
+        searchJson.setDatefrom(dateFrom);
+        return gson.toJson(searchJson);
     }
 
     private void apiCalls() {
@@ -156,7 +183,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             mLastPosition = size;
             mPage++;
             app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage);
-            mDialog.show();
+            mLoader.setVisibility(View.VISIBLE);
             tmpPosition = position;
         }
     }
@@ -167,6 +194,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         switch (eventId) {
             case Net.GET_BASE:
                 filldata(NetObjects);
+                mLoader.setVisibility(View.GONE);
                 break;
             case Net.MENU_SEARC:
                 fillsearch((MenuSearch) NetObjects);
@@ -283,10 +311,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onRefresh() {
-        if(isNetworkConnected()){
+        if (isNetworkConnected()) {
             apiCalls();
             mSwipeRefreshLayout.setRefreshing(false);
-        }else{
+        } else {
             mSwipeRefreshLayout.setRefreshing(false);
             Toast.makeText(getActivity(), "Проверьте своё интернет соединение", Toast.LENGTH_SHORT).show();
         }

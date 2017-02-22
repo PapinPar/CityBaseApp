@@ -267,7 +267,7 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void createPayment(@NonNull final String uid, @NonNull final String key, @NonNull final Float amount, @NonNull final String operation, @NonNull final String pay_way, @NonNull final String orderId) {
+    public void createPayment(@NonNull final String uid, @NonNull final String key, @NonNull final double amount, @NonNull final String operation, @NonNull final String pay_way, @NonNull final String orderId) {
         api.createPayment(uid, key, amount, operation, pay_way, orderId).enqueue(new BaseCallback<PaymentResponse>(CREATE_PAYMENT, this));
     }
 

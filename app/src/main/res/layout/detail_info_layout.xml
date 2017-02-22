@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:id="@+id/mainLinear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backWhite"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -21,8 +19,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/imageHight">
-            </View>
+                android:layout_height="@dimen/imageHight"></View>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/myPager"
@@ -30,9 +27,7 @@
                 android:layout_height="@dimen/imageHight"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                >
-            </android.support.v4.view.ViewPager>
+                android:layout_alignParentTop="true"></android.support.v4.view.ViewPager>
         </RelativeLayout>
 
         <RelativeLayout
@@ -52,7 +47,7 @@
                 android:padding="5dp"
                 android:text="Обновленно :"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"/>
+                android:textSize="@dimen/textSize" />
 
             <TextView
                 android:id="@+id/updTW"
@@ -65,7 +60,7 @@
                 android:padding="5dp"
                 android:text="15.1.1991"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textSize"/>
+                android:textSize="@dimen/textSize" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -77,7 +72,7 @@
                 android:padding="5dp"
                 android:text="Опубликованно :"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"/>
+                android:textSize="@dimen/textSize" />
 
             <TextView
                 android:id="@+id/publichedTW"
@@ -89,7 +84,7 @@
                 android:padding="5dp"
                 android:text="77/77/7777"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textSize"/>
+                android:textSize="@dimen/textSize" />
 
             <ImageView
                 android:id="@+id/imageWebLink"
@@ -99,7 +94,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="37dp"
-                app:srcCompat="@drawable/global"/>
+                app:srcCompat="@drawable/global" />
 
         </RelativeLayout>
 
@@ -112,7 +107,7 @@
             android:padding="20dp"
             android:text="2000 грн"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"/>
+            android:textSize="@dimen/textSize" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -134,8 +129,7 @@
                     android:id="@+id/imageView13"
                     android:layout_width="@dimen/iconSize"
                     android:layout_height="@dimen/iconSize"
-                    app:srcCompat="@drawable/house"
-                    />
+                    app:srcCompat="@drawable/house" />
 
 
                 <TextView
@@ -145,7 +139,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="1 room"
                     android:textColor="@color/textColor"
-                    android:textSize="@dimen/textSize"/>
+                    android:textSize="@dimen/textSize" />
             </LinearLayout>
 
             <LinearLayout
@@ -162,8 +156,7 @@
                     android:id="@+id/imageView15"
                     android:layout_width="@dimen/iconSize"
                     android:layout_height="@dimen/iconSize"
-                    app:srcCompat="@drawable/sizes"
-                    />
+                    app:srcCompat="@drawable/sizes" />
 
                 <TextView
                     android:id="@+id/areaSizeTW"
@@ -172,7 +165,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="34 kvadrata"
                     android:textColor="@color/textColor"
-                    android:textSize="@dimen/textSize"/>
+                    android:textSize="@dimen/textSize" />
             </LinearLayout>
 
             <LinearLayout
@@ -189,8 +182,7 @@
                     android:id="@+id/imageView16"
                     android:layout_width="@dimen/iconSize"
                     android:layout_height="@dimen/iconSize"
-                    app:srcCompat="@drawable/metro"
-                    />
+                    app:srcCompat="@drawable/metro" />
 
                 <TextView
                     android:id="@+id/metroNameTW"
@@ -199,7 +191,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="23 abfusta"
                     android:textColor="@color/textColor"
-                    android:textSize="@dimen/textSize"/>
+                    android:textSize="@dimen/textSize" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -214,7 +206,7 @@
             android:text="Описание"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="@dimen/textSize"/>
+            android:textSize="@dimen/textSize" />
 
         <TextView
             android:id="@+id/infoAbout"
@@ -226,21 +218,28 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"/>
+            android:textSize="@dimen/textSize" />
 
-        <EditText
-            android:id="@+id/comment_et"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:hint="Комментарий"
-            android:textColor="@color/black"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:selectAllOnFocus="false"
-            android:imeOptions="actionSend"
-            android:background="@drawable/selector_edit_text"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginTop="15dp"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/comment_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/selector_edit_text"
+                android:hint="Комментарий"
+                android:imeOptions="actionSend"
+                android:inputType="textImeMultiLine"
+                android:padding="7dp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textView19"
@@ -252,7 +251,7 @@
             android:paddingLeft="20dp"
             android:text="Адресс :"
             android:textColor="@color/black"
-            android:textSize="@dimen/textSize"/>
+            android:textSize="@dimen/textSize" />
 
         <TextView
             android:id="@+id/addressTW"
@@ -263,7 +262,7 @@
             android:paddingLeft="20dp"
             android:text="TextView"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"/>
+            android:textSize="@dimen/textSize" />
 
         <TextView
             android:id="@+id/textView21"
@@ -274,7 +273,7 @@
             android:gravity="center"
             android:text="Контактный телефон"
             android:textColor="@color/black"
-            android:textSize="@dimen/textSize"/>
+            android:textSize="@dimen/textSize" />
 
         <TextView
             android:id="@+id/phoneNumberTW"
@@ -285,17 +284,20 @@
             android:gravity="center"
             android:text="+38063555555"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"/>
+            android:textSize="@dimen/textSize" />
+
         <TextView
             android:id="@+id/realtor_tw"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
-            android:text="Попали на посредника?"
-            android:textSize="@dimen/textSize"
-            android:clickable="true"
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:text="Попали на посредника?"
+            android:textStyle="italic"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize" />
 
     </LinearLayout>
 

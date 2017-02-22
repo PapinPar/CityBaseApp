@@ -102,6 +102,6 @@ public interface API {
     Call<FieldResponse> activateOrder (@Query("order_id") String orderId, @Query("uid") String uid, @Query("key") String key);
 
     @GET("payments.createPayment")
-    Call<PaymentResponse> createPayment (@Query("uid") String uid, @Query("key") String key, @Query("amount") float amount,
+    Call<PaymentResponse> createPayment (@Query("uid") String uid, @Query("key") String key, @Query("amount") double amount,
                                          @Query("operation") String operation, @Query("pay_way") String pay_way, @Query("order_id") String orderId);
 }

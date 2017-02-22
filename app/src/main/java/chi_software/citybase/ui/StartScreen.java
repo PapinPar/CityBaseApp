@@ -78,7 +78,6 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                     SharedCityBase.SaveKey(this, loginResponse.getMyResponse().getKey());
                     mDialog.dismiss();
                     if (!mState) {
-                        SharedCityBase.SaveCity(this, mCity);
                         onCreateDialog();
                     } else {
                         startMainActivity();
@@ -183,6 +182,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                     mCity = "_Kharkov";
                 if (item == 2)
                     mCity = "_Odessa";
+                SharedCityBase.SaveCity(StartScreen.this, mCity);
                 startMainActivity();
             }
         });
