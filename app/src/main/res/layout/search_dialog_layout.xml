@@ -13,6 +13,7 @@
             android:id="@+id/radioGroupSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="visible"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:background="@color/backGreen"
@@ -56,10 +57,11 @@
             android:padding="@dimen/searchPadding">
 
             <TextView
+                android:gravity="left"
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Тип аренды"
+                android:text="Тип"
                 android:textSize="@dimen/textSize"/>
 
             <chi_software.citybase.multiSpinner.MultiSelectionSpinner
@@ -67,7 +69,7 @@
                 android:layout_height="wrap_content"
                 style="@style/MySpinerStyle"
                 android:id="@+id/spinnerTypeNew"
-                android:gravity="center"
+                android:gravity="right"
                 android:padding="@dimen/searchPaddingSpinner"
                 />
         </LinearLayout>
@@ -91,12 +93,12 @@
                 android:text="Населённые пункты"
                 android:textSize="@dimen/textSize"/>
 
-            <view
+            <chi_software.citybase.multiSpinner.MultiSelectionSpinner
                 android:id="@+id/spinnerAreaNew"
                 class="chi_software.citybase.multiSpinner.MultiSelectionSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="right"
                 android:padding="@dimen/searchPaddingSpinner"
                 />
         </LinearLayout>
@@ -120,12 +122,12 @@
                 android:text="Районы"
                 android:textSize="@dimen/textSize"/>
 
-            <view
+            <chi_software.citybase.multiSpinner.MultiSelectionSpinner
                 android:id="@+id/spinnerPunktNew"
                 class="chi_software.citybase.multiSpinner.MultiSelectionSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="right"
                 android:padding="@dimen/searchPaddingSpinner"
                 />
         </LinearLayout>
@@ -138,7 +140,6 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:orientation="horizontal">
-
             <EditText
                 android:id="@+id/priceFromET"
                 android:layout_width="wrap_content"
@@ -147,7 +148,7 @@
                 android:background="@color/backGray"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="От"
+                android:hint="Цена От"
                 android:inputType="number"
                 android:textSize="@dimen/textSize"/>
 
@@ -159,7 +160,7 @@
                 android:background="@color/backGray"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="До"
+                android:hint="Цена До"
                 android:inputType="number"
                 android:textSize="@dimen/textSize"/>
 
@@ -175,6 +176,7 @@
             android:layout_weight="1"
             android:background="@color/backGray"
             android:ems="10"
+            android:gravity="center"
             android:hint="Телефон или текст"
             android:inputType="textPersonName"
             android:textSize="@dimen/textSize"/>
@@ -193,6 +195,7 @@
             android:textSize="@dimen/textSize"/>
 
         <EditText
+            android:visibility="gone"
             android:id="@+id/comentET"
             android:layout_width="match_parent"
             android:layout_height="@dimen/searchTextHeight"

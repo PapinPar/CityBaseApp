@@ -182,6 +182,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                     mCity = "_Kharkov";
                 if (item == 2)
                     mCity = "_Odessa";
+                SharedCityBase.SaveCityRus(StartScreen.this,mCityChoose[item]);
                 SharedCityBase.SaveCity(StartScreen.this, mCity);
                 startMainActivity();
             }
