@@ -22,7 +22,8 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/findButton"
             android:divider="@color/background"
-            android:dividerHeight="3dp"></android.support.v7.widget.RecyclerView>
+            android:dividerHeight="3dp"
+            android:layout_alignParentBottom="true" />
 
         <Button
             android:id="@+id/findButton"
@@ -34,6 +35,17 @@
             android:background="@color/findButton2"
             android:text="фильтр"
             android:textSize="@dimen/textSize" />
+
+        <com.tuyenmonkey.mkloader.MKLoader
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            app:mk_type="Worm"
+            app:mk_color="@color/textColor"
+            android:visibility="gone"
+            android:id="@+id/MKLoader"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
 

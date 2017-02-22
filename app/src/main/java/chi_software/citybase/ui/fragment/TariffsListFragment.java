@@ -36,7 +36,7 @@ public class TariffsListFragment extends BaseFragment implements TariffsAdapter.
     private ArrayList<TariffModel> mTariffList;
     private RecyclerView mTariffRv;
     private String ORDER_ACTION;
-    private float mAmount;
+    private double mAmount;
     private SpotsDialog mDialog;
 
     @Nullable
@@ -135,7 +135,7 @@ public class TariffsListFragment extends BaseFragment implements TariffsAdapter.
     }
 
     @Override
-    public void buyTariff (String id, float amount) {
+    public void buyTariff (String id, double amount) {
         mDialog.show();
         ORDER_ACTION = "BUY";
         mAmount = amount;

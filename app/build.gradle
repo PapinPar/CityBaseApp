@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "chi_software.citybase"
         vectorDrawables.useSupportLibrary = true
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,8 +27,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:design:25.2.0'
     //GSON
     //compile 'com.google.code.gson:gson:2.4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
@@ -39,7 +39,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //  UI
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:design:25.2.0'
     //Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.d-max:spots-dialog:0.7@aar'
@@ -48,7 +48,8 @@ dependencies {
     //ImageLoader
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     //CHROME CUSTOM TAB
-    compile 'com.android.support:customtabs:24.0.0+'
+    compile 'com.android.support:customtabs:23.0.0+'
+    compile 'com.tuyenmonkey:mkloader:1.0.0'
 
     compile 'org.jetbrains:annotations-java5:15.0'
 }

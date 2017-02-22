@@ -80,5 +80,5 @@ public interface Net extends Subject<NetSubscriber> {
     void getTariffs (@NonNull String city, @NonNull String uid, @NonNull String key);
     void createOrder (@NonNull String tariffID, @NonNull String coment, @NonNull String uid, @NonNull String key);
     void activateOrder (@NonNull String orderId, @NonNull String uid, @NonNull String key);
-    void createPayment (@NonNull String uid, @NonNull String key, @NonNull Float amount, @NonNull String operation, @NonNull String pay_way, @NonNull String orderId);
+    void createPayment (@NonNull String uid, @NonNull String key, @NonNull double amount, @NonNull String operation, @NonNull String pay_way, @NonNull String orderId);
 }
