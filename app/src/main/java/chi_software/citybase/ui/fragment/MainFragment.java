@@ -147,7 +147,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.findButton:
                 mSearchDialog.getListener(this, mMyMenu);
-                mSearchDialog.show(getActivity(), this, mMyMenu, mTypeSelected, mAreaSelected, mPunktSelected,mTable);
+                mSearchDialog.show(getActivity(), this, mMyMenu, mTypeSelected, mAreaSelected, mPunktSelected, mTable);
                 break;
         }
     }
@@ -209,6 +209,25 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestFail(eventId, NetObjects);
+        switch (eventId) {
+            case Net.MORE_USERS_ERROR:
+                Toast.makeText(getActivity(), (String) NetObjects, Toast.LENGTH_SHORT).show();
+                startScreen();
+                break;
+            case Net.GET_BASE:
+                showError();
+                break;
+            case Net.MENU_SEARC:
+                showError();
+                break;
+            case Net.GET_USER:
+                showError();
+                break;
+        }
+
+    }
+
+    private void showError() {
         mDialog.dismiss();
         Toast.makeText(getActivity(), "Произошел сбой.Проверьте своё интернет подключение.", Toast.LENGTH_SHORT).show();
     }

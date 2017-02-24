@@ -4,7 +4,9 @@ package chi_software.citybase.data.menuSearch;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MenuSearch {
+import chi_software.citybase.data.ErrorClass;
+
+public class MenuSearch extends ErrorClass {
 
     @SerializedName("response")
     @Expose

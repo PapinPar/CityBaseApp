@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,6 +43,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     public static final String URL = "url";
     public static final String SIZE = "size";
     public static final String POSITION = "position";
+    public static final String POSITION_PHOTO = "position_photo";
     public static final String MODEL = "model";
     public static final String KEY = "key";
     public static final String TABLE = "table";
@@ -49,7 +51,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     private ArrayList<String> mUrlList;
     private List<MyObject> mMyObjectsList;
     private int mPosition;
-    private int mSize;
+    private int mSize,mPhotoId;
     private String mUid, mKey, mTable, mCommentStr;
     private TextView mUpdData, mPublishedData, mPrice, mRoomsType, mAreaSize, mMetroName, mInfo, mAddress, mPhoneNumber;
     private LinearLayout mLine2, mLine3;
@@ -125,7 +127,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                                 dialog.dismiss();
                             }
                         });
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Нет",
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Вернуться в базу",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -149,6 +151,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                mPhotoId = position;
             }
 
             @Override
@@ -163,8 +166,13 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
 
     private void sendComment() {
         mCommentStr = mComment.getText().toString();
+        if(mCommentStr.length()>0){
+            Toast.makeText(this, "Комментарий сохранен.", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Комментарий удалён.", Toast.LENGTH_SHORT).show();
+        }
         app.getNet().setComment(mUid, mKey, SharedCityBase.GetCity(this), mTable, mMyObjectsList.get(mPosition).getId(), "comment", mCommentStr);
-        Toast.makeText(this, "Комментарий сохранен.", Toast.LENGTH_SHORT).show();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private void setInfo() {
@@ -245,6 +253,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         s.putExtra(DetailPostActivity.KEY, mKey);
         s.putExtra(DetailPostActivity.TABLE, mTable);
         s.putExtra(DetailPostActivity.POSITION, mPosition);
+        s.putExtra(DetailPostActivity.POSITION_PHOTO,mPhotoId);
         s.putExtra(DetailPostActivity.SIZE, mSize);
         s.putStringArrayListExtra(DetailPostActivity.URL, (ArrayList<String>) mUrlList);
         s.putExtra(DetailPostActivity.MODEL, (Serializable) mMyObjectsList);
@@ -262,6 +271,17 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                 break;
             case Net.ADD_RIELTOR:
                 Toast.makeText(this, "Спасибо что помогаете нам улучшить сервис.", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    @Override
+    public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
+        super.onNetRequestFail(eventId, NetObjects);
+        switch (eventId){
+            case Net.MORE_USERS_ERROR:
+                Toast.makeText(DetailPostActivity.this, (String) NetObjects, Toast.LENGTH_SHORT).show();
+                startScreen();
                 break;
         }
     }

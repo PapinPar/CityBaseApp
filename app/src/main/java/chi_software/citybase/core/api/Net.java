@@ -12,7 +12,7 @@ import chi_software.citybase.core.observer.Subject;
 public interface Net extends Subject<NetSubscriber> {
     @IntDef({ SIGN_IN, GET_BASE, MENU_SEARC, SET_COLOR, SET_COMMENT, REGISTRATION, SEND_SMS, ACTIVATE_ACOUNT, TRIAL_BASE, EDIT_USER_LOGIN,
             EDIT_USER_PASSWORD, ADD_USER_EMAIL, DELETE_USER_EMAIL, GET_USER, GET_MY_AMOUNT, GET_ACTIVE_SERVICE, GET_TARIFFS, CREATE_ORDER,
-            ACTIVATE_ORDER, CREATE_PAYMENT ,SMS_RESET,NEW_RESET_PASS,GET_OBJ_INFO})
+            ACTIVATE_ORDER, CREATE_PAYMENT ,SMS_RESET,NEW_RESET_PASS,GET_OBJ_INFO,MORE_USERS_ERROR})
     @interface NetEvent {}
 
 
@@ -41,6 +41,7 @@ public interface Net extends Subject<NetSubscriber> {
     int NEW_RESET_PASS= 305;
     int GET_OBJ_INFO = 306;
     int ADD_RIELTOR = 307;
+    int MORE_USERS_ERROR = 404;
 
     //  ************* AUTH ************
     void login (@NonNull String login, @NonNull String password);
@@ -49,7 +50,7 @@ public interface Net extends Subject<NetSubscriber> {
     void getUser (@NonNull String uid, @NonNull String key, String city);
 
     // ************** EDIT USER **********
-    void editUserLogin (@NonNull String uid, @NonNull String key, @NonNull String name, @NonNull String login);
+    void editUserLogin (@NonNull String uid, @NonNull String key, @NonNull String name, @NonNull String login,@NonNull String id);
     void editUserPassword (@NonNull String uid, @NonNull String key, @NonNull String password, @NonNull String reenterpassword);
     void addUserEmail (@NonNull String uid, @NonNull String key, @NonNull String email);
     void deleteUserEmail (@NonNull String uid, @NonNull String key);
