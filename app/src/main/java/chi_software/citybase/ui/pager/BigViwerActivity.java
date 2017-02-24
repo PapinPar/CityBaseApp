@@ -30,6 +30,7 @@ public class BigViwerActivity extends BaseActivity {
     private List<MyObject> mMyObjectsList;
     private int mSize;
     private int mPosition;
+    private int mPhotoId;
 
 
     @Override
@@ -44,6 +45,7 @@ public class BigViwerActivity extends BaseActivity {
         mUrlList = getIntent().getStringArrayListExtra(URL);
         mSize = getIntent().getIntExtra(SIZE, 0);
         mPosition = getIntent().getIntExtra(POSITION, 0);
+        mPhotoId = getIntent().getIntExtra(DetailPostActivity.POSITION_PHOTO, 0);
         mMyObjectsList = (List<MyObject>) getIntent().getSerializableExtra(MODEL);
 
         ViewPager pager = (ViewPager) findViewById(R.id.myBigPager);
@@ -51,6 +53,7 @@ public class BigViwerActivity extends BaseActivity {
         PagerAdapter pagerAdapter = new BigViwerActivity.MyFragmentPagerAdapter(getSupportFragmentManager());
         if ( pager != null ) {
             pager.setAdapter(pagerAdapter);
+            pager.setCurrentItem(mPhotoId,true);
         }
     }
 

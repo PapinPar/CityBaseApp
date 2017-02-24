@@ -50,6 +50,8 @@ dependencies {
     //CHROME CUSTOM TAB
     compile 'com.android.support:customtabs:23.0.0+'
     compile 'com.tuyenmonkey:mkloader:1.0.0'
+    //CRUPTO
+    compile 'com.scottyab:aescrypt:0.0.1'
 
     compile 'org.jetbrains:annotations-java5:15.0'
 }

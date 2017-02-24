@@ -1,15 +1,18 @@
 package chi_software.citybase.core;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import chi_software.citybase.SharedCityBase;
 import chi_software.citybase.core.api.App;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
+import chi_software.citybase.ui.StartScreen;
 
 /**
  * Created by Papin on 09.11.2016.
@@ -44,6 +47,13 @@ public class BaseActivity extends AppCompatActivity implements NetSubscriber {
     public boolean isNetworkConnected () {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+
+    public void startScreen(){
+        SharedCityBase.SetPassword(this,"");
+        SharedCityBase.SetLogin(this,"");
+        Intent startActivity = new Intent(BaseActivity.this, StartScreen.class);
+        startActivity(startActivity);
     }
 
     @Override

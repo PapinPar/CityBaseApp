@@ -125,6 +125,10 @@ public class TariffsListFragment extends BaseFragment implements TariffsAdapter.
                 mDialog.dismiss();
                 Toast.makeText(getContext(), "Произошла ошибка.\nПроверьтье интернет соединине и попробуйте снова", Toast.LENGTH_SHORT).show();
                 break;
+            case Net.MORE_USERS_ERROR:
+                Toast.makeText(getActivity(), (String) NetObjects, Toast.LENGTH_SHORT).show();
+                startScreen();
+                break;
         }
     }
     @Override

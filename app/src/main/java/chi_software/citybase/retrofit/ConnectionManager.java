@@ -17,6 +17,7 @@ import java.util.concurrent.Executor;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
 import chi_software.citybase.data.BaseResponse;
+import chi_software.citybase.data.ErrorClass;
 import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.activ_service.ServiceResponse;
 import chi_software.citybase.data.comment.Comment;
@@ -106,12 +107,18 @@ public class ConnectionManager implements Net {
         @Override
         public void onResponse(Call<T> call, Response<T> response) {
             synchronized (locker) {
-                if (value == 106) {
-                    FieldResponse resp = (FieldResponse) response.body();
-                    if (resp.getError() != null) {
-                        net.notifyErrorSubscribers(value, resp.getError());
+                ErrorClass resp = (ErrorClass) response.body();
+                if (resp.getError() != null) {
+                    if (!resp.getError().contains("access")) {
+                        if (value == 106) {
+                            if (resp.getError() != null) {
+                                net.notifyErrorSubscribers(value, resp.getError());
+                            } else {
+                                net.notifySuccessSubscribers(value, resp);
+                            }
+                        }
                     } else {
-                            net.notifySuccessSubscribers(value, resp);
+                        net.notifyErrorSubscribers(MORE_USERS_ERROR, "Приложение не могут использовать больше двух пользователей!");
                     }
                 } else {
                     net.notifySuccessSubscribers(value, response.body());
@@ -133,11 +140,18 @@ public class ConnectionManager implements Net {
         api.login(login, password).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                LoginResponse resp = (LoginResponse) response.body();
-                if (resp.getMyResponse() != null) {
-                    notifySuccessSubscribers(SIGN_IN, response.body());
+                ErrorClass bodyResponse = (ErrorClass) response.body();
+                if (bodyResponse.getError() != null) {
+                    if (!bodyResponse.getError().contains("access")) {
+                        notifyErrorSubscribers(MORE_USERS_ERROR, "Приложение не могут использовать больше двух пользователей!");
+                    }
                 } else {
-                    notifyErrorSubscribers(SIGN_IN, "Проверьте правильность введённых данных и повторите попытку.");
+                    LoginResponse resp = (LoginResponse) response.body();
+                    if (resp.getMyResponse() != null) {
+                        notifySuccessSubscribers(SIGN_IN, response.body());
+                    } else {
+                        notifyErrorSubscribers(SIGN_IN, "Проверьте правильность введённых данных и повторите попытку.");
+                    }
                 }
             }
 
@@ -176,8 +190,8 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void editUserLogin(@NonNull final String uid, @NonNull final String key, @NonNull final String name, @NonNull final String login) {
-        api.editUserLogin(uid, key, name, login).enqueue(new BaseCallback<FieldResponse>(EDIT_USER_LOGIN, this));
+    public void editUserLogin(@NonNull final String uid, @NonNull final String key, @NonNull final String name, @NonNull final String login,final String id) {
+        api.editUserLogin(uid, key, name, login,id).enqueue(new BaseCallback<FieldResponse>(EDIT_USER_LOGIN, this));
     }
 
     @Override
@@ -192,14 +206,21 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void getBase(final String search, final String city, final String table, final String uid, final String key, final Integer page,String city_rus) {
-        api.getBase(search, city, table, uid, key, page,city_rus).enqueue(new Callback<BaseGet>() {
+    public void getBase(final String search, final String city, final String table, final String uid, final String key, final Integer page, String city_rus) {
+        api.getBase(search, city, table, uid, key, page, city_rus).enqueue(new Callback<BaseGet>() {
             @Override
             public void onResponse(Call<BaseGet> call, Response<BaseGet> response) {
-                BaseGet baseGet = response.body();
-                Map s = getModel(baseGet);
-                BaseResponse photoResponse = new BaseResponse(baseGet, s);
-                notifySuccessSubscribers(GET_BASE, photoResponse);
+                ErrorClass bodyResponse = (ErrorClass) response.body();
+                if (bodyResponse.getError() != null) {
+                    if (!bodyResponse.getError().contains("access")) {
+                        notifyErrorSubscribers(MORE_USERS_ERROR, "Приложение не могут использовать больше двух пользователей!");
+                    }
+                } else {
+                    BaseGet baseGet = response.body();
+                    Map s = getModel(baseGet);
+                    BaseResponse photoResponse = new BaseResponse(baseGet, s);
+                    notifySuccessSubscribers(GET_BASE, photoResponse);
+                }
             }
 
             @Override

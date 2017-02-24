@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class BaseGet implements Serializable {
+import chi_software.citybase.data.ErrorClass;
+
+public class BaseGet extends ErrorClass implements Serializable {
 
     @SerializedName("response")
     @Expose

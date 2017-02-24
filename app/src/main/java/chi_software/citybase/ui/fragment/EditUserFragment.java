@@ -1,4 +1,5 @@
 package chi_software.citybase.ui.fragment;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,17 +58,18 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
 
     @Nullable
     @Override
-    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_user_layout, container, false);
         return view;
     }
 
     @Override
-    public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        closeKeyboard();
 
-        mDialog = new SpotsDialog(getActivity(),"Загрузка");
+
+        mDialog = new SpotsDialog(getActivity(), "Загрузка");
         mPhone = (TextView) view.findViewById(R.id.textPhone);
         mLogin = (EditText) view.findViewById(R.id.editPassET);
         mName = (EditText) view.findViewById(R.id.editNameET);
@@ -91,18 +94,18 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
         mSignOutBut.setOnClickListener(this);
         mEditMail.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged (CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
             @Override
-            public void onTextChanged (CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
 
             @Override
-            public void afterTextChanged (Editable s) {
-                if ( mEditMail.getText().toString().length() > 0 && mEditMail.getText().toString().contains("@") ) {
+            public void afterTextChanged(Editable s) {
+                if (mEditMail.getText().toString().length() > 0 && mEditMail.getText().toString().contains("@")) {
                     mMailBut.setAlpha(1);
                 } else
                     mMailBut.setAlpha((float) 0.6);
@@ -110,18 +113,18 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
         });
         mEquelPass.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged (CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
             @Override
-            public void onTextChanged (CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
 
             @Override
-            public void afterTextChanged (Editable s) {
-                if ( mNewPass.getText().toString().length() == mEquelPass.getText().toString().length() ) {
+            public void afterTextChanged(Editable s) {
+                if (mNewPass.getText().toString().length() == mEquelPass.getText().toString().length()) {
                     mChangePass.setAlpha(1);
                 } else
                     mChangePass.setAlpha((float) 0.6);
@@ -136,26 +139,27 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
         apiCalls();
     }
 
-    private void apiCalls () {
-        if ( !isNetworkConnected() )
+    private void apiCalls() {
+        if (!isNetworkConnected())
             Toast.makeText(getActivity(), "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
         else {
-            app.getNet().getUser(mUid, mKey, "");
+            app.getNet().getUser(mUid, mKey, userCity);
             app.getNet().getMyAmount(mUid, mKey);
         }
     }
 
 
     @Override
-    public void onNetRequestDone (@Net.NetEvent int eventId, Object NetObjects) {
+    public void onNetRequestDone(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestDone(eventId, NetObjects);
-        switch ( eventId ) {
+        switch (eventId) {
             case Net.GET_USER:
                 UserResponse userResponse = (UserResponse) NetObjects;
                 filldata(userResponse);
                 break;
             case Net.EDIT_USER_LOGIN:
                 Toast.makeText(getActivity(), "Данные успешно изменены", Toast.LENGTH_SHORT).show();
+                closeKeyboard();
                 //finish();
                 break;
             case Net.DELETE_USER_EMAIL:
@@ -166,6 +170,8 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
             case Net.ADD_USER_EMAIL:
                 mDialog.dismiss();
                 Toast.makeText(getActivity(), "Вам будет отправленно письмо на " + editMailS, Toast.LENGTH_SHORT).show();
+                mEditMail.setText("");
+                closeKeyboard();
                 break;
             case Net.GET_MY_AMOUNT:
                 FieldResponse myAmount = (FieldResponse) NetObjects;
@@ -177,65 +183,89 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 ServiceResponse serviceResponse = (ServiceResponse) NetObjects;
                 fillServiceData(serviceResponse);
                 break;
+            case Net.EDIT_USER_PASSWORD:
+                SharedCityBase.SetPassword(getActivity(),mNewPassS);
+                Toast.makeText(getActivity(), "Пароль успешно изменен", Toast.LENGTH_SHORT).show();
+                mEquelPass.setText("");
+                mNewPass.setText("");
+                closeKeyboard();
+                break;
         }
     }
 
-    private void filldata (UserResponse userResponse) {
+    private void closeKeyboard() {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    private void filldata(UserResponse userResponse) {
         mPhone.setText(userResponse.getResponse().getPhone());
         mName.setText(userResponse.getResponse().getName());
         mLogin.setText(userResponse.getResponse().getLogin());
-        if ( userResponse.getResponse().getEmail() != null )
+        if (userResponse.getResponse().getEmail() != null)
             mOldMailS = userResponse.getResponse().getEmail();
-        if ( userResponse.getResponse().getEmail() == null || userResponse.getResponse().getEmail().toString().equals("") )
+        if (userResponse.getResponse().getEmail() == null || userResponse.getResponse().getEmail().toString().equals(""))
             mOldMailS = "NULL";
         mEditMail.setText(userResponse.getResponse().getEmail());
-        if ( userCity.equals("_Kyiv") )
+        if (userCity.equals("_Kyiv"))
             mCity.setText("Киев");
-        if ( userCity.equals("_Kharkov") )
+        if (userCity.equals("_Kharkov"))
             mCity.setText("Харьков");
-        if ( userCity.equals("_Odessa") )
+        if (userCity.equals("_Odessa"))
             mCity.setText("Одесса");
     }
 
-    private void fillServiceData (ServiceResponse serviceResponse) {
+    private void fillServiceData(ServiceResponse serviceResponse) {
         serviceList.clear();
-        for ( ActivServicess serv : serviceResponse.getResponse() ) {
+        for (ActivServicess serv : serviceResponse.getResponse()) {
             serviceList.add(new ServiceData(serv.getDateFrom(), serv.getDateTo(), serv.getRusName()));
         }
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onClick (View v) {
-        switch ( v.getId() ) {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.saveUserInfoBut:
                 nameS = mName.getText().toString().trim();
                 loginS = mLogin.getText().toString();
-                if ( isNetworkConnected() )
-                    app.getNet().editUserLogin(mUid, mKey, nameS, loginS);
+                if (isNetworkConnected()) {
+                    if (mName.length() < 3 || mName.length() > 30) {
+                        Toast.makeText(getActivity(), "Имя должно быть не менее 3 и не более 30 символов.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        app.getNet().editUserLogin(mUid, mKey, nameS, loginS, mUid);
+                    }
+                }
                 break;
             case R.id.editMailBut:
-                if ( !isNetworkConnected() )
+                if (!isNetworkConnected())
                     Toast.makeText(getActivity(), "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
                 else {
-                    if ( mMailBut.getAlpha() == 1 ) {
-                        if ( !mOldMailS.equals("NULL") ) {
-                            app.getNet().deleteUserEmail(mUid, mKey);
-                        } else {
-                            editMailS = mEditMail.getText().toString();
-                            app.getNet().addUserEmail(mUid, mKey, editMailS);
+                    if (mEditMail.length() > 6) {
+                        if (mMailBut.getAlpha() == 1) {
+                            if (!mOldMailS.equals("NULL")) {
+                                app.getNet().deleteUserEmail(mUid, mKey);
+                            } else {
+                                editMailS = mEditMail.getText().toString();
+                                if (Patterns.EMAIL_ADDRESS.matcher(editMailS).matches()) {
+                                    app.getNet().addUserEmail(mUid, mKey, editMailS);
+                                } else {
+                                    Toast.makeText(getActivity(), "Введите валдиный Email", Toast.LENGTH_SHORT).show();
+                                }
+                            }
                         }
+                    } else {
+                        Toast.makeText(getActivity(), "Email не может быть короче 6 символов", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
             case R.id.changePasBtn:
-                if ( !isNetworkConnected() )
+                if (!isNetworkConnected())
                     Toast.makeText(getActivity(), "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
                 else {
-                    if ( mChangePass.getAlpha() == 1 ) {
+                    if (mChangePass.getAlpha() == 1) {
                         mNewPassS = mNewPass.getText().toString();
                         mEqPassS = mEquelPass.getText().toString();
-                        if ( mNewPassS.equals(mEqPassS) ) {
+                        if (mNewPassS.equals(mEqPassS)) {
                             app.getNet().editUserPassword(mUid, mKey, mNewPassS, mEqPassS);
                         } else
                             Toast.makeText(getActivity(), "Пароли не воспадают", Toast.LENGTH_SHORT).show();
@@ -266,37 +296,47 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
         SharedCityBase.SaveCity(getActivity(), userCity);
         SharedCityBase.SaveKey(getActivity(), mKey);
         SharedCityBase.SaveUID(getActivity(), mUid);
-        SharedCityBase.SaveCityRus(getActivity(),cityRus);
+        SharedCityBase.SaveCityRus(getActivity(), cityRus);
     }
 
-    private void loadShared () {
+    private void loadShared() {
         userCity = SharedCityBase.GetCity(getActivity());
         mCity.setText(userCity);
         mKey = SharedCityBase.GetKey(getActivity());
         mUid = SharedCityBase.GetUID(getActivity());
     }
 
-    protected void onCreateDialog () {
+    protected void onCreateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final String[] mCityChoose = { "Киев", "Харьков", "Одесса" };
+        final String[] mCityChoose = {"Киев", "Харьков", "Одесса"};
         builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Выберите Город");
         builder.setItems(mCityChoose, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick (DialogInterface dialog, int item) {
-                if ( item == 0 )
+            public void onClick(DialogInterface dialog, int item) {
+                if (item == 0)
                     userCity = "_Kyiv";
-                if ( item == 1 )
+                if (item == 1)
                     userCity = "_Kharkov";
-                if ( item == 2 )
+                if (item == 2)
                     userCity = "_Odessa";
                 Toast.makeText(getContext(), "Местоположение изменено", Toast.LENGTH_SHORT).show();
                 saveShared(mCityChoose[item]);
                 apiCalls();
             }
         });
-        builder.setCancelable(false);
+        builder.setCancelable(true);
         builder.show();
     }
 
+    @Override
+    public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
+        super.onNetRequestFail(eventId, NetObjects);
+        switch (eventId) {
+            case Net.MORE_USERS_ERROR:
+                Toast.makeText(getActivity(), (String) NetObjects, Toast.LENGTH_SHORT).show();
+                startScreen();
+                break;
+        }
+    }
 }

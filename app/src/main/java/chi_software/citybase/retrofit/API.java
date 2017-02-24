@@ -36,16 +36,16 @@ public interface API {
 
 
     // ************* EDIT USER ****************
-    @GET("login.EDIT_USER_LOGIN")
-    Call<FieldResponse> editUserLogin (@Query("uid") String uid, @Query("key") String key, @Query("name") String name, @Query("login") String login);
+    @GET("login.EditUserLogin")
+    Call<FieldResponse> editUserLogin (@Query("uid") String uid, @Query("key") String key, @Query("name") String name, @Query("login") String login,@Query("id")String id);
 
-    @GET("login.EDIT_USER_PASSWORD")
+    @GET("login.EditUserPassword")
     Call<FieldResponse> editUserPassword (@Query("uid") String uid, @Query("key") String key, @Query("password") String password, @Query("reenterpassword") String reenterpassword);
 
-    @GET("login.ADD_USER_EMAIL")
+    @GET("login.AddUserEmail")
     Call<FieldResponse> addUserEmail (@Query("uid") String uid, @Query("key") String key, @Query("email") String email);
 
-    @GET("login.DELETE_USER_EMAIL")
+    @GET("login.DeleteUserEmail")
     Call<FieldResponse> deleteUserEmail (@Query("uid") String uid, @Query("key") String key);
 
     // ************ SEARCH ****************
