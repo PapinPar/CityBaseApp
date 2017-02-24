@@ -29,6 +29,9 @@
     <dimen name="tariffHight">200dp</dimen>
     <dimen name="tariffImage">100dp</dimen>
 
+    <dimen name="textSizeTutor">26sp</dimen>
+
+
 
 
 

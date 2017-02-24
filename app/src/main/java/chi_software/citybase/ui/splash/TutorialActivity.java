@@ -1,7 +1,6 @@
 package chi_software.citybase.ui.splash;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,7 +21,7 @@ import chi_software.citybase.ui.StartScreen;
 
 public class TutorialActivity extends BaseActivity implements ViewPager.OnPageChangeListener, RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
-    private ArrayList<Drawable> mListDrawble;
+    private ArrayList<Integer> mListDrawble;
     private RadioGroup radioGroup;
     private ViewPager pager;
     private Button mSkipBtn;
@@ -50,10 +49,10 @@ public class TutorialActivity extends BaseActivity implements ViewPager.OnPageCh
     }
 
     private void getMyDrawable() {
-        mListDrawble.add(getResources().getDrawable(R.drawable.info_1));
-        mListDrawble.add(getResources().getDrawable(R.drawable.info_2));
-        mListDrawble.add(getResources().getDrawable(R.drawable.info_3));
-        mListDrawble.add(getResources().getDrawable(R.drawable.info_4));
+        mListDrawble.add(R.layout.tutorial_1_layout);
+        mListDrawble.add(R.layout.tutorial_2_layout);
+        mListDrawble.add(R.layout.tutorial_3_layout);
+        mListDrawble.add(R.layout.tutorial_4_layout);
     }
 
     @Override
@@ -97,6 +96,7 @@ public class TutorialActivity extends BaseActivity implements ViewPager.OnPageCh
     public void onClick(View v) {
         Intent startScreen = new Intent(TutorialActivity.this, StartScreen.class);
         startActivity(startScreen);
+        finish();
     }
 
     private class SplashAdapter extends FragmentPagerAdapter {

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tutorial_background_image"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/releativ_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/tutorial_house" />
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/tutorial_circle" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/imageView4"
+            android:layout_marginLeft="-18dp"
+            android:layout_marginTop="45dp"
+            android:layout_toEndOf="@+id/imageView4"
+            android:layout_toRightOf="@+id/imageView4"
+            android:background="@drawable/tutorial_lens" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/releativ_1"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Удобный поиск"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/textSizeTutor"
+        android:textStyle="normal|bold" />
+
+    <RelativeLayout
+        android:id="@+id/releativ_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView16"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/first_dote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tutorial_description_circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@id/first_dote"
+            android:layout_toRightOf="@id/first_dote"
+            android:ems="10"
+            android:lineSpacingExtra="8dp"
+            android:text="12 критериев поиска по параметрам и местонахождению объектов"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/releativ_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/releativ_2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/second_dote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tutorial_description_circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@id/second_dote"
+            android:layout_toRightOf="@id/second_dote"
+            android:ems="10"
+            android:lineSpacingExtra="8dp"
+            android:text="Сохранение критериев поиска для экономии Вашего времени"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/releativ_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/releativ_3"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/third_dote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tutorial_description_circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@id/third_dote"
+            android:layout_toRightOf="@id/third_dote"
+            android:ems="10"
+            android:lineSpacingExtra="8dp"
+            android:text="Сохранение результатов поиска в формате Word, Excel, Txt на ваш компютер или другое устройство"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize" />
+
+    </RelativeLayout>
+</RelativeLayout>
