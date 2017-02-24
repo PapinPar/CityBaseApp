@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tutorial_background_image"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/releativ_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_alignLeft="@+id/imageView8"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/imageView8"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/tutorial_base" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/tutorial_circle" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_alignLeft="@+id/imageView8"
+            android:layout_alignStart="@+id/imageView8"
+            android:layout_marginLeft="55dp"
+            android:background="@drawable/tutorial_body" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_alignLeft="@+id/imageView8"
+            android:layout_alignStart="@+id/imageView8"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/tutorial_body" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_alignEnd="@+id/imageView8"
+            android:layout_alignRight="@+id/imageView8"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/tutorial_body" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/releativ_1"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Коллективное ведение базы"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/textSizeTutor"
+        android:textStyle="normal|bold" />
+
+    <RelativeLayout
+        android:id="@+id/releativ_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView16"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/first_dote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tutorial_description_circle" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/first_dote"
+            android:layout_toRightOf="@+id/first_dote"
+            android:ems="10"
+            android:lineSpacingExtra="8dp"
+            android:text="Общцая база данных объектов для Ваших коллег и сотрудников в пределах агенства недвижимости"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/releativ_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/releativ_2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/second_dote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tutorial_description_circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@id/second_dote"
+            android:layout_toRightOf="@id/second_dote"
+            android:ems="10"
+            android:lineSpacingExtra="8dp"
+            android:text="Разграничение прав доступа редактирование базы данных между сотрудниками агенства"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/releativ_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/releativ_3"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/third_dote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tutorial_description_circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@id/third_dote"
+            android:layout_toRightOf="@id/third_dote"
+            android:ems="10"
+            android:lineSpacingExtra="8dp"
+            android:text="Результаты редактирования базы данных доступны каждому сотруднику"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize" />
+
+    </RelativeLayout>
+</RelativeLayout>

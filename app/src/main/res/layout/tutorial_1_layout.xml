@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tutorial_background_image"
+    android:orientation="vertical"
+    android:gravity="center">
+        <RelativeLayout
+            android:id="@+id/releativ_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/tutorial_house"
+                android:layout_marginTop="20dp" />
+
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/tutorial_circle" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="30dp"
+                android:layout_height="15dp"
+                android:layout_alignTop="@+id/imageView4"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@+id/imageView4"
+                android:layout_toRightOf="@+id/imageView4"
+                android:background="@drawable/tutorial_new_small" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@+id/imageView4"
+                android:layout_marginRight="-10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@+id/imageView4"
+                android:layout_toStartOf="@+id/imageView4"
+                android:background="@drawable/tutorial_new_middle" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_above="@+id/imageView5"
+                android:layout_alignEnd="@+id/imageView4"
+                android:layout_alignRight="@+id/imageView4"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/tutorial_new_big" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/releativ_1"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Самые новые объекты"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSizeTutor"
+            android:textStyle="normal|bold" />
+
+        <RelativeLayout
+            android:id="@+id/releativ_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView16"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/first_dote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tutorial_description_circle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@id/first_dote"
+                android:layout_toRightOf="@id/first_dote"
+                android:ems="10"
+                android:lineSpacingExtra="8dp"
+                android:text="Объекты добовляються в базу в течении 1-го часа после публикации хозяевами"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/releativ_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/releativ_2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/second_dote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tutorial_description_circle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@id/second_dote"
+                android:layout_toRightOf="@id/second_dote"
+                android:ems="10"
+                android:lineSpacingExtra="8dp"
+                android:text="Постоянное обновление информации с 7:00 до 24:00 в режиме онлайн"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textSize" />
+
+        </RelativeLayout>
+</RelativeLayout>

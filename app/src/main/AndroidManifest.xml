@@ -58,6 +58,7 @@
         </activity>
         <activity
             android:name=".ui.splash.TutorialActivity">
+            android:screenOrientation="portrait"
         </activity>
         <activity
             android:name=".ui.StartScreen"

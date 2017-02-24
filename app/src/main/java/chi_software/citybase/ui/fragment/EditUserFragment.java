@@ -249,7 +249,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                                 if (Patterns.EMAIL_ADDRESS.matcher(editMailS).matches()) {
                                     app.getNet().addUserEmail(mUid, mKey, editMailS);
                                 } else {
-                                    Toast.makeText(getActivity(), "Введите валдиный Email", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Введите валидный Email", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }

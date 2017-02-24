@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tutorial_background_image"
+    android:orientation="vertical"
+    android:gravity="center">
+    <RelativeLayout
+        android:id="@+id/releativ_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/tutorial_pc"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_alignLeft="@+id/imageView8"
+            android:layout_alignStart="@+id/imageView8" />
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="-8dp"
+            android:background="@drawable/tutorial_lpad"
+            android:layout_toEndOf="@id/imageView5"
+            android:layout_toRightOf="@id/imageView5"
+            android:layout_marginTop="40dp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/tutorial_lphone"
+            android:layout_toEndOf="@id/imageView4"
+            android:layout_toRightOf="@id/imageView4"
+            android:layout_marginTop="65dp" />
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/tutorial_circle"
+            android:id="@+id/imageView8" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/releativ_1"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Ведение личной базы данных"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/textSizeTutor"
+        android:textStyle="normal|bold" />
+
+    <RelativeLayout
+        android:id="@+id/releativ_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView16"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/first_dote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tutorial_description_circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@id/first_dote"
+            android:layout_toRightOf="@id/first_dote"
+            android:ems="10"
+            android:lineSpacingExtra="8dp"
+            android:text="Редактирование атрибутов объекта, добавление личных заметок, выделение, удаление объектов и много другое"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/releativ_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/releativ_2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/second_dote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tutorial_description_circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@id/second_dote"
+            android:layout_toRightOf="@id/second_dote"
+            android:ems="10"
+            android:lineSpacingExtra="8dp"
+            android:text="Работа с базой данных с компьютера, планшета или мобильного телефона"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize" />
+
+    </RelativeLayout>
+</RelativeLayout>
