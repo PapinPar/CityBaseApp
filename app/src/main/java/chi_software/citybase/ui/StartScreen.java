@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import chi_software.citybase.R;
-import chi_software.citybase.SharedCityBase;
+import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.getBase.BaseGet;

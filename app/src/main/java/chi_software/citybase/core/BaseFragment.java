@@ -5,8 +5,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 
-import chi_software.citybase.SharedCityBase;
+import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.api.App;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
@@ -57,5 +58,10 @@ public class BaseFragment extends Fragment implements NetSubscriber {
     public boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 }

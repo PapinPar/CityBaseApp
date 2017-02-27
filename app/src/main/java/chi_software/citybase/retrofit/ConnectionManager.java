@@ -140,18 +140,11 @@ public class ConnectionManager implements Net {
         api.login(login, password).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                ErrorClass bodyResponse = (ErrorClass) response.body();
-                if (bodyResponse.getError() != null) {
-                    if (!bodyResponse.getError().contains("access")) {
-                        notifyErrorSubscribers(MORE_USERS_ERROR, "Приложение не могут использовать больше двух пользователей!");
-                    }
+                LoginResponse resp = (LoginResponse) response.body();
+                if (resp.getMyResponse() != null) {
+                    notifySuccessSubscribers(SIGN_IN, response.body());
                 } else {
-                    LoginResponse resp = (LoginResponse) response.body();
-                    if (resp.getMyResponse() != null) {
-                        notifySuccessSubscribers(SIGN_IN, response.body());
-                    } else {
-                        notifyErrorSubscribers(SIGN_IN, "Проверьте правильность введённых данных и повторите попытку.");
-                    }
+                    notifyErrorSubscribers(SIGN_IN, "Проверьте правильность введённых данных и повторите попытку.");
                 }
             }
 

@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import chi_software.citybase.R;
-import chi_software.citybase.SharedCityBase;
+import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.ui.StartScreen;
 
