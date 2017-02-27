@@ -46,7 +46,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.forgotTV).setOnClickListener(this);
         mDialog = new SpotsDialog(StartScreen.this, "Загрузка");
 
-        loadUser();
+        //loadUser();
 
     }
 
@@ -158,8 +158,6 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
 
         mUser = mPhoneLoginEditText.getText().toString();
         mPass = mPassLoginEditText.getText().toString();
-        //mUser = "0506803241";
-        //mPass = "123456";
         if (mUser.length() > 0 && mPass.length() > 0) {
             app.getNet().login(mUser, mPass);
         } else {

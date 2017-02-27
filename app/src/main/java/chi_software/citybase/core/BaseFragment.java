@@ -1,5 +1,6 @@
 package chi_software.citybase.core;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -7,11 +8,11 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
-import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.api.App;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
 import chi_software.citybase.ui.StartScreen;
+import chi_software.citybase.utils.SharedCityBase;
 
 
 /**
@@ -61,7 +62,10 @@ public class BaseFragment extends Fragment implements NetSubscriber {
     }
 
     public void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) getActivity().getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                getActivity().getCurrentFocus().getWindowToken(), 0);
     }
 }

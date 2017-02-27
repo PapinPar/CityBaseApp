@@ -1,4 +1,5 @@
 package chi_software.citybase.ui.fragment;
+
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -26,12 +27,12 @@ public class InfoFragment extends BaseFragment implements View.OnClickListener {
 
     @Nullable
     @Override
-    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.info_fragment, container, false);
     }
 
     @Override
-    public void onViewCreated (View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.imageChi).setOnClickListener(this);
         view.findViewById(R.id.first_phone_tv).setOnClickListener(this);
@@ -39,15 +40,15 @@ public class InfoFragment extends BaseFragment implements View.OnClickListener {
         view.findViewById(R.id.email_tv).setOnClickListener(this);
     }
 
-    private void openChromeTab () {
+    private void openChromeTab() {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(getActivity(), Uri.parse("https://chisw.com/"));
     }
 
     @Override
-    public void onClick (View v) {
-        switch ( v.getId() ) {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.imageChi:
                 openChromeTab();
                 break;
@@ -63,13 +64,13 @@ public class InfoFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    private void callPhone (String phone) {
+    private void callPhone(String phone) {
         int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE);
-        if ( permissionCheck == 0 ) {
-            if ( ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ) {
-                if ( ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CALL_PHONE) ) {
+        if (permissionCheck == 0) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CALL_PHONE)) {
                 } else {
-                    ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.READ_CONTACTS }, 1);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_CONTACTS}, 1);
                 }
             }
         }
@@ -79,14 +80,14 @@ public class InfoFragment extends BaseFragment implements View.OnClickListener {
         startActivity(intent);
     }
 
-    private void sendEmail () {
+    private void sendEmail() {
         String mailTo = "mailto:admin@citybase.in.ua";
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setData(Uri.parse(mailTo));
 
         try {
             startActivity(emailIntent);
-        } catch ( ActivityNotFoundException e ) {
+        } catch (ActivityNotFoundException e) {
             //TODO: Handle case where no email app is available
         }
     }
