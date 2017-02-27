@@ -1,4 +1,4 @@
-package chi_software.citybase;
+package chi_software.citybase.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

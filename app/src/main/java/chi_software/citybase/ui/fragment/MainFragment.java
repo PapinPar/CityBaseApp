@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import chi_software.citybase.R;
-import chi_software.citybase.SharedCityBase;
+import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.BaseFragment;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.BaseResponse;

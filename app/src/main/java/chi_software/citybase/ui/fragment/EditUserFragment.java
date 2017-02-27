@@ -13,7 +13,6 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chi_software.citybase.R;
-import chi_software.citybase.SharedCityBase;
 import chi_software.citybase.core.BaseFragment;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.FieldResponse;
@@ -34,6 +32,7 @@ import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.ui.MyAmountHistory;
 import chi_software.citybase.ui.StartScreen;
 import chi_software.citybase.ui.adapter.ActiveServAdapter;
+import chi_software.citybase.utils.SharedCityBase;
 import dmax.dialog.SpotsDialog;
 
 
@@ -66,8 +65,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        closeKeyboard();
-
+        hideKeyboard();
 
         mDialog = new SpotsDialog(getActivity(), "Загрузка");
         mPhone = (TextView) view.findViewById(R.id.textPhone);
@@ -159,7 +157,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 break;
             case Net.EDIT_USER_LOGIN:
                 Toast.makeText(getActivity(), "Данные успешно изменены", Toast.LENGTH_SHORT).show();
-                closeKeyboard();
+                hideKeyboard();
                 //finish();
                 break;
             case Net.DELETE_USER_EMAIL:
@@ -171,7 +169,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 mDialog.dismiss();
                 Toast.makeText(getActivity(), "Вам будет отправленно письмо на " + editMailS, Toast.LENGTH_SHORT).show();
                 mEditMail.setText("");
-                closeKeyboard();
+                hideKeyboard();
                 break;
             case Net.GET_MY_AMOUNT:
                 FieldResponse myAmount = (FieldResponse) NetObjects;
@@ -188,13 +186,9 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 Toast.makeText(getActivity(), "Пароль успешно изменен", Toast.LENGTH_SHORT).show();
                 mEquelPass.setText("");
                 mNewPass.setText("");
-                closeKeyboard();
+                hideKeyboard();
                 break;
         }
-    }
-
-    private void closeKeyboard() {
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private void filldata(UserResponse userResponse) {
@@ -229,8 +223,8 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 nameS = mName.getText().toString().trim();
                 loginS = mLogin.getText().toString();
                 if (isNetworkConnected()) {
-                    if (mName.length() < 3 || mName.length() > 30) {
-                        Toast.makeText(getActivity(), "Имя должно быть не менее 3 и не более 30 символов.", Toast.LENGTH_SHORT).show();
+                    if (mName.length() <= 3 || mName.length() >= 30  ||  loginS.length() <= 3 || loginS.length()>=10) {
+                        Toast.makeText(getActivity(), "Поля Имя и Логни должны быть не менее 3 и не более 30 символов.", Toast.LENGTH_SHORT).show();
                     } else {
                         app.getNet().editUserLogin(mUid, mKey, nameS, loginS, mUid);
                     }

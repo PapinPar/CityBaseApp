@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 
-import chi_software.citybase.SharedCityBase;
+import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.api.App;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.core.api.NetSubscriber;
@@ -54,6 +55,11 @@ public class BaseActivity extends AppCompatActivity implements NetSubscriber {
         SharedCityBase.SetLogin(this,"");
         Intent startActivity = new Intent(BaseActivity.this, StartScreen.class);
         startActivity(startActivity);
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     @Override

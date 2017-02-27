@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chi_software.citybase.R;
-import chi_software.citybase.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.comment.Comment;
 import chi_software.citybase.data.getBase.MyObject;
+import chi_software.citybase.utils.SharedCityBase;
 
 
 /**
@@ -127,7 +126,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                                 dialog.dismiss();
                             }
                         });
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Вернуться в базу",
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Нет",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -168,12 +167,15 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         mCommentStr = mComment.getText().toString();
         if(mCommentStr.length()>0){
             Toast.makeText(this, "Комментарий сохранен.", Toast.LENGTH_SHORT).show();
+            mComment.clearFocus();
         }else{
             Toast.makeText(this, "Комментарий удалён.", Toast.LENGTH_SHORT).show();
+            mComment.clearFocus();
         }
         app.getNet().setComment(mUid, mKey, SharedCityBase.GetCity(this), mTable, mMyObjectsList.get(mPosition).getId(), "comment", mCommentStr);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        hideKeyboard();
     }
+
 
     private void setInfo() {
         mUpdData.setText(mMyObjectsList.get(mPosition).getDateUp());

@@ -227,7 +227,7 @@
                 android:background="@color/backSearch"
                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_-./@|\,"
                 android:gravity="center"
-                android:hint="\@email"
+                android:hint="Почта"
                 android:inputType="textEmailAddress"
                 android:maxLength="30"
                 android:paddingBottom="15dp"

@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import chi_software.citybase.R;
-import chi_software.citybase.SharedCityBase;
+import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.ui.fragment.EditUserFragment;
 import chi_software.citybase.ui.fragment.InfoFragment;
