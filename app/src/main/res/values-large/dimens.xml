@@ -30,6 +30,8 @@
     <dimen name="tariffImage">200dp</dimen>
 
     <dimen name="textSizeTutor">36sp</dimen>
+    <dimen name="detailWidthSize">200dp</dimen>
+
 
 
 </resources>

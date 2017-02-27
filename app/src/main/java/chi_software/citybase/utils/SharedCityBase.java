@@ -2,6 +2,7 @@ package chi_software.citybase.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Base64;
 
 
 /**
@@ -90,27 +91,29 @@ public class SharedCityBase {
 
     // PASSWORD
     public static void SetPassword(Context context, String s) {
-        saveString(context, s, PREFS_PASSWORD);
+        saveString(context, encrypt(s), PREFS_PASSWORD);
     }
 
     public static String GetPassword(Context contextc) {
-        return getString(contextc, PREFS_PASSWORD, "");
+        return decrypt(getString(contextc, PREFS_PASSWORD, ""));
     }
 
     // LOGIN
     public static void SetLogin(Context context, String s) {
-        saveString(context, s, PREFS_LOGIN);
+
+        saveString(context, encrypt(s), PREFS_LOGIN);
     }
 
-    public static String GetLogin(Context contextc) {
-        return getString(contextc, PREFS_LOGIN, "");
+    public static String GetLogin(Context context) {
+        return decrypt(getString(context, PREFS_LOGIN, ""));
     }
 
     // IS FIRST
-    public static void setFirst(Context context, boolean b){
-        saveBoolean(context,b,PREFS_IS_FIRST);
+    public static void setFirst(Context context, boolean b) {
+        saveBoolean(context, b, PREFS_IS_FIRST);
     }
-    public static boolean getFirst(Context context){
+
+    public static boolean getFirst(Context context) {
         return getBoolean(context, PREFS_IS_FIRST, true);
     }
 
@@ -140,6 +143,14 @@ public class SharedCityBase {
 
     private static boolean getBoolean(Context context, String key, boolean defValue) {
         return getSharedPreferences(context).getBoolean(key, defValue);
+    }
+
+    private static String encrypt(String input) {
+        return Base64.encodeToString(input.getBytes(), Base64.DEFAULT);
+    }
+
+    private static String decrypt(String input) {
+        return new String(Base64.decode(input, Base64.DEFAULT));
     }
 
 }
