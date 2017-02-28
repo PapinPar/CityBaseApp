@@ -22,6 +22,7 @@ public class SharedCityBase {
     private static final String PREFS_LOGIN = "LOGIN";
     private static final String PREFS_IS_FIRST = "IS_FIRST";
     private static final String PREFS_RUS_CITY = "RUS_CITY";
+    private static final String PREFS_SCREEN_DPI = "SCREEN_DPI";
 
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(SHARED_PREFERENCES_CITY_BASE, Context.MODE_PRIVATE);
@@ -117,6 +118,16 @@ public class SharedCityBase {
         return getBoolean(context, PREFS_IS_FIRST, true);
     }
 
+    // DPI
+    public static void setDPI(Context context, float f) {
+        saveDPI(context, f, PREFS_SCREEN_DPI);
+    }
+    public static float getDPI(Context context){
+        return getDPI(context, PREFS_SCREEN_DPI);
+    }
+
+
+    // METHOD
     private static void saveString(Context context, String s, String key) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putString(key, s);
@@ -143,6 +154,16 @@ public class SharedCityBase {
 
     private static boolean getBoolean(Context context, String key, boolean defValue) {
         return getSharedPreferences(context).getBoolean(key, defValue);
+    }
+
+    private static void saveDPI(Context context, float d, String key) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putFloat(key, d);
+        editor.apply();
+    }
+
+    private static float getDPI(Context context, String key) {
+        return getSharedPreferences(context).getFloat(key, 1);
     }
 
     private static String encrypt(String input) {

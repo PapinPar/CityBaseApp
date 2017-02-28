@@ -1,4 +1,5 @@
 package chi_software.citybase.ui;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import chi_software.citybase.R;
+import chi_software.citybase.interfaces.OpenCloseTariff;
 import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.ui.fragment.EditUserFragment;
@@ -18,12 +20,12 @@ import chi_software.citybase.ui.fragment.MainFragment;
 import chi_software.citybase.ui.fragment.TariffsListFragment;
 
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MainFragment.OpenTariffs {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, OpenCloseTariff {
 
     private boolean doubleBackToExitPressedOnce = false;
 
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         navigationInitial();
@@ -33,7 +35,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     }
 
-    private void navigationInitial () {
+    private void navigationInitial() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -41,17 +43,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if ( navigationView != null ) {
+        if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected (MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
         MainFragment mainFragment = new MainFragment();
         mainFragment.setOpenTarrif(this);
-        switch ( item.getItemId() ) {
+        switch (item.getItemId()) {
             case R.id.arenda:
                 SharedCityBase.SaveTable(this, "rent_living");
                 getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "mail_history_fragment").commit();
@@ -74,6 +76,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.tarifs:
                 TariffsListFragment tariffsListFragment = new TariffsListFragment();
+                tariffsListFragment.setOpenTarrif(this);
                 getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "mail_history_fragment").commit();
                 break;
             case R.id.study:
@@ -89,12 +92,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     @Override
-    public void onBackPressed () {
+    public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if ( drawer.isDrawerOpen(GravityCompat.START) ) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if ( doubleBackToExitPressedOnce ) {
+            if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
                 return;
             }
@@ -104,7 +107,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             new Handler().postDelayed(new Runnable() {
 
                 @Override
-                public void run () {
+                public void run() {
                     doubleBackToExitPressedOnce = false;
                 }
             }, 2000);
@@ -112,11 +115,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     }
 
-
     @Override
-    public void openTariff () {
+    public void openTariff() {
         TariffsListFragment tariffsListFragment = new TariffsListFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "mail_history_fragment").commit();
+    }
+
+    @Override
+    public void closeTariff() {
+        EditUserFragment mailFragment = new EditUserFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mailFragment, "mail_history_fragment").commit();
     }
 }
 

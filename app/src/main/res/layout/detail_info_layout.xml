@@ -13,13 +13,14 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/ImageRelative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/backGray">
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/imageHight"></View>
+                android:layout_height="@dimen/imageHight" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/myPager"
@@ -27,7 +28,7 @@
                 android:layout_height="@dimen/imageHight"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"></android.support.v4.view.ViewPager>
+                android:layout_alignParentTop="true" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -86,15 +87,29 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 
-            <ImageView
-                android:id="@+id/imageWebLink"
-                android:layout_width="@dimen/iconSize"
-                android:layout_height="@dimen/iconSize"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="37dp"
-                app:srcCompat="@drawable/global" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/textView10"
+                android:layout_toStartOf="@+id/textView10"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageWebLink"
+                    android:layout_width="182dp"
+                    android:layout_height="@dimen/iconSize"
+                    app:srcCompat="@drawable/global" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Источник" />
+
+
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -224,20 +239,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/comment_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="90dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_weight="2"
                 android:background="@drawable/selector_edit_text"
                 android:hint="Комментарий"
-                android:imeOptions="actionSend"
-                android:inputType="textImeMultiLine"
                 android:padding="7dp"
                 android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/sendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:padding="20dp"
+                android:src="@drawable/ic_menu_send" />
         </LinearLayout>
 
 
@@ -287,18 +310,20 @@
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize" />
 
-        <TextView
+        <Button
             android:id="@+id/realtor_tw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="15dp"
+            android:background="@color/backRed"
             android:clickable="true"
             android:text="Попали на посредника?"
-            android:textStyle="italic"
             android:textColor="@color/black"
-            android:textSize="@dimen/textSize" />
+            android:textSize="@dimen/textSize"
+            android:textStyle="italic" />
+
 
     </LinearLayout>
 

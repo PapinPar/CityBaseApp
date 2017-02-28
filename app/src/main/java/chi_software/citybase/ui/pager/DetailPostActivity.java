@@ -4,18 +4,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,12 +50,13 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     private ArrayList<String> mUrlList;
     private List<MyObject> mMyObjectsList;
     private int mPosition;
-    private int mSize,mPhotoId;
+    private int mSize, mPhotoId;
     private String mUid, mKey, mTable, mCommentStr;
     private TextView mUpdData, mPublishedData, mPrice, mRoomsType, mAreaSize, mMetroName, mInfo, mAddress, mPhoneNumber;
     private LinearLayout mLine2, mLine3;
     private EditText mComment;
-    private TextView mRieltor;
+    private ImageView mSendComment;
+    private RelativeLayout mRelativeImage;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,11 +81,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         webLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse(mMyObjectsList.get(mPosition).getUrl()));
-                startActivity(intent);
+                openChromeTab(mMyObjectsList.get(mPosition).getUrl());
             }
         });
 
@@ -98,21 +95,11 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         mAddress = (TextView) findViewById(R.id.addressTW);
         mPhoneNumber = (TextView) findViewById(R.id.phoneNumberTW);
         mComment = (EditText) findViewById(R.id.comment_et);
-        mRieltor = (TextView) findViewById(R.id.realtor_tw);
+        mSendComment = (ImageView) findViewById(R.id.sendButton);
+        mRelativeImage = (RelativeLayout) findViewById(R.id.ImageRelative);
 
-        mComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    sendComment();
-                    handled = true;
-                }
-                return handled;
-            }
-        });
-
-        mRieltor.setOnClickListener(new View.OnClickListener() {
+        // Say about rieltor
+        findViewById(R.id.realtor_tw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(DetailPostActivity.this).create();
@@ -135,6 +122,8 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                 alertDialog.show();
             }
         });
+
+        // Call owner
         mPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +132,13 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                     intent.setData(Uri.parse("tel:" + mPhoneNumber.getText().toString()));
                     startActivity(intent);
                 }
+            }
+        });
+
+        mSendComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendComment();
             }
         });
         app.getNet().getObjectinfo("", SharedCityBase.GetCity(this), mTable, mUid, mKey, Integer.valueOf(mMyObjectsList.get(mPosition).getId()));
@@ -165,10 +161,10 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
 
     private void sendComment() {
         mCommentStr = mComment.getText().toString();
-        if(mCommentStr.length()>0){
+        if (mCommentStr.length() > 0) {
             Toast.makeText(this, "Комментарий сохранен.", Toast.LENGTH_SHORT).show();
             mComment.clearFocus();
-        }else{
+        } else {
             Toast.makeText(this, "Комментарий удалён.", Toast.LENGTH_SHORT).show();
             mComment.clearFocus();
         }
@@ -178,6 +174,9 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
 
 
     private void setInfo() {
+        if (mUrlList.size() <= 0 || mUrlList == null) {
+            mRelativeImage.setVisibility(View.GONE);
+        }
         mUpdData.setText(mMyObjectsList.get(mPosition).getDateUp());
         mPublishedData.setText(mMyObjectsList.get(mPosition).getDatePub());
         String currency;
@@ -255,7 +254,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         s.putExtra(DetailPostActivity.KEY, mKey);
         s.putExtra(DetailPostActivity.TABLE, mTable);
         s.putExtra(DetailPostActivity.POSITION, mPosition);
-        s.putExtra(DetailPostActivity.POSITION_PHOTO,mPhotoId);
+        s.putExtra(DetailPostActivity.POSITION_PHOTO, mPhotoId);
         s.putExtra(DetailPostActivity.SIZE, mSize);
         s.putStringArrayListExtra(DetailPostActivity.URL, (ArrayList<String>) mUrlList);
         s.putExtra(DetailPostActivity.MODEL, (Serializable) mMyObjectsList);
@@ -280,7 +279,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     @Override
     public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestFail(eventId, NetObjects);
-        switch (eventId){
+        switch (eventId) {
             case Net.MORE_USERS_ERROR:
                 Toast.makeText(DetailPostActivity.this, (String) NetObjects, Toast.LENGTH_SHORT).show();
                 startScreen();
@@ -305,6 +304,12 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         public int getCount() {
             return mSize;
         }
+    }
+
+    private void openChromeTab(String url) {
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(DetailPostActivity.this, Uri.parse(url));
     }
 
 }

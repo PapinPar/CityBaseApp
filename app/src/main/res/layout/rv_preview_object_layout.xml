@@ -16,6 +16,7 @@
         <ImageView
             android:id="@+id/imageInfoNew"
             android:layout_width="match_parent"
+            android:src="@drawable/no_photo_2"
             android:background="@color/backGray"
             android:layout_height="@dimen/imageHight"
             />

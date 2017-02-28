@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import chi_software.citybase.R;
-import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.BaseFragment;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.BaseResponse;
@@ -35,9 +34,11 @@ import chi_software.citybase.data.Search;
 import chi_software.citybase.data.getBase.MyObject;
 import chi_software.citybase.data.login.UserResponse;
 import chi_software.citybase.data.menuSearch.MenuSearch;
+import chi_software.citybase.interfaces.OpenCloseTariff;
 import chi_software.citybase.ui.adapter.PostAdapter;
 import chi_software.citybase.ui.dialog.SearchDialog;
 import chi_software.citybase.ui.pager.DetailPostActivity;
+import chi_software.citybase.utils.SharedCityBase;
 import dmax.dialog.SpotsDialog;
 
 
@@ -58,7 +59,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private Map<String, List<String>> mKeysModel;
     private List<String> userInfo;
     private SharedPreferences sPref;
-    private OpenTariffs openTariffs;
+    private OpenCloseTariff openCloseTariffs;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private List<String> mTypeSelected;
@@ -106,7 +107,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         mPunktSelected = new ArrayList<>();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new PostAdapter(mModelDataList, this);
+        float Dpi = 50 * SharedCityBase.getDPI(getActivity());
+        mAdapter = new PostAdapter(mModelDataList, this, Dpi);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
     }
@@ -244,7 +246,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             mDialog.show();
         } else {
             Toast.makeText(getActivity(), "У вас нет доустпа к этой базе", Toast.LENGTH_SHORT).show();
-            openTariffs.openTariff();
+            openCloseTariffs.openTariff();
         }
     }
 
@@ -282,12 +284,12 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         String info = "";
         for (int i = 0; i < mBaseResponse.getBaseGet().getGetResponse().getModel().size(); i++) {
             String id = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId();
-            if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1) {
-                info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
-            } else if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1) {
-                info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
+            if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1) {
+                info = "Микро район: " + mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
+            } else if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1) {
+                info = "Админ. район: " + mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
             } else
-                info = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
+                info = "Город: " + mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
             if (mBaseResponse.getMap().containsKey(id)) {
                 list = (ArrayList) mBaseResponse.getMap().get(id);
                 mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
@@ -313,8 +315,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         tmpCity = mCity;
     }
 
-    public void setOpenTarrif(OpenTariffs openTariffs) {
-        this.openTariffs = openTariffs;
+    public void setOpenTarrif(OpenCloseTariff openCloseTariffs) {
+        this.openCloseTariffs = openCloseTariffs;
     }
 
     @Override
@@ -328,7 +330,4 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         }
     }
 
-    public interface OpenTariffs {
-        void openTariff();
-    }
 }

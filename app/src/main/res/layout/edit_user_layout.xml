@@ -22,17 +22,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/backSearch"
+                android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
                 <TextView
                     android:id="@+id/textView15"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="На вашем счету :"
                     android:textColor="@color/black"
@@ -42,14 +40,16 @@
                     android:id="@+id/amount_tw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textView15"
-                    android:layout_marginTop="15dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/textView15"
+                    android:layout_toRightOf="@+id/textView15"
+                    android:gravity="center"
                     android:text="0.00 грн"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textSize"
-                    android:textStyle="normal|bold" />
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <FrameLayout
@@ -62,6 +62,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
                     android:background="@color/black" />
             </FrameLayout>
 
@@ -76,6 +77,8 @@
                     android:id="@+id/textView18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="3dp"
                     android:gravity="center"
                     android:text="Активные услуги :"
                     android:textColor="@color/black"

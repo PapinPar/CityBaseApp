@@ -24,6 +24,8 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_layout);
         isFirst = SharedCityBase.getFirst(SplashActivity.this);
+        float dpi = getResources().getDisplayMetrics().density;
+        SharedCityBase.setDPI(SplashActivity.this, dpi);
         start();
 
     }

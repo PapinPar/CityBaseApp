@@ -7,18 +7,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import chi_software.citybase.R;
-import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.getBase.BaseGet;
 import chi_software.citybase.data.login.LoginResponse;
 import chi_software.citybase.ui.forgotPass.ForgotPassActivity;
+import chi_software.citybase.utils.SharedCityBase;
 import dmax.dialog.SpotsDialog;
 
 
@@ -26,7 +29,7 @@ import dmax.dialog.SpotsDialog;
  * Created by Papin on 08.11.2016.
  */
 
-public class StartScreen extends BaseActivity implements View.OnClickListener {
+public class StartScreen extends BaseActivity implements View.OnClickListener, TextView.OnEditorActionListener {
 
     private MaterialEditText mPhoneLoginEditText, mPassLoginEditText;
     private SpotsDialog mDialog;
@@ -44,20 +47,10 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.butTryBaseNew).setOnClickListener(this);
         findViewById(R.id.registNewTW).setOnClickListener(this);
         findViewById(R.id.forgotTV).setOnClickListener(this);
+
+        mPassLoginEditText.setOnEditorActionListener(this);
+
         mDialog = new SpotsDialog(StartScreen.this, "Загрузка");
-
-        //loadUser();
-
-    }
-
-    private void loadUser() {
-        mPass = SharedCityBase.GetPassword(this);
-        mUser = SharedCityBase.GetLogin(this);
-        if (mPass.length() > 1 && mUser.length() > 1) {
-            mDialog.show();
-            mState = true;
-            app.getNet().login(mUser, mPass);
-        }
     }
 
     @SuppressLint("SwitchIntDef")
@@ -123,12 +116,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.butOkNew:
-                if (isNetworkConnected()) {
-                    mDialog.show();
-                    signIn();
-                }
-                if (!isNetworkConnected())
-                    Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
+                SignIn();
                 break;
             case R.id.registNewTW:
                 startNewActivity(RegistrationActivity.class);
@@ -140,6 +128,15 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                 startNewActivity(ForgotPassActivity.class);
                 break;
         }
+    }
+
+    private void SignIn() {
+        if (isNetworkConnected()) {
+            mDialog.show();
+            signIn();
+        }
+        if (!isNetworkConnected())
+            Toast.makeText(this, "Проверьте интернр соединение", Toast.LENGTH_SHORT).show();
     }
 
     private void startNewActivity(Class registrationActivityClass) {
@@ -180,7 +177,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
                     mCity = "_Kharkov";
                 if (item == 2)
                     mCity = "_Odessa";
-                SharedCityBase.SaveCityRus(StartScreen.this,mCityChoose[item]);
+                SharedCityBase.SaveCityRus(StartScreen.this, mCityChoose[item]);
                 SharedCityBase.SaveCity(StartScreen.this, mCity);
                 startMainActivity();
             }
@@ -193,5 +190,14 @@ public class StartScreen extends BaseActivity implements View.OnClickListener {
         Intent startMainScreen = new Intent(StartScreen.this, MainActivity.class);
         startActivity(startMainScreen);
         finish();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            signIn();
+            return true;
+        }
+        return false;
     }
 }

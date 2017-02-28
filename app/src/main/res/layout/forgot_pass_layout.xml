@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@drawable/login_bg">
+    android:background="@drawable/login_bg"
+    android:gravity="center">
 
     <RelativeLayout
         android:id="@+id/releative2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -21,7 +21,7 @@
             android:layout_marginLeft="223.2dp"
             android:layout_marginRight="223.2dp"
             android:layout_marginTop="50dp"
-            app:srcCompat="@drawable/ic_oval"/>
+            app:srcCompat="@drawable/ic_oval" />
 
         <ImageView
             android:id="@+id/ic_chape_1"
@@ -30,7 +30,7 @@
             android:layout_alignTop="@+id/imageView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            app:srcCompat="@drawable/ic_shape_1"/>
+            app:srcCompat="@drawable/ic_shape_1" />
 
         <TextView
             android:id="@+id/textView"
@@ -41,7 +41,7 @@
             android:text="CityBase.in.ua "
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView2"
@@ -54,19 +54,8 @@
             android:text="Восстановление пароля"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="@dimen/infoSizeWidth"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="7dp"
-            android:gravity="center"
-            android:text="На этот номер телефона будет отправлено sms сообщение с кодом"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"/>
 
     </RelativeLayout>
 
@@ -86,17 +75,28 @@
             android:layout_width="@dimen/infoSizeWidth"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="+38"
             android:hint="Номер"
             android:inputType="phone"
-            android:selectAllOnFocus="false"
             android:maxLength="13"
+            android:selectAllOnFocus="false"
+            android:text="+38"
             android:textSize="@dimen/textSize"
             android:visibility="visible"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelTextSize="@dimen/floatingTextSize"
             app:met_textColor="@android:color/black"
-            app:met_textColorHint="@color/hintColor"/>
+            app:met_textColorHint="@color/hintColor" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="@dimen/infoSizeWidth"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:gravity="center"
+            android:text="На этот номер телефона будет отправлено sms сообщение с кодом"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textSize" />
+
 
         <Button
             android:id="@+id/butForgetOK"
@@ -108,6 +108,6 @@
             android:text="Далее"
             android:textIsSelectable="false"
             android:textSize="@dimen/textSize"
-            android:textStyle="normal|bold"/>
+            android:textStyle="normal|bold" />
     </LinearLayout>
 </RelativeLayout>

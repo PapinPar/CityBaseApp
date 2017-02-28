@@ -58,8 +58,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.edit_user_layout, container, false);
-        return view;
+        return inflater.inflate(R.layout.edit_user_layout, container, false);
     }
 
     @Override

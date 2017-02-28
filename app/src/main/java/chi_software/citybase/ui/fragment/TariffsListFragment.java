@@ -1,8 +1,11 @@
 package chi_software.citybase.ui.fragment;
+
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,14 +16,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import chi_software.citybase.R;
-import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.BaseFragment;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.FieldResponse;
 import chi_software.citybase.data.payment.PaymentResponse;
 import chi_software.citybase.data.tarif.Tariff;
 import chi_software.citybase.data.tarif.TariffModel;
+import chi_software.citybase.interfaces.OpenCloseTariff;
 import chi_software.citybase.ui.adapter.TariffsAdapter;
+import chi_software.citybase.utils.SharedCityBase;
 import dmax.dialog.SpotsDialog;
 
 
@@ -38,6 +42,8 @@ public class TariffsListFragment extends BaseFragment implements TariffsAdapter.
     private String ORDER_ACTION;
     private double mAmount;
     private SpotsDialog mDialog;
+    private OpenCloseTariff openCloseTariff;
+
 
     @Nullable
     @Override
@@ -88,8 +94,7 @@ public class TariffsListFragment extends BaseFragment implements TariffsAdapter.
                 }
                 break;
             case Net.ACTIVATE_ORDER:
-                mDialog.dismiss();
-                Toast.makeText(getContext(), "Тариф успешно активирован", Toast.LENGTH_SHORT).show();
+                SuccessActivate();
                 break;
             case Net.CREATE_PAYMENT:
                 mDialog.dismiss();
@@ -97,6 +102,23 @@ public class TariffsListFragment extends BaseFragment implements TariffsAdapter.
                 openChromeTab(fieldResponse.getResponse().getLink());
                 break;
         }
+    }
+
+    private void SuccessActivate() {
+        mDialog.dismiss();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Поздравляю!")
+                .setMessage("Тариф успешно активирован")
+                .setCancelable(false)
+                .setNegativeButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                openCloseTariff.closeTariff();
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void openChromeTab (String link) {
@@ -144,5 +166,9 @@ public class TariffsListFragment extends BaseFragment implements TariffsAdapter.
         ORDER_ACTION = "BUY";
         mAmount = amount;
         app.getNet().createOrder(id, "Созданно с приложения Android", mUid, mKey);
+    }
+
+    public void setOpenTarrif(OpenCloseTariff openCloseTariff) {
+        this.openCloseTariff = openCloseTariff;
     }
 }

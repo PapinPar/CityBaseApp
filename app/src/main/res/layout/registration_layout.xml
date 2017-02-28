@@ -19,23 +19,12 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="223.2dp"
             android:layout_marginRight="223.2dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="150dp"
             android:text="Регистрация"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize"
             android:textStyle="bold" />
 
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="На этот номер будет отправлено sms сообщение с кодом для подтверждения регистрации. "
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize" />
 
     </RelativeLayout>
 
@@ -113,7 +102,7 @@
             android:layout_height="wrap_content"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя1234567890!@#$%^*()_./|\,"
             android:gravity="center"
-            android:hint="Повторите Пароль"
+            android:hint="Повторите пароль"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:maxLength="12"
