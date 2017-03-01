@@ -14,6 +14,7 @@
 
     <dimen name="infoSizeWidth">600dp</dimen>
     <dimen name="textSize">33sp</dimen>
+    <dimen name="smallTextSize">27sp</dimen>
     <dimen name="floatingTextSize">20sp</dimen>
     <dimen name="imageHight">430dp</dimen>
     <dimen name="imageInfoHight">175dp</dimen>
@@ -32,6 +33,6 @@
     <dimen name="textSizeTutor">36sp</dimen>
     <dimen name="detailWidthSize">200dp</dimen>
 
-
+    <dimen name="textSizePhone">34sp</dimen>
 
 </resources>

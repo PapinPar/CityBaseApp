@@ -28,6 +28,8 @@ import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.comment.Comment;
 import chi_software.citybase.data.getBase.MyObject;
+import chi_software.citybase.interfaces.SetCommentListener;
+import chi_software.citybase.ui.dialog.CommentDialog;
 import chi_software.citybase.utils.SharedCityBase;
 
 
@@ -36,7 +38,7 @@ import chi_software.citybase.utils.SharedCityBase;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class DetailPostActivity extends BaseActivity implements PageFragment.ShowBigImageListener {
+public class DetailPostActivity extends BaseActivity implements PageFragment.ShowBigImageListener, SetCommentListener {
 
     public static final String UID = "uid";
     public static final String URL = "url";
@@ -55,8 +57,8 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     private TextView mUpdData, mPublishedData, mPrice, mRoomsType, mAreaSize, mMetroName, mInfo, mAddress, mPhoneNumber;
     private LinearLayout mLine2, mLine3;
     private EditText mComment;
-    private ImageView mSendComment;
     private RelativeLayout mRelativeImage;
+    private CommentDialog setCommentIF;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +97,6 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         mAddress = (TextView) findViewById(R.id.addressTW);
         mPhoneNumber = (TextView) findViewById(R.id.phoneNumberTW);
         mComment = (EditText) findViewById(R.id.comment_et);
-        mSendComment = (ImageView) findViewById(R.id.sendButton);
         mRelativeImage = (RelativeLayout) findViewById(R.id.ImageRelative);
 
         // Say about rieltor
@@ -135,7 +136,8 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
             }
         });
 
-        mSendComment.setOnClickListener(new View.OnClickListener() {
+        // SEND COMMENT
+        mComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendComment();
@@ -160,16 +162,8 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     }
 
     private void sendComment() {
-        mCommentStr = mComment.getText().toString();
-        if (mCommentStr.length() > 0) {
-            Toast.makeText(this, "Комментарий сохранен.", Toast.LENGTH_SHORT).show();
-            mComment.clearFocus();
-        } else {
-            Toast.makeText(this, "Комментарий удалён.", Toast.LENGTH_SHORT).show();
-            mComment.clearFocus();
-        }
-        app.getNet().setComment(mUid, mKey, SharedCityBase.GetCity(this), mTable, mMyObjectsList.get(mPosition).getId(), "comment", mCommentStr);
-        hideKeyboard();
+        setCommentIF = new CommentDialog();
+        setCommentIF.show(DetailPostActivity.this, this,mComment.getText().toString());
     }
 
 
@@ -185,9 +179,9 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         else
             currency = " $";
         if (mMyObjectsList.get(mPosition).getPrice() != null) {
-            mPrice.setText(mMyObjectsList.get(mPosition).getPrice() + currency);
+            mPrice.setText("Цена:" + mMyObjectsList.get(mPosition).getPrice() + currency);
         } else {
-            mPrice.setText("?" + currency);
+            mPrice.setText("Цена:?" + currency);
         }
         mRoomsType.setText(mMyObjectsList.get(mPosition).getType());
         String areaFloor = "";
@@ -285,6 +279,19 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                 startScreen();
                 break;
         }
+    }
+
+    @Override
+    public void getBackComment(String comment) {
+        mComment.setText(comment);
+        if (comment.length() > 0) {
+            Toast.makeText(this, "Комментарий сохранен.", Toast.LENGTH_SHORT).show();
+            mComment.clearFocus();
+        } else {
+            Toast.makeText(this, "Комментарий удалён.", Toast.LENGTH_SHORT).show();
+            mComment.clearFocus();
+        }
+        app.getNet().setComment(mUid, mKey, SharedCityBase.GetCity(this), mTable, mMyObjectsList.get(mPosition).getId(), "comment", comment);
     }
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {

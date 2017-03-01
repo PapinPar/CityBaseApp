@@ -4,7 +4,7 @@
 
     <item
         android:icon="@drawable/ic_main_nav"
-        android:title="Базы объектов">
+        android:title="">
         <menu>
             <item
                 android:id="@+id/arenda"

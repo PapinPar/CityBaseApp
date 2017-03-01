@@ -21,6 +21,7 @@
     <color name="backYellow">#fff9c4</color>
     <color name="backWhite">#ffffff</color>
     <color name="textColor">#486b97</color>
+    <color name="textColorInfo">#262626</color>
     <color name="hintColor">#434a54</color>
     <color name="editTextBackground">#e7e7e7</color>
     <color name="editTextBackground2">#f7f7f8</color>

@@ -200,4 +200,5 @@ public class StartScreen extends BaseActivity implements View.OnClickListener, T
         }
         return false;
     }
+
 }

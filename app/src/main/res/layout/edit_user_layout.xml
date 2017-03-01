@@ -216,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Электронная почта является одним из вариантов
+                android:text="Является одним из вариантов
  для входа на сайт, а также необходима для
 использования функции MSR."
                 android:textColor="@color/textColor"

@@ -11,13 +11,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import chi_software.citybase.R;
-import chi_software.citybase.interfaces.OpenCloseTariff;
-import chi_software.citybase.utils.SharedCityBase;
 import chi_software.citybase.core.BaseActivity;
+import chi_software.citybase.interfaces.OpenCloseTariff;
 import chi_software.citybase.ui.fragment.EditUserFragment;
 import chi_software.citybase.ui.fragment.InfoFragment;
 import chi_software.citybase.ui.fragment.MainFragment;
 import chi_software.citybase.ui.fragment.TariffsListFragment;
+import chi_software.citybase.utils.SharedCityBase;
 
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, OpenCloseTariff {
@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
+        setTitle("Аренда жилой");
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -55,31 +56,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mainFragment.setOpenTarrif(this);
         switch (item.getItemId()) {
             case R.id.arenda:
+                setTitle("Аренда жилой");
                 SharedCityBase.SaveTable(this, "rent_living");
-                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "mail_history_fragment").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "rent_living").commit();
                 break;
             case R.id.sell:
+                setTitle("Продажа жилой");
                 SharedCityBase.SaveTable(this, "sale_living");
-                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "mail_history_fragment").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "sale_living").commit();
                 break;
             case R.id.arendaComer:
+                setTitle("Аренда коммерческой");
                 SharedCityBase.SaveTable(this, "rent_not_living");
-                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "mail_history_fragment").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "rent_not_living").commit();
                 break;
             case R.id.sellComer:
+                setTitle("Продажа коммерческой");
                 SharedCityBase.SaveTable(this, "sale_not_living");
-                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "mail_history_fragment").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mainFragment, "sale_not_living").commit();
                 break;
             case R.id.myProfile:
-                EditUserFragment mailFragment = new EditUserFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mailFragment, "mail_history_fragment").commit();
+                setTitle("Личный кабинет");
+                EditUserFragment editUserFragment = new EditUserFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, editUserFragment, "mail_history_fragment").commit();
                 break;
             case R.id.tarifs:
+                setTitle("Тариффы");
                 TariffsListFragment tariffsListFragment = new TariffsListFragment();
                 tariffsListFragment.setOpenTarrif(this);
-                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "mail_history_fragment").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "tariffs_List_Fragment").commit();
                 break;
             case R.id.study:
+                setTitle("О нас");
                 InfoFragment infoFragment = new InfoFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.include_main, infoFragment, "info_fragment").commit();
                 break;

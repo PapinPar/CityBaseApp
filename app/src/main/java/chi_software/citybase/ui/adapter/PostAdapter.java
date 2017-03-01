@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
         private final TextView type;
         private final TextView price;
         private final ImageView image;
+        private final ImageView imageLoader;
         private final TextView info;
         private final Context myParent;
         //private ImageView backgroundColor;
@@ -54,6 +56,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
             myParent = itemView.getContext();
             image = (ImageView) itemView.findViewById(R.id.imageInfoNew);
             info = (TextView) itemView.findViewById(R.id.detailInfoNew);
+            imageLoader = (ImageView) itemView.findViewById(R.id.loaderImage);
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -77,7 +80,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(DevViewHolder holder, final int position) {
+    public void onBindViewHolder(final DevViewHolder holder, final int position) {
         Log.d("MyAdapter", "holder.getAdapterPosition():" + holder.getAdapterPosition());
         Log.d("MyAdapter", "i:" + position);
         String currency;
@@ -111,11 +114,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
             Picasso.with(holder.myParent)
                     .load(mPostsList.get(position).getUrl())
                     .error(R.drawable.icon_logo)
-                    .into(holder.image);
+                    .into(holder.image, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            holder.imageLoader.setVisibility(View.GONE);
+                        }
+                        @Override
+                        public void onError() {
+                        }
+                    });
             holder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
+            holder.imageLoader.setVisibility(View.GONE);
             holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            holder.image.setImageResource(R.drawable.no_photo_2);
+            holder.image.setImageResource(R.drawable.icon_logo
+            );
 
             holder.image.setPadding(0, 0, 0, Dpi);
         }
