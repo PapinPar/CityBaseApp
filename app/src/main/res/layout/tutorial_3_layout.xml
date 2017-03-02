@@ -109,7 +109,7 @@
             android:layout_toRightOf="@+id/first_dote"
             android:ems="10"
             android:lineSpacingExtra="8dp"
-            android:text="Общцая база данных объектов для Ваших коллег и сотрудников в пределах агенства недвижимости"
+            android:text="Общая база данных объектов для Ваших коллег и сотрудников в пределах агентства недвижимости"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize" />
 
@@ -139,7 +139,7 @@
             android:layout_toRightOf="@id/second_dote"
             android:ems="10"
             android:lineSpacingExtra="8dp"
-            android:text="Разграничение прав доступа редактирование базы данных между сотрудниками агенства"
+            android:text="Разграничение прав доступа редактирования базы данных между сотрудниками агентства"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize" />
 

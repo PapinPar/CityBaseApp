@@ -96,7 +96,7 @@
             android:layout_toRightOf="@id/first_dote"
             android:ems="10"
             android:lineSpacingExtra="8dp"
-            android:text="Редактирование атрибутов объекта, добавление личных заметок, выделение, удаление объектов и много другое"
+            android:text="Возможность вести личную базу посредников, оставлять заметки к объектам"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize" />
 

@@ -62,4 +62,13 @@ public class SmsActivity extends BaseActivity {
                 }
         }
     }
+
+    @Override
+    public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
+        super.onNetRequestFail(eventId, NetObjects);
+        String error = NetObjects.toString();
+        if(error.contains("timed out")){
+            Toast.makeText(this, "Произошла ошибка. \n Пожалуйста попробуйте восстановить пароль через наш сайт citybase.in.ua", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

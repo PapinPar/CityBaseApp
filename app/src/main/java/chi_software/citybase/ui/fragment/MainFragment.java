@@ -2,6 +2,7 @@ package chi_software.citybase.ui.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
@@ -148,8 +149,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.findButton:
-                mSearchDialog.getListener(this, mMyMenu);
-                mSearchDialog.show(getActivity(), this, mMyMenu, mTypeSelected, mAreaSelected, mPunktSelected, mTable);
+                if (!mFindBut.getText().toString().equals("Нет объектов для отображения")) {
+                    mSearchDialog.getListener(this, mMyMenu);
+                    mSearchDialog.show(getActivity(), this, mMyMenu, mTypeSelected, mAreaSelected, mPunktSelected, mTable);
+                }
                 break;
         }
     }
@@ -282,23 +285,28 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         String url = "http://api.citybase.in.ua/api/img/";
         ArrayList list = new ArrayList();
         String info = "";
-        for (int i = 0; i < mBaseResponse.getBaseGet().getGetResponse().getModel().size(); i++) {
-            String id = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId();
-            if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1) {
-                info = "Микро район: " + mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
-            } else if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1) {
-                info = "Админ. район: " + mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
-            } else
-                info = "Город: " + mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
-            if (mBaseResponse.getMap().containsKey(id)) {
-                list = (ArrayList) mBaseResponse.getMap().get(id);
-                mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
-                        //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), mTable));
-            } else
-                mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
-                        //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
-                        "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, mTable));
+        if (mMyObject.size() > 1) {
+            for (int i = 0; i < mBaseResponse.getBaseGet().getGetResponse().getModel().size(); i++) {
+                String id = mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId();
+                if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace().length() > 1) {
+                    info = "Район: " + mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPlace();
+                } else if (mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion() != null && mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion().length() > 1) {
+                    info = "Район: " + mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getAdminRegion();
+                } else
+                    info = "Нас. пункт: " + mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getCity();
+                if (mBaseResponse.getMap().containsKey(id)) {
+                    list = (ArrayList) mBaseResponse.getMap().get(id);
+                    mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
+                            //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
+                            "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), url + list.get(0), mTable));
+                } else
+                    mModelDataList.add(new ModelData(mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getPrice(), info,
+                            //mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getUrl(),
+                            "перейти на сайт", mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getType(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getText(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getId(), mBaseResponse.getBaseGet().getGetResponse().getModel().get(i).getColor(), null, mTable));
+            }
+        } else {
+            mFindBut.setText("Нет объектов для отображения");
+            mFindBut.setTextColor(Color.RED);
         }
         mDialog.dismiss();
         mAdapter.notifyDataSetChanged();

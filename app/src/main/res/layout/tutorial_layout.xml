@@ -41,15 +41,7 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/button_selector"
             android:button="@null" />
-
-        <RadioButton
-            android:id="@+id/radioBtnFour"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/button_selector"
-            android:button="@null" />
-    </RadioGroup>
+            </RadioGroup>
 
     <Button
         android:id="@+id/skip_btn"

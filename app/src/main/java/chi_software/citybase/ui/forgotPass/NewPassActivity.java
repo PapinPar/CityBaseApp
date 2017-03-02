@@ -1,4 +1,5 @@
 package chi_software.citybase.ui.forgotPass;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -23,7 +24,7 @@ public class NewPassActivity extends BaseActivity implements View.OnClickListene
     private SpotsDialog mDialog;
 
     @Override
-    protected void onCreate (@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activate_pass_layot);
 
@@ -31,13 +32,13 @@ public class NewPassActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.newPassOK).setOnClickListener(this);
         mCodeED = (MaterialEditText) findViewById(R.id.newCodeET);
         mPassED = (MaterialEditText) findViewById(R.id.newPassET);
-        mDialog = new SpotsDialog(NewPassActivity.this,"Загрузка");
+        mDialog = new SpotsDialog(NewPassActivity.this, "Загрузка");
     }
 
     @Override
-    public void onNetRequestDone (@Net.NetEvent int eventId, Object NetObjects) {
+    public void onNetRequestDone(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestDone(eventId, NetObjects);
-        switch ( eventId ) {
+        switch (eventId) {
             case Net.NEW_RESET_PASS:
                 mDialog.dismiss();
                 Toast.makeText(this, "Пароль успешно изменен", Toast.LENGTH_SHORT).show();
@@ -48,9 +49,9 @@ public class NewPassActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void onNetRequestFail (@Net.NetEvent int eventId, Object NetObjects) {
+    public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestFail(eventId, NetObjects);
-        switch ( eventId ) {
+        switch (eventId) {
             case Net.NEW_RESET_PASS:
                 mDialog.dismiss();
                 Toast.makeText(this, "Произошел сбой.Проверьте своё интернет подключение.", Toast.LENGTH_SHORT).show();
@@ -59,23 +60,27 @@ public class NewPassActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public boolean isNetworkConnected () {
+    public boolean isNetworkConnected() {
         return super.isNetworkConnected();
     }
 
     @Override
-    public void onClick (View v) {
+    public void onClick(View v) {
         mCodeS = mCodeED.getText().toString();
         mPassS = mPassED.getText().toString();
 
         if (mCodeS.length() == 4 && mPassS.length() > 0) {
             if (isNetworkConnected()) {
                 mDialog.show();
-                app.getNet().newResetPass(mCodeS, mUidS, mPassS);
+                if (mPassED.length() >= 6) {
+                    app.getNet().newResetPass(mCodeS, mUidS, mPassS);
+                } else {
+                    Toast.makeText(this, "Пароль не может быть короче 6 символов", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(this, "Проверьте подключение к интернету", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             Toast.makeText(this, "Введите валидные данные", Toast.LENGTH_SHORT).show();
         }
     }
