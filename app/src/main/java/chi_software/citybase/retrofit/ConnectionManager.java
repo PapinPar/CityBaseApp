@@ -129,7 +129,7 @@ public class ConnectionManager implements Net {
         @Override
         public void onFailure(Call<T> call, Throwable t) {
             synchronized (locker) {
-                net.notifyErrorSubscribers(value, "Error");
+                net.notifyErrorSubscribers(value, t.getMessage());
             }
         }
     }

@@ -103,7 +103,7 @@
                 android:layout_toRightOf="@id/first_dote"
                 android:ems="10"
                 android:lineSpacingExtra="8dp"
-                android:text="Объекты добовляються в базу в течении 1-го часа после публикации хозяевами"
+                android:text="Объекты добавляются в базу в течении 1-го часа после публикации хозяевами"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textSize" />
 

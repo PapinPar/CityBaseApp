@@ -74,6 +74,10 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
         super.onNetRequestFail(eventId, NetObjects);
+        String error = NetObjects.toString();
+        if (error.contains("timed out")) {
+            Toast.makeText(this, "Произошла ошибка. \n Пожалуйста попробуйте восстановить пароль через наш сайт citybase.com.ua", Toast.LENGTH_SHORT).show();
+        }
         Toast.makeText(this, "Пожалуйста проверьте интернет соединение", Toast.LENGTH_SHORT).show();
         startActivity(StartScreen.class);
     }

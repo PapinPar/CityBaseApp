@@ -46,7 +46,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
-        setTitle("Аренда жилой");
+        switch (SharedCityBase.GetTable(this)) {
+            case "rent_living":
+                setTitle("Аренда жилой");
+                break;
+            case "sale_living":
+                setTitle("Продажа жилой");
+                break;
+            case "rent_not_living":
+                setTitle("Аренда коммерческой");
+                break;
+            case "sale_not_living":
+                setTitle("Продажа коммерческой");
+                break;
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -125,12 +138,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void openTariff() {
+        setTitle("Тариффы");
         TariffsListFragment tariffsListFragment = new TariffsListFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "mail_history_fragment").commit();
     }
 
     @Override
     public void closeTariff() {
+        setTitle("Личный кабинет");
         EditUserFragment mailFragment = new EditUserFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.include_main, mailFragment, "mail_history_fragment").commit();
     }

@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_oval"
+            app:srcCompat="@drawable/icon_main"
             android:id="@+id/imageView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -22,17 +22,9 @@
             android:layout_marginLeft="223.2dp"
             android:layout_marginRight="223.2dp"/>
 
-        <ImageView
-            android:id="@+id/ic_chape_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_shape_1"
-            android:layout_alignTop="@+id/imageView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"/>
-
         <TextView
-            android:text="CityBase.in.ua "
+            android:layout_marginTop="5dp"
+            android:text="CityBase.com.ua "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView"

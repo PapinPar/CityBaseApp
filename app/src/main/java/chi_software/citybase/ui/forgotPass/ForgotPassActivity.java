@@ -93,6 +93,11 @@ public class ForgotPassActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onNetRequestFail(@Net.NetEvent int eventId, Object NetObjects) {
+        String error = NetObjects.toString();
+        if (error.contains("timed out")) {
+            Toast.makeText(this, "Произошла ошибка. \n Пожалуйста попробуйте восстановить пароль через наш сайт citybase.in.ua", Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
+        }
         super.onNetRequestFail(eventId, NetObjects);
         switch (eventId) {
             case Net.SMS_RESET:

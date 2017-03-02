@@ -52,7 +52,6 @@ public class TutorialActivity extends BaseActivity implements ViewPager.OnPageCh
         mListDrawble.add(R.layout.tutorial_1_layout);
         mListDrawble.add(R.layout.tutorial_2_layout);
         mListDrawble.add(R.layout.tutorial_3_layout);
-        mListDrawble.add(R.layout.tutorial_4_layout);
     }
 
     @Override
@@ -82,12 +81,8 @@ public class TutorialActivity extends BaseActivity implements ViewPager.OnPageCh
                 pager.setCurrentItem(1, true);
                 break;
             case R.id.radioBtnThree:
-                mSkipBtn.setText("Пропустить");
-                pager.setCurrentItem(2, true);
-                break;
-            case R.id.radioBtnFour:
                 mSkipBtn.setText("Далее");
-                pager.setCurrentItem(3, true);
+                pager.setCurrentItem(2, true);
                 break;
         }
     }

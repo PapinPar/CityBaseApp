@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView"
             android:layout_centerHorizontal="true"
-            android:text="CityBase.in.ua "
+            android:text="CityBase.com.ua "
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize"
             android:textStyle="bold"/>
