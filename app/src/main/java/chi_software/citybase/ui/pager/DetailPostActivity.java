@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +29,10 @@ import chi_software.citybase.core.BaseActivity;
 import chi_software.citybase.core.api.Net;
 import chi_software.citybase.data.comment.Comment;
 import chi_software.citybase.data.getBase.MyObject;
+import chi_software.citybase.db.DBHelper;
+import chi_software.citybase.db.Post.PostModel;
+import chi_software.citybase.db.Post.PostRepository;
+import chi_software.citybase.db.base.IDBCallback;
 import chi_software.citybase.interfaces.SetCommentListener;
 import chi_software.citybase.ui.dialog.CommentDialog;
 import chi_software.citybase.utils.SharedCityBase;
@@ -60,6 +65,8 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     private RelativeLayout mRelativeImage;
     private CommentDialog setCommentIF;
 
+    private PostRepository postRepository;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_info_layout);
@@ -86,6 +93,9 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
                 openChromeTab(mMyObjectsList.get(mPosition).getUrl());
             }
         });
+
+        //DB
+        postRepository = new PostRepository(new DBHelper(this));
 
         mUpdData = (TextView) findViewById(R.id.updTW);
         mPublishedData = (TextView) findViewById(R.id.publichedTW);
@@ -163,7 +173,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
 
     private void sendComment() {
         setCommentIF = new CommentDialog();
-        setCommentIF.show(DetailPostActivity.this, this,mComment.getText().toString());
+        setCommentIF.show(DetailPostActivity.this, this, mComment.getText().toString());
     }
 
 
@@ -237,6 +247,41 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
 
         if (mMyObjectsList.get(mPosition).getComment() != null) {
             mComment.setText(mMyObjectsList.get(mPosition).getComment().toString());
+        }
+        fillSimplePost();
+    }
+
+    private void fillSimplePost() {
+        final PostModel postModel = new PostModel();
+        if (mMyObjectsList.get(mPosition).getComment() != null) {
+            postModel.setComment(mMyObjectsList.get(mPosition).getComment().toString());
+        } else {
+            postModel.setComment("No comment");
+        }
+        if (mMyObjectsList.get(mPosition).getPrice() != null) {
+            postModel.setPrice(mMyObjectsList.get(mPosition).getPrice().toString());
+        } else {
+            postModel.setPrice("No price");
+        }
+        postModel.setId(Long.parseLong(mMyObjectsList.get(mPosition).getId()));
+        postRepository.create(postModel).execute(new IDBCallback<Long>() {
+            @Override
+            public void onCompleted(boolean isSuccessful, @Nullable Long aLong) {
+                if (isSuccessful && aLong != null) {
+                    readSimplePost(aLong);
+                }
+            }
+        });
+    }
+
+    private void readSimplePost(final long id) {
+        if (id != -1) {
+            postRepository.readById(id).execute(new IDBCallback<PostModel>() {
+                @Override
+                public void onCompleted(boolean isSuccessful, @Nullable PostModel postModel) {
+                    Toast.makeText(DetailPostActivity.this, "Price:" + postModel.getPrice() + "\n Comment: " + postModel.getComment(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
