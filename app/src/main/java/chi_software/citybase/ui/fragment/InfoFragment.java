@@ -38,6 +38,7 @@ public class InfoFragment extends BaseFragment implements View.OnClickListener {
         view.findViewById(R.id.first_phone_tv).setOnClickListener(this);
         view.findViewById(R.id.second_phone_tv).setOnClickListener(this);
         view.findViewById(R.id.email_tv).setOnClickListener(this);
+        view.findViewById(R.id.webLinkTW).setOnClickListener(this);
     }
 
     private void openChromeTab() {
@@ -61,7 +62,15 @@ public class InfoFragment extends BaseFragment implements View.OnClickListener {
             case R.id.email_tv:
                 sendEmail();
                 break;
+            case R.id.webLinkTW:
+                openLink();
+                break;
         }
+    }
+
+    private void openLink() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.citybase.com.ua/"));
+        startActivity(browserIntent);
     }
 
     private void callPhone(String phone) {

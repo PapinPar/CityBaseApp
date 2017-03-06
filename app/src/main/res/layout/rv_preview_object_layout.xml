@@ -71,7 +71,7 @@
                     android:layout_toRightOf="@+id/roomsTypeTW"
                     android:layout_toStartOf="@+id/imageView2"
                     android:gravity="center"
-                    android:text="TextView"
+                    android:text="Нас. Пункт: 123456789012345678"
                     android:textColor="@color/hintColor"
                     android:textSize="@dimen/textSize" />
             </LinearLayout>

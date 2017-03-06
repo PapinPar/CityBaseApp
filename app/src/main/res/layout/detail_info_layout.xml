@@ -160,12 +160,41 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/line2"
+                android:layout_marginTop="4dp"
+                android:id="@+id/line4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/linear1"
+                android:gravity="left|center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/termIW"
+                    android:layout_width="@dimen/iconSize"
+                    android:layout_height="@dimen/iconSize"
+                    app:srcCompat="@drawable/term" />
+
+                <TextView
+                    android:id="@+id/termTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="34 kvadrata"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/line4"
                 android:gravity="left|center"
                 android:orientation="horizontal">
 

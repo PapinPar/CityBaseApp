@@ -1,5 +1,7 @@
 package chi_software.citybase.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -94,7 +96,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 getSupportFragmentManager().beginTransaction().replace(R.id.include_main, editUserFragment, "mail_history_fragment").commit();
                 break;
             case R.id.tarifs:
-                setTitle("Тариффы");
+                setTitle("Тарифы");
                 TariffsListFragment tariffsListFragment = new TariffsListFragment();
                 tariffsListFragment.setOpenTarrif(this);
                 getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "tariffs_List_Fragment").commit();
@@ -136,11 +138,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     }
 
+    protected void onCreateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Внимание!")
+                .setMessage("У вас нет доступа к этой базе, Вам необходимо активировать подписку в разделе тарифы.")
+                .setCancelable(false)
+                .setNegativeButton("Оk",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                setTitle("Тарифы");
+                                TariffsListFragment tariffsListFragment = new TariffsListFragment();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "mail_history_fragment").commit();
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     @Override
     public void openTariff() {
-        setTitle("Тариффы");
-        TariffsListFragment tariffsListFragment = new TariffsListFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.include_main, tariffsListFragment, "mail_history_fragment").commit();
+        onCreateDialog();
     }
 
     @Override
