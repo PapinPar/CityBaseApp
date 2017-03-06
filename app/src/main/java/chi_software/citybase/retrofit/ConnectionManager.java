@@ -183,8 +183,27 @@ public class ConnectionManager implements Net {
     }
 
     @Override
-    public void editUserLogin(@NonNull final String uid, @NonNull final String key, @NonNull final String name, @NonNull final String login,final String id) {
-        api.editUserLogin(uid, key, name, login,id).enqueue(new BaseCallback<FieldResponse>(EDIT_USER_LOGIN, this));
+    public void editUserLogin(@NonNull final String uid, @NonNull final String key, @NonNull final String name, @NonNull final String login, final String id) {
+        api.editUserLogin(uid, key, name, login, id).enqueue(new Callback<FieldResponse>() {
+            @Override
+            public void onResponse(Call<FieldResponse> call, Response<FieldResponse> response) {
+                ErrorClass bodyResponse = (ErrorClass) response.body();
+                if (bodyResponse.getError() != null) {
+                    if (bodyResponse.getError().contains("access")) {
+                        notifyErrorSubscribers(MORE_USERS_ERROR, "Приложение не могут использовать больше двух пользователей!");
+                    } else if (bodyResponse.getError().contains("User already exists")) {
+                        notifyErrorSubscribers(EDIT_USER_LOGIN, "Данный логин уже используется, пожалуйста, выберите другой.");
+                    }
+                } else {
+                    notifySuccessSubscribers(EDIT_USER_LOGIN, "OK");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FieldResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -205,7 +224,7 @@ public class ConnectionManager implements Net {
             public void onResponse(Call<BaseGet> call, Response<BaseGet> response) {
                 ErrorClass bodyResponse = (ErrorClass) response.body();
                 if (bodyResponse.getError() != null) {
-                    if (!bodyResponse.getError().contains("access")) {
+                    if (bodyResponse.getError().contains("access")) {
                         notifyErrorSubscribers(MORE_USERS_ERROR, "Приложение не могут использовать больше двух пользователей!");
                     }
                 } else {

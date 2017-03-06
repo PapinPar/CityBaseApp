@@ -248,7 +248,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             app.getNet().getBase(mSearch, mCity, mTable, mUid, mKey, mPage, mRusCity);
             mDialog.show();
         } else {
-            Toast.makeText(getActivity(), "У вас нет доустпа к этой базе", Toast.LENGTH_SHORT).show();
             openCloseTariffs.openTariff();
         }
     }

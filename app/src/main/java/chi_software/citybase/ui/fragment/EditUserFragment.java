@@ -181,7 +181,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 fillServiceData(serviceResponse);
                 break;
             case Net.EDIT_USER_PASSWORD:
-                SharedCityBase.SetPassword(getActivity(),mNewPassS);
+                SharedCityBase.SetPassword(getActivity(), mNewPassS);
                 Toast.makeText(getActivity(), "Пароль успешно изменен", Toast.LENGTH_SHORT).show();
                 mEquelPass.setText("");
                 mNewPass.setText("");
@@ -212,7 +212,14 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
         for (ActivServicess serv : serviceResponse.getResponse()) {
             serviceList.add(new ServiceData(serv.getDateFrom(), serv.getDateTo(), serv.getRusName()));
         }
-        mAdapter.notifyDataSetChanged();
+        if (serviceList.size() > 0) {
+            mAdapter.notifyDataSetChanged();
+            rvService.setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.no_active_service).setVisibility(View.GONE);
+        } else {
+            getActivity().findViewById(R.id.no_active_service).setVisibility(View.VISIBLE);
+            rvService.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -222,7 +229,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 nameS = mName.getText().toString().trim();
                 loginS = mLogin.getText().toString();
                 if (isNetworkConnected()) {
-                    if (mName.length() <= 3 || mName.length() >= 30  ||  loginS.length() <= 3 || loginS.length()>=10) {
+                    if (mName.length() <= 3 || mName.length() >= 30 || loginS.length() <= 3 || loginS.length() >= 10) {
                         Toast.makeText(getActivity(), "Поля Имя и Логни должны быть не менее 3 и не более 30 символов.", Toast.LENGTH_SHORT).show();
                     } else {
                         app.getNet().editUserLogin(mUid, mKey, nameS, loginS, mUid);
@@ -259,9 +266,13 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                         mNewPassS = mNewPass.getText().toString();
                         mEqPassS = mEquelPass.getText().toString();
                         if (mNewPassS.equals(mEqPassS)) {
-                            app.getNet().editUserPassword(mUid, mKey, mNewPassS, mEqPassS);
+                            if (mNewPassS.length() >= 6) {
+                                app.getNet().editUserPassword(mUid, mKey, mNewPassS, mEqPassS);
+                            } else {
+                                Toast.makeText(getActivity(), "Минимальная длина пароля 6 символов", Toast.LENGTH_SHORT).show();
+                            }
                         } else
-                            Toast.makeText(getActivity(), "Пароли не воспадают", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Пароли не совпдают", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -300,7 +311,7 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
     }
 
     protected void onCreateDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder;
         final String[] mCityChoose = {"Киев", "Харьков", "Одесса"};
         builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Выберите Город");
@@ -329,6 +340,9 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
             case Net.MORE_USERS_ERROR:
                 Toast.makeText(getActivity(), (String) NetObjects, Toast.LENGTH_SHORT).show();
                 startScreen();
+                break;
+            case Net.EDIT_USER_LOGIN:
+                Toast.makeText(getActivity(), (String) NetObjects, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

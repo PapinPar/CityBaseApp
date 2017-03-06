@@ -84,11 +84,24 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/textSize" />
 
+                <TextView
+                    android:id="@+id/no_active_service"
+                    android:text="У Вас нет активных услуг"
+                    android:textColor="#FFFF0000"
+                    android:gravity="center"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@id/textView18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvActivServ"
-                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView18"></android.support.v7.widget.RecyclerView>
+                    android:layout_below="@+id/textView18" />
             </RelativeLayout>
 
             <LinearLayout
@@ -155,7 +168,7 @@
                     android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя+0123456789_"
                     android:gravity="center"
                     android:hint="Логин"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="textPersonName"
                     android:maxLength="30"
                     android:paddingBottom="15dp"
@@ -235,6 +248,7 @@
                 android:maxLength="30"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
+                android:imeOptions="actionDone"
                 android:selectAllOnFocus="false"
                 android:textSize="@dimen/textSize"
                 android:visibility="visible" />
@@ -281,6 +295,7 @@
                 android:inputType="textPassword"
                 android:maxLength="12"
                 android:paddingBottom="15dp"
+                android:imeOptions="actionNext"
                 android:paddingTop="15dp"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textSize" />
@@ -298,6 +313,7 @@
                 android:inputType="textPassword"
                 android:maxLength="12"
                 android:paddingBottom="15dp"
+                android:imeOptions="actionDone"
                 android:paddingTop="15dp"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textSize" />
