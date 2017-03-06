@@ -9,15 +9,15 @@
         android:id="@+id/releative2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="223.2dp"
-            android:layout_marginRight="223.2dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
             android:text="Регистрация"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textSize"
@@ -26,171 +26,180 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/registLinear1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/registLinear2"
-        android:layout_below="@+id/releative2"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/registNameET"
-            android:layout_width="@dimen/infoSizeWidth"
-            android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя"
-            android:gravity="center"
-            android:hint="Имя"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:maxLength="30"
-            android:selectAllOnFocus="false"
-            android:singleLine="true"
-            android:textSize="@dimen/textSize"
-            android:visibility="visible"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextSize="@dimen/floatingTextSize"
-            app:met_textColor="@android:color/black"
-            app:met_textColorHint="@color/hintColor" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/registNumberET"
-            android:layout_width="@dimen/infoSizeWidth"
-            android:layout_height="wrap_content"
-            android:digits="0123456789"
-            android:gravity="center"
-            android:hint="Номер"
-            android:imeOptions="actionNext"
-            android:inputType="phone"
-            android:maxLength="13"
-            android:selectAllOnFocus="false"
-            android:singleLine="true"
-            android:text="+38"
-            android:textSize="@dimen/textSize"
-            android:visibility="visible"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextSize="@dimen/floatingTextSize"
-            app:met_textColor="@android:color/black"
-            app:met_textColorHint="@color/hintColor" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/registPassET"
-            android:layout_width="@dimen/infoSizeWidth"
-            android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя1234567890!@#$%^*()_./|\,"
-            android:gravity="center"
-            android:hint="Пароль"
-            android:imeOptions="actionNext"
-            android:inputType="textPassword"
-            android:maxLength="12"
-            android:selectAllOnFocus="false"
-            android:singleLine="true"
-            android:textSize="@dimen/textSize"
-            android:visibility="visible"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextSize="@dimen/floatingTextSize"
-            app:met_textColor="@android:color/black"
-            app:met_textColorHint="@color/hintColor" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/registPassAgainET"
-            android:layout_width="@dimen/infoSizeWidth"
-            android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя1234567890!@#$%^*()_./|\,"
-            android:gravity="center"
-            android:hint="Повторите пароль"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:maxLength="12"
-            android:selectAllOnFocus="false"
-            android:singleLine="true"
-            android:textSize="@dimen/textSize"
-            android:visibility="visible"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextSize="@dimen/floatingTextSize"
-            app:met_textColor="@android:color/black"
-            app:met_textColorHint="@color/hintColor" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/registLinear2"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonReg"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_vertical|center_horizontal|center"
-        android:orientation="vertical"
-        android:weightSum="1">
+        android:layout_below="@+id/releative2"
+        android:layout_centerHorizontal="true">
 
-        <TextView
-            android:id="@+id/textView6"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Вы"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textSize"
-            android:textStyle="bold" />
+            android:layout_above="@+id/registLinear2"
+            android:orientation="vertical">
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-            <RadioButton
-                android:id="@+id/radioButton1"
+            <LinearLayout
+                android:id="@+id/registLinear1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Специалист по  недвижимости или агенство "
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"
-                android:textStyle="normal|bold" />
+                android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/radioButton2"
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/registNameET"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя"
+                    android:gravity="center"
+                    android:hint="Имя"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLength="30"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+                    app:met_textColor="@android:color/black"
+                    app:met_textColorHint="@color/hintColor" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/registNumberET"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789"
+                    android:gravity="center"
+                    android:hint="Номер"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="13"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"
+                    android:text="+38"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+                    app:met_textColor="@android:color/black"
+                    app:met_textColorHint="@color/hintColor" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/registPassET"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя1234567890!@#$%^*()_./|\,"
+                    android:gravity="center"
+                    android:hint="Пароль"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:maxLength="12"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+                    app:met_textColor="@android:color/black"
+                    app:met_textColorHint="@color/hintColor" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/registPassAgainET"
+                    android:layout_width="@dimen/infoSizeWidth"
+                    android:layout_height="wrap_content"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя1234567890!@#$%^*()_./|\,"
+                    android:gravity="center"
+                    android:hint="Повторите пароль"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:maxLength="12"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+                    app:met_textColor="@android:color/black"
+                    app:met_textColorHint="@color/hintColor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/registLinear2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Ищите недвижимость  для себя"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"
-                android:textStyle="normal|bold" />
+                android:layout_marginBottom="20dp"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:orientation="vertical"
+                android:weightSum="1">
 
-            <RadioButton
-                android:id="@+id/radioButton3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Сдаете или продаете недвижимость"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/textSize"
-                android:textStyle="normal|bold" />
-        </RadioGroup>
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Вы"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioButton1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Специалист по  недвижимости или агенство "
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal|bold" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Ищите недвижимость  для себя"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal|bold" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Сдаете или продаете недвижимость"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal|bold" />
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 
     <Button
         android:id="@+id/buttonReg"

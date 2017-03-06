@@ -90,7 +90,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
             currency = "$";
         // Местоположение
         if (mPostsList.get(position).getAdminArea().length() > 1) {
-            holder.adminArea.setText(mPostsList.get(position).getAdminArea());
+            String city = mPostsList.get(position).getAdminArea();
+            if (mPostsList.get(position).getAdminArea().length() > 30) {
+                city = city.substring(0, 29);
+                city = city + "...";
+            }
+            holder.adminArea.setText(city);
             Log.d("MyAdapter", mPostsList.get(position).getAdminArea());
         } else
             holder.adminArea.setVisibility(View.INVISIBLE);
@@ -119,6 +124,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DevViewHolder>
                         public void onSuccess() {
                             holder.imageLoader.setVisibility(View.GONE);
                         }
+
                         @Override
                         public void onError() {
                         }

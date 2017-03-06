@@ -176,10 +176,33 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/line4_info"
+                android:id="@+id/line6_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/line3_info"
+                android:layout_marginTop="7.5dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Сайт : "
+                    android:textSize="@dimen/textSize" />
+
+                <TextView
+                    android:id="@+id/webLinkTW"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CityBase.com.ua"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textSize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/line4_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line6_info"
                 android:layout_marginTop="7.5dp"
                 android:gravity="center"
                 android:orientation="vertical">

@@ -54,8 +54,8 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
     private int mPosition;
     private int mSize, mPhotoId;
     private String mUid, mKey, mTable, mCommentStr;
-    private TextView mUpdData, mPublishedData, mPrice, mRoomsType, mAreaSize, mMetroName, mInfo, mAddress, mPhoneNumber;
-    private LinearLayout mLine2, mLine3;
+    private TextView mUpdData, mPublishedData, mPrice, mRoomsType, mAreaSize, mMetroName, mInfo, mAddress, mPhoneNumber, mTermType;
+    private LinearLayout mLine2, mLine3, mLine4;
     private EditText mComment;
     private RelativeLayout mRelativeImage;
     private CommentDialog setCommentIF;
@@ -76,8 +76,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         if (pager != null) {
             pager.setAdapter(pagerAdapter);
         }
-        mLine2 = (LinearLayout) findViewById(R.id.line2);
-        mLine3 = (LinearLayout) findViewById(R.id.line3);
+
 
         ImageView webLink = (ImageView) findViewById(R.id.imageWebLink);
         webLink.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +97,10 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
         mPhoneNumber = (TextView) findViewById(R.id.phoneNumberTW);
         mComment = (EditText) findViewById(R.id.comment_et);
         mRelativeImage = (RelativeLayout) findViewById(R.id.ImageRelative);
-
+        mTermType = (TextView) findViewById(R.id.termTV);
+        mLine2 = (LinearLayout) findViewById(R.id.line2);
+        mLine3 = (LinearLayout) findViewById(R.id.line3);
+        mLine4 = (LinearLayout) findViewById(R.id.line4);
         // Say about rieltor
         findViewById(R.id.realtor_tw).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +165,7 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
 
     private void sendComment() {
         setCommentIF = new CommentDialog();
-        setCommentIF.show(DetailPostActivity.this, this,mComment.getText().toString());
+        setCommentIF.show(DetailPostActivity.this, this, mComment.getText().toString());
     }
 
 
@@ -199,6 +201,16 @@ public class DetailPostActivity extends BaseActivity implements PageFragment.Sho
             mAreaSize.setText(areaFloor);
         } else {
             mLine2.setVisibility(View.GONE);
+        }
+
+        if (mMyObjectsList.get(mPosition).getTerm() != null) {
+            if (mMyObjectsList.get(mPosition).getTerm().equals("Д")) {
+                mTermType.setText("Долгосрочно");
+            } else {
+                mTermType.setText("Посуточно");
+            }
+        } else {
+            mLine4.setVisibility(View.GONE);
         }
 
 
