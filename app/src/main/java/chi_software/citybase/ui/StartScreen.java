@@ -159,7 +159,7 @@ public class StartScreen extends BaseActivity implements View.OnClickListener, T
             app.getNet().login(mUser, mPass);
         } else {
             mDialog.dismiss();
-            Toast.makeText(this, "Пожалуйста введите свои данные", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Пожалуйста, введите свои данные", Toast.LENGTH_SHORT).show();
         }
     }
 

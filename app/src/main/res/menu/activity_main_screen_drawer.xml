@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:icon="@drawable/ic_main_nav"
-        android:title="">
-        <menu>
+
+        <group>
             <item
                 android:id="@+id/arenda"
-                android:title="Аренда жилой"/>
+                android:title="Аренда жилой" />
             <item
                 android:id="@+id/sell"
-                android:title="Продажа жилой"/>
+                android:title="Продажа жилой" />
             <item
                 android:id="@+id/arendaComer"
-                android:title="Аренда коммерческой"/>
+                android:title="Аренда коммерческой" />
             <item
                 android:id="@+id/sellComer"
-                android:title="Продажа коммерческой"/>
+                android:title="Продажа коммерческой" />
+        </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/myProfile"
+                android:icon="@drawable/ic_cabinet_nav"
+                android:title="Личный кабинет" />
+            <item
+                android:id="@+id/tarifs"
+                android:icon="@drawable/ic_tarif_nav"
+                android:title="Тарифы" />
+            <item
+                android:id="@+id/study"
+                android:icon="@drawable/ic_about_nav"
+                android:title="Контакты" />
         </menu>
     </item>
-
-    <group >
-        <item
-            android:id="@+id/myProfile"
-            android:icon="@drawable/ic_cabinet_nav"
-            android:title="Личный кабинет"/>
-        <item
-            android:id="@+id/tarifs"
-            android:icon="@drawable/ic_tarif_nav"
-            android:title="Тарифы"/>
-        <item
-            android:id="@+id/study"
-            android:icon="@drawable/ic_about_nav"
-            android:title="Контакты"/>
-    </group>
-
 </menu>

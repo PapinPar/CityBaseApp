@@ -229,8 +229,8 @@ public class EditUserFragment extends BaseFragment implements View.OnClickListen
                 nameS = mName.getText().toString().trim();
                 loginS = mLogin.getText().toString();
                 if (isNetworkConnected()) {
-                    if (mName.length() <= 3 || mName.length() >= 30 || loginS.length() <= 3 || loginS.length() >= 10) {
-                        Toast.makeText(getActivity(), "Поля Имя и Логни должны быть не менее 3 и не более 30 символов.", Toast.LENGTH_SHORT).show();
+                    if (mName.length() <= 3 || mName.length() >= 30 || loginS.length() <= 3 || loginS.length() >= 30) {
+                        Toast.makeText(getActivity(), "Поля Имя и Логин должны быть не менее 3 и не более 30 символов.", Toast.LENGTH_SHORT).show();
                     } else {
                         app.getNet().editUserLogin(mUid, mKey, nameS, loginS, mUid);
                     }

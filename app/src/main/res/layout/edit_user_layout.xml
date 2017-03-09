@@ -84,24 +84,24 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/textSize" />
 
-                <TextView
+                  <TextView
                     android:id="@+id/no_active_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView18"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
                     android:text="У Вас нет активных услуг"
                     android:textColor="#FFFF0000"
-                    android:gravity="center"
                     android:textSize="@dimen/textSize"
-                    android:visibility="visible"
-                    android:layout_marginBottom="10dp"
-                    android:layout_below="@id/textView18"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:visibility="visible" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvActivServ"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView18" />
+                    android:layout_below="@+id/textView18"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <LinearLayout
@@ -244,11 +244,11 @@
                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_-./@|\,"
                 android:gravity="center"
                 android:hint="Почта"
+                android:imeOptions="actionDone"
                 android:inputType="textEmailAddress"
                 android:maxLength="30"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
-                android:imeOptions="actionDone"
                 android:selectAllOnFocus="false"
                 android:textSize="@dimen/textSize"
                 android:visibility="visible" />
@@ -292,10 +292,10 @@
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Новый пароль"
+                android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLength="12"
                 android:paddingBottom="15dp"
-                android:imeOptions="actionNext"
                 android:paddingTop="15dp"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textSize" />
