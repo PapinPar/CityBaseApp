@@ -58,7 +58,7 @@ public class SmsActivity extends BaseActivity {
                     finish();
                 }
                 else{
-                    Toast.makeText(this, "Введен непарвльный код", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Введен неправильный код", Toast.LENGTH_SHORT).show();
                 }
         }
     }

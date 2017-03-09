@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="@drawable/login_bg">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg">
 
     <RelativeLayout
         android:id="@+id/releative2"
@@ -12,151 +12,148 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/icon_main"
-            android:id="@+id/imageView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
             android:layout_marginLeft="223.2dp"
-            android:layout_marginRight="223.2dp"/>
+            android:layout_marginRight="223.2dp"
+            android:layout_marginTop="50dp"
+            app:srcCompat="@drawable/icon_main" />
 
         <TextView
-            android:layout_marginTop="5dp"
-            android:text="CityBase.com.ua "
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView"
             android:layout_centerHorizontal="true"
-            android:id="@+id/textView"
+            android:layout_marginTop="5dp"
+            android:text="CityBase.com.ua "
             android:textColor="@color/textColor"
-            android:textStyle="bold"
-            android:textSize="@dimen/textSize"/>
+            android:textSize="@dimen/textSize"
+            android:textStyle="bold" />
 
         <TextView
-            android:text="База объектов недвижимости от  владельцев вашего города"
-            android:layout_height="wrap_content"
-            android:layout_width="@dimen/infoSizeWidth"
             android:id="@+id/textView2"
-            android:textSize="@dimen/textSize"
+            android:layout_width="@dimen/infoSizeWidth"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/textView"
-            android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="7dp"/>
+            android:layout_marginTop="7dp"
+            android:gravity="center"
+            android:text="База объектов недвижимости от  владельцев вашего города"
+            android:textSize="@dimen/textSize" />
 
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/butTryBaseNew"
+        android:layout_below="@+id/releative2"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/butTryBaseNew"
-        android:layout_below="@+id/releative2">
+        android:selectAllOnFocus="false">
 
-        android:selectAllOnFocus="false"
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/phoneLoginNew"
-            android:layout_height="wrap_content"
             android:layout_width="@dimen/infoSizeWidth"
+            android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя+0123456789_"
+            android:gravity="center"
+            android:hint="Номер телефона / Логин"
+            android:imeOptions="actionNext"
+            android:inputType="textAutoComplete"
+            android:singleLine="true"
             android:textSize="@dimen/textSize"
+            android:visibility="visible"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelTextSize="@dimen/floatingTextSize"
             app:met_textColor="@android:color/black"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя+0123456789_"
-            app:met_textColorHint="@color/hintColor"
-            android:gravity="center"
-            android:hint="Номер телефона / Логин"
-            android:inputType="textAutoComplete"
-            android:visibility="visible"/>
+            app:met_textColorHint="@color/hintColor" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/passwordLoginNew"
             android:layout_width="@dimen/infoSizeWidth"
-            android:textSize="@dimen/textSize"
             android:layout_height="wrap_content"
-            android:maxLength="12"
-            app:met_floatingLabel="highlight"
-            android:singleLine="true"
-            android:imeOptions="actionDone"
-            app:met_floatingLabelTextSize="@dimen/floatingTextSize"
-            app:met_textColor="@android:color/black"
-            app:met_textColorHint="@color/hintColor"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя1234567890!@#$%^*()_./|\,"
             android:gravity="center"
             android:hint="Пароль"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
-            android:visibility="visible"/>
+            android:maxLength="12"
+            android:singleLine="true"
+            android:textSize="@dimen/textSize"
+            android:visibility="visible"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="@dimen/floatingTextSize"
+            app:met_textColor="@android:color/black"
+            app:met_textColorHint="@color/hintColor" />
 
         <TextView
-            android:text="Забыли пароль? "
+            android:id="@+id/forgotTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/textSize"
-            android:id="@+id/forgotTV"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="Забыли пароль? "
+            android:textSize="@dimen/textSize" />
 
         <Button
             android:id="@+id/butOkNew"
             style="@style/WhiteButton_Green"
             android:layout_width="@dimen/infoSizeWidth"
             android:layout_height="wrap_content"
-            android:text="Войти"
             android:layout_marginTop="20dp"
             android:padding="20dp"
-            android:textStyle="normal|bold"
-            android:textSize="@dimen/textSize"
+            android:text="Войти"
             android:textIsSelectable="false"
-            />
+            android:textSize="@dimen/textSize"
+            android:textStyle="normal|bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:gravity="center_vertical|center_horizontal|center"
-            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:text="Еще нет аккаунта?"
-                android:textSize="@dimen/textSize"
+                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView5"/>
+                android:text="Еще нет аккаунта?"
+                android:textSize="@dimen/textSize" />
 
             <TextView
-                android:text="Зарегестрируйтесь"
-                android:textSize="@dimen/textSize"
+                android:id="@+id/registNewTW"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/registNewTW"
+                android:text="Зарегистрируйтесь"
                 android:textColor="@color/buttonTextGreen"
-                android:textStyle="normal|bold|italic"
-                />
+                android:textSize="@dimen/textSize"
+                android:textStyle="normal|bold|italic" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <Button
-        android:text="Попробовать Базу"
-        android:padding="20dp"
+        android:id="@+id/butTryBaseNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/textSize"
-        android:clickable="false"
-        android:visibility="invisible"
         android:layout_alignParentBottom="true"
-        android:id="@+id/butTryBaseNew"
-        android:textColor="#486b97"
-        android:background="#d6e3f3"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        />
+        android:background="#d6e3f3"
+        android:clickable="false"
+        android:padding="20dp"
+        android:text="Попробовать Базу"
+        android:textColor="#486b97"
+        android:textSize="@dimen/textSize"
+        android:visibility="invisible" />
 
 </RelativeLayout>
