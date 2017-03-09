@@ -84,7 +84,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/textSize" />
 
-                  <TextView
+                <TextView
                     android:id="@+id/no_active_service"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -250,6 +250,7 @@
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:selectAllOnFocus="false"
+                android:singleLine="true"
                 android:textSize="@dimen/textSize"
                 android:visibility="visible" />
 
@@ -297,6 +298,7 @@
                 android:maxLength="12"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
+                android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textSize" />
 
@@ -310,11 +312,12 @@
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Повторите пароль"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLength="12"
                 android:paddingBottom="15dp"
-                android:imeOptions="actionDone"
                 android:paddingTop="15dp"
+                android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textSize" />
 
